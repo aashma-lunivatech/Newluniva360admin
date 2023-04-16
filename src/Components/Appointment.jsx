@@ -52,7 +52,7 @@ const Appointment = () => {
   ];
   return (
     <AppointmentSection>
-      <Row gutter={2}>
+      <Row gutter={24}>
         {overalldata.map((item) => (
           <Col span={8}>
             <div className="cardbag">

@@ -3,14 +3,17 @@ import Appointment from "./Appointment";
 import HospitalSurveyChart from "./HospitalSurveyChart";
 import IncomeCharts from "./IncomeCharts";
 import TableAppointementActivity from "./TableAppointementActivity";
+import { Col } from "antd";
 
 const TopMainSection = () => {
   return (
     <>
       <Appointment />
-      <div className="maincontainer">
-        <HospitalSurveyChart />
-      </div>
+      <Col span={10}>
+        <div className="maincontainer">
+          <HospitalSurveyChart />
+        </div>
+      </Col>
       <div className="second-charts">
         <div className="smallcontainer">
           <IncomeCharts />

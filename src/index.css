@@ -1,5 +1,5 @@
 body{
-  background: #ced6d6; 
+  /* background: #ced6d6;  */
 
 }
 .login-text{
@@ -21,7 +21,7 @@ font-size: 18px;
    }
 
    .ant-menu-dark .ant-menu-item-selected {
-    background-color:rgb(24, 11, 11);
+    background-color:grey;
   }
   .ant-input-group .ant-input {   
     height: 45px;
@@ -32,6 +32,31 @@ font-size: 18px;
     display: none;
   }
   .ant-layout-header {
-    height: 93px;   
-    border-radius: 20px;
-  }
+    height: 93px;
+    border-radius: 7px;
+  }  
+  .contentContainer {
+    background-color: rgb(254, 254, 254);
+    border-radius: 8px;
+    box-shadow: 0 0.25rem 0.375rem -0.0625rem hsla(0,7%,72%,.1), 0 0.125rem 0.25rem -0.0625rem hsla(0,8%,70%,.06);
+    margin-bottom: 16px;
+    overflow: hidden;
+    padding: 5px 8px;
+}
+.sumit-button{
+  display: flex;
+  justify-content: center;
+}
+.add-icon{
+  /* font-size: 20px; */
+}
+.add-button{
+display: flex;
+justify-content: space-between;
+}
+.ant-menu-sub.ant-menu-inline {
+  background: #f5f5f5 !important;
+}
+.ant-table {
+  overflow-x: auto;
+}

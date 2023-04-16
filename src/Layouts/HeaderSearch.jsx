@@ -1,6 +1,6 @@
 import React from "react";
 import { AudioOutlined } from "@ant-design/icons";
-import { Input, Space } from "antd";
+import { Col, Input, Space } from "antd";
 import styled from "styled-components";
 const { Search } = Input;
 const suffix = (
@@ -11,25 +11,28 @@ const suffix = (
     }}
   />
 );
-const onSearch = (value) => console.log(value);
+const onSearch = (value) => console.log(value.target.value);
 const HeaderSearch = () => {
   return (
     <div>
       <HeaderSearchComponent>
-        <Search
-          className="search-button"
-          placeholder="Search here .... "
-          onSearch={onSearch}
-          // enterButton
-        />
+        <Col Span={6}>
+          <Input
+            className="search-button"
+            style={{
+              width: "300px",
+              height: "45px",
+              marginTop: "15px",
+              borderRadius: "30px",
+            }}
+            onChange={onSearch}
+            placeholder="Search here..."
+          />
+        </Col>
       </HeaderSearchComponent>
     </div>
   );
 };
 
 export default HeaderSearch;
-export const HeaderSearchComponent = styled.div`
-  .search-button {
-    margin-top: 10px;
-  }
-`;
+export const HeaderSearchComponent = styled.div``;
