@@ -52,7 +52,7 @@ font-size: 18px;
 }
 .add-button{
 display: flex;
-justify-content: space-between;
+justify-content: flex-end;
 }
 .ant-menu-sub.ant-menu-inline {
   background: #f5f5f5 !important;

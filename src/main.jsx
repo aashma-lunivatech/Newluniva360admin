@@ -6,13 +6,17 @@ import "./App.css";
 import RootPage from "./Pages/Dashboard/RootPage/RootPage";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import Homepage from "./Pages/Homepage/Homepage";
-import ThemeChanger from "./Components/Settings/ThemeChanger";
-import DoctorsPage from "./Components/Doctorspage/DoctorsPage";
 import Client from "./Components/Client/Client";
 
 import MainDoctorPage from "./Components/Doctorspage/MainDoctorPage";
 import TopMainSection from "./Components/TopMainSection";
 import DoctorPageView from "./Components/Doctorspage/DoctorPageView";
+import DoctorDetails from "./Components/Settings/DoctorDetails";
+import ClientHeaderCard from "./Components/Client/ClientHeaderCard";
+import RegisteredClient from "./Components/Client/RegisteredClient";
+import AddClientHeader from "./Components/Client/AddClientHeader";
+import ClientOnlinereportTable from "./Components/Client/ClientOnlinereportTable";
+import ClientDepartment from "./Components/Client/ClientDepartment";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -36,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/appointment",
-        element: <ThemeChanger />,
+        element: <DoctorDetails />,
       },
       {
         path: "/doctor",
@@ -44,7 +48,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/clients",
+        element: <AddClientHeader />,
+      },
+      {
+        path: "/clientsform",
         element: <Client />,
+      },
+      {
+        path: "/clientsform/edit/:id",
+        element: <Client />,
+      },
+      {
+        path: "/registerclient",
+        element: <RegisteredClient />,
+      },
+      {
+        path: "/clientonlinereport",
+        element: <ClientOnlinereportTable />,
+      },
+      {
+        path: "/clientdepartment",
+        element: <ClientDepartment />,
       },
       {
         path: "/adddoctor",

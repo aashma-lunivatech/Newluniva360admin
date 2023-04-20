@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GetListOfDoctorDetails } from "../../services/appServices/ProductionServices";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import styled from "styled-components";
 
-const ThemeChanger = () => {
+const DoctorDetails = () => {
   const [obtaindata, setObtaindata] = useState();
+  const [imagedata, SetImagedata] = useState([]);
   const columns = [
     {
       title: "DId",
@@ -61,21 +62,37 @@ const ThemeChanger = () => {
       title: "DocLinks",
       dataIndex: "DocLinks",
       key: "DocLinks",
+      render: (text) => (
+        <a href={text} target="_blank">
+          {text}
+        </a>
+      ),
     },
     {
       title: "DocImage",
       dataIndex: "DocImage",
-      dataIndex: "DocImage",
       key: "DocImage",
-      // render: (DocImage) => <img src={DocImage} />,
-      //add blobb path
-      render: (image) => <img src={image} />,
-    },
-
-    {
-      title: "DocIsActive",
-      dataIndex: "DocIsActive",
-      key: "DocIsActive",
+      render: (DocImage) => (
+        <img
+          style={{ width: 100, height: 100, borderRadius: 50 }}
+          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
+        />
+      ),
+      // render: (DocImage) => {
+      //   if (Array.isArray(DocImage)) {
+      //     return DocImage.map((image) => (
+      //       <img
+      //         src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${image}`}
+      //       />
+      //     ));
+      //   } else {
+      //     return (
+      //       <img
+      //         src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
+      //       />
+      //     );
+      //   }
+      // },
     },
     {
       title: "DocRegisteredDate",
@@ -88,11 +105,6 @@ const ThemeChanger = () => {
       key: "DocDepartment",
     },
     {
-      title: "DocAddresss",
-      dataIndex: "DocAddresss",
-      key: "DocAddresss",
-    },
-    {
       title: "DocCharge",
       dataIndex: "DocCharge",
       key: "DocCharge",
@@ -103,14 +115,31 @@ const ThemeChanger = () => {
       key: "UserType",
     },
     {
+      title: "DocIsActive",
+      dataIndex: "DocIsActive",
+      key: "DocIsActive",
+      render: (record, text) => {
+        if (record) {
+          return <Tag color={"green"}>Active</Tag>;
+        } else {
+          return <Tag color={"volcano"}>Not Active</Tag>;
+        }
+      },
+    },
+    {
       title: "ConferenceLink",
       dataIndex: "ConferenceLink",
       key: "ConferenceLink",
+      render: (text) => (
+        <a href={text} target="_blank">
+          {text}
+        </a>
+      ),
     },
     {
-      title: "DocAddresss",
-      dataIndex: "DocAddresss",
-      key: "DocAddresss",
+      title: "DocAddress",
+      dataIndex: "DocAddress",
+      key: "DocAddress",
     },
     {
       title: "DocLoginId",
@@ -131,7 +160,6 @@ const ThemeChanger = () => {
       console.log(res, "res");
       if (res?.DoctorList.length > 0) {
         setObtaindata(res?.DoctorList);
-        console.log(res, "i am a response");
       } else {
         console.log("out of if else");
       }
@@ -146,7 +174,7 @@ const ThemeChanger = () => {
   );
 };
 
-export default ThemeChanger;
+export default DoctorDetails;
 const DoctorTableData = styled.div`
   margin-top: 10px;
 `;

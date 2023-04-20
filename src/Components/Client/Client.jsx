@@ -1,24 +1,113 @@
-import React from "react";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
-  Cascader,
   Col,
   DatePicker,
   Form,
   Input,
   InputNumber,
-  Select,
   Switch,
-  TreeSelect,
   Upload,
+  message,
+  notification,
 } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+import { InsertUpdateClientDetailsluniva } from "../../services/appServices/ProductionServices";
+import { useNavigate, useParams } from "react-router-dom";
+
 const Client = () => {
+  const { id } = useParams();
+  const [form] = Form.useForm();
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedId, setSelectedId] = useState(id);
+  const [imageUrl, setImageUrl] = useState([]);
+  const [buttondisable, setButtondisable] = useState(false);
+
+  const props = {
+    name: "file",
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    headers: {
+      authorization: "authorization-text",
+    },
+    onChange(info) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList, "infodata");
+        console.log(info.fileList.name, "infofilename");
+        setImageUrl(info.file.name);
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+  useEffect(() => {
+    console.log(selectedId, "sekectednbsdnasb");
+  }, [id]);
+  const getInitialValues = () => {
+    return { RID: selectedId };
+  };
+
+  // const EditClientForm = (id) => {
+  //   let data = {
+  //     RID: selectedId,
+  //   };
+  //   InsertUpdateClientDetailsluniva(data, (res) => {
+  //     console.log(res, "i am data");
+  //     if (res?.SuccessMsg == true) {
+  //       notification.success("client details Added Successfully");
+  //       setButtondisable(true);
+  //       setTimeout(function () {
+  //         window.location.reload();
+  //       }, 4000);
+  //     } else {
+  //       notification.warning("Error!");
+  //     }
+  //   });
+  // };
+
+  const handleSubmit = (e) => {
+    let data = {
+      RID: e?.RID,
+      ClientCode: e?.ClientCode,
+      ClientName: e?.ClientName,
+      ClientCountry: e?.ClientCountry,
+      ClientState: e?.ClientState,
+      ClientDistrict: e?.ClientDistrict,
+      ClientMUNVDC: e?.ClientMUNVDC,
+      ClientLocalAddress: e?.ClientLocalAddress,
+      ClientTypeId: e?.ClientTypeId,
+      ClientPAN: e?.ClientPAN,
+      ClientPhoneNumber: e?.ClientPhoneNumber,
+      ClientEmail: e?.ClientEmail,
+      ClientWebsite: e?.ClientWebsite,
+      ClientLogo: imageUrl,
+      ClientContactPerson: e?.ClientContactPerson,
+      ClinetContactPersonMobile: e?.ClinetContactPersonMobile,
+      IsActive: e?.IsActive || true,
+      UserId: e?.UserId,
+      RegisterDate: selectedDate?.format("YYYY-MM-DD"),
+      clientBanner: e?.clientBanner,
+    };
+    InsertUpdateClientDetailsluniva(data, (res) => {
+      console.log(res, "i am response");
+      if (res?.SuccessMsg == true) {
+        notification.success("client details Added Successfully");
+        setButtondisable(true);
+        setTimeout(function () {
+          window.location.reload();
+        }, 4000);
+      } else {
+        notification.warning("Error!");
+      }
+    });
+    console.log(data, "i am a data");
+  };
+
   return (
     <ClientComponents>
       <div className="">
@@ -33,6 +122,8 @@ const Client = () => {
         >
           <Col span={24}>
             <Form
+              initialValues={getInitialValues}
+              onFinish={handleSubmit}
               labelCol={{
                 span: 8,
               }}
@@ -45,91 +136,96 @@ const Client = () => {
                 marginTop: 10,
               }}
             >
-              <Form.Item label="RID">
+              <Form.Item label="RID" name="RID">
                 <InputNumber />
               </Form.Item>
-              <Form.Item label="UserId">
+              <Form.Item label="ClientCode" name="ClientCode">
+                <Input />
+              </Form.Item>
+              <Form.Item label="ClientName" name="ClientName">
+                <Input />
+              </Form.Item>
+              <Form.Item label="ClientCountry" name="ClientCountry">
                 <InputNumber />
               </Form.Item>
-              <Form.Item label="Code">
+              <Form.Item label="ClientState" name="ClientState">
+                <InputNumber />
+              </Form.Item>
+              <Form.Item label="ClientDistrict" name="ClientDistrict">
+                <InputNumber />
+              </Form.Item>
+              <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
+                <InputNumber />
+              </Form.Item>
+              <Form.Item label="ClientLocalAddress" name="ClientLocalAddress">
                 <Input />
               </Form.Item>
-              <Form.Item label="Name">
+              <Form.Item label="ClientTypeId" name="ClientTypeId">
+                <InputNumber />
+              </Form.Item>
+              <Form.Item label="ClientPAN" name="ClientPAN">
                 <Input />
               </Form.Item>
-              <Form.Item label="Country">
+              <Form.Item label="ClientPhoneNumber" name="ClientPhoneNumber">
                 <Input />
               </Form.Item>
-              <Form.Item label="State">
-                <Input />
+              <Form.Item label="UserId" name="UserId">
+                <InputNumber />
               </Form.Item>
-              <Form.Item label="District">
+              <Form.Item label="ClientEmail" name="ClientEmail">
                 <Input />
-              </Form.Item>
-              <Form.Item label="Municipality/VDC">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientLocalAddress">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientTypeId">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientPAN">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientPhoneNumber">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientEmail">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientWebsite">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientContactPerson">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClinetContactPersonMobile">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientWebsite">
-                <Input />
-              </Form.Item>
-              <Form.Item label="clientBanner">
-                <Input />
-              </Form.Item>
-              <Form.Item label="RegisterDate">
-                <DatePicker style={{ width: "100%" }} />
               </Form.Item>
 
-              <Form.Item label="Client logo" valuePropName="fileList">
-                <Upload action="/upload.do" listType="picture-card">
-                  <div>
-                    <PlusOutlined />
-                    <div
-                      style={{
-                        marginTop: 8,
-                      }}
-                    >
-                      Upload
-                    </div>
-                  </div>
+              <Form.Item label="ClientWebsite" name="ClientWebsite">
+                <Input />
+              </Form.Item>
+              <Form.Item label="ClientContactPerson" name="ClientContactPerson">
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="ClinetContactPersonMobile"
+                name="ClinetContactPersonMobile"
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item label="clientBanner" name="clientBanner">
+                <Input />
+              </Form.Item>
+              <Form.Item label="RegisterDate" name="RegisterDate">
+                <DatePicker
+                  rules={[
+                    {
+                      required: true,
+                      message: "Date is required!",
+                    },
+                  ]}
+                  value={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+
+              <Form.Item label="Client logo" name="ClientLogo">
+                <Upload {...props}>
+                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
               </Form.Item>
               <Form.Item label="is Active" valuePropName="checked">
                 <Switch />
               </Form.Item>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  htmlType="submit"
-                  // disabled={butDis}
-                  type="primary"
-                  className="sumit-button"
-                >
-                  Submit
-                </Button>
-              </div>
+              <Form.Item>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button
+                    disabled={buttondisable}
+                    htmlType="submit"
+                    // disabled={butDis}
+                    type="primary"
+                    className="sumit-button"
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Form.Item>
             </Form>
           </Col>
         </Card>

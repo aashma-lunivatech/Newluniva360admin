@@ -22,13 +22,13 @@ export const RouteDataAdmin = [
         id: 7,
         label: "Doctors",
         pathName: "/doctor",
-        icon: CiMedicalCase,
+        // icon: CiMedicalCase,
       },
       {
         id: 8,
         label: "Appointment",
         pathName: "/appointment",
-        icon: CiMedicalCase,
+        // icon: CiMedicalCase,
       },
     ],
   },
@@ -37,8 +37,35 @@ export const RouteDataAdmin = [
     // icon: GiDoctorFace,
     icon: CiMedicalCase,
     label: "Clients",
-    pathName: "/clients",
-    Element: <Client />,
+    // pathName: "/clients",
+    hasSubMenu: true,
+    subNav: [
+      {
+        id: 4.1,
+        label: "clients",
+        pathName: "/clients",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 4.2,
+        label: "Client Report List",
+        pathName: "/clientonlinereport",
+        // icon: CiMedicalCase,
+      },
+
+      {
+        id: 4.3,
+        label: "Client Department",
+        pathName: "/clientdepartment",
+        // icon: CiMedicalCase,
+      },
+      // {
+      //   id: 4.2,
+      //   label: "Appointment",
+      //   pathName: "/appointment",
+      //   icon: CiMedicalCase,
+      // },
+    ],
   },
   {
     id: 5,

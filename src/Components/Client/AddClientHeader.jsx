@@ -1,19 +1,18 @@
 import { Button, Card } from "antd";
 import React from "react";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
-import DoctorPage from "./DoctorsPage";
-import Mainlayout from "../../Layouts/layout";
-import DoctorDetails from "../Settings/DoctorDetails";
-const DoctorPageView = () => {
+import RegisteredClient from "./RegisteredClient";
+import { useNavigate } from "react-router-dom";
+
+const AddClientHeader = () => {
   const navigate = useNavigate();
   const handleRedirect = () => {
-    navigate("/adddoctor");
+    navigate("/clientsform");
   };
   return (
     <div>
       <div className="">
         <Card
-          title="Doctors Details"
+          title="Client Details"
           bordered={false}
           style={
             {
@@ -28,16 +27,14 @@ const DoctorPageView = () => {
               type="primary"
               onClick={() => handleRedirect()}
             >
-              Add Doctor
+              Add Clients
             </Button>
           </div>
         </Card>
-        <div>
-          <DoctorDetails />
-        </div>
+        <RegisteredClient />
       </div>
     </div>
   );
 };
 
-export default DoctorPageView;
+export default AddClientHeader;
