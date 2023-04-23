@@ -69,18 +69,28 @@ const Client = () => {
   //     }
   //   });
   // };
-
+  const initialValues = {
+    RID: selectedId,
+    clientcode: "Np",
+    ClientCountry: "nepal",
+    ClientState: 2,
+    ClientDistrict: 1,
+    ClientMUNVDC: 2,
+    ClientTypeId: 1,
+    UserId: 3,
+    // replace "default country" with the default value for ClientCountry
+  };
   const handleSubmit = (e) => {
     let data = {
-      RID: e?.RID,
-      ClientCode: e?.ClientCode,
+      RID: e?.RID ?? 1,
+      ClientCode: e?.ClientCode ?? "Np",
       ClientName: e?.ClientName,
-      ClientCountry: e?.ClientCountry,
-      ClientState: e?.ClientState,
-      ClientDistrict: e?.ClientDistrict,
-      ClientMUNVDC: e?.ClientMUNVDC,
+      ClientCountry: e?.ClientCountry ?? 1,
+      ClientState: e?.ClientState ?? 1,
+      ClientDistrict: e?.ClientDistrict ?? 1,
+      ClientMUNVDC: e?.ClientMUNVDC ?? 1,
       ClientLocalAddress: e?.ClientLocalAddress,
-      ClientTypeId: e?.ClientTypeId,
+      ClientTypeId: e?.ClientTypeId ?? 1,
       ClientPAN: e?.ClientPAN,
       ClientPhoneNumber: e?.ClientPhoneNumber,
       ClientEmail: e?.ClientEmail,
@@ -89,7 +99,7 @@ const Client = () => {
       ClientContactPerson: e?.ClientContactPerson,
       ClinetContactPersonMobile: e?.ClinetContactPersonMobile,
       IsActive: e?.IsActive || true,
-      UserId: e?.UserId,
+      UserId: e?.UserId ?? 1,
       RegisterDate: selectedDate?.format("YYYY-MM-DD"),
       clientBanner: e?.clientBanner,
     };
@@ -97,6 +107,14 @@ const Client = () => {
       console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         notification.success("client details Added Successfully");
+        notification.config({
+          placement: "topRight",
+          duration: 3,
+          style: {
+            backgroundColor: "#f6ffed",
+            border: "1px solid #b7eb8f",
+          },
+        });
         setButtondisable(true);
         setTimeout(function () {
           window.location.reload();
@@ -122,7 +140,8 @@ const Client = () => {
         >
           <Col span={24}>
             <Form
-              initialValues={getInitialValues}
+              // initialValues={getInitialValues}
+              initialValues={initialValues}
               onFinish={handleSubmit}
               labelCol={{
                 span: 8,
@@ -136,59 +155,59 @@ const Client = () => {
                 marginTop: 10,
               }}
             >
-              <Form.Item label="RID" name="RID">
+              {/* <Form.Item label="RID" name="RID">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientCode" name="ClientCode">
+              </Form.Item> */}
+              {/* <Form.Item label="ClientCode" name="ClientCode">
+                <Input />
+              </Form.Item> */}
+              <Form.Item label="Name" name="ClientName">
                 <Input />
               </Form.Item>
-              <Form.Item label="ClientName" name="ClientName">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ClientCountry" name="ClientCountry">
+              {/* <Form.Item label="ClientCountry" name="ClientCountry">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientState" name="ClientState">
+              </Form.Item> */}
+              {/* <Form.Item label="ClientState" name="ClientState">
                 <InputNumber />
               </Form.Item>
               <Form.Item label="ClientDistrict" name="ClientDistrict">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
+              </Form.Item> */}
+              {/* <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientLocalAddress" name="ClientLocalAddress">
+              </Form.Item> */}
+              <Form.Item label="LocalAddress" name="ClientLocalAddress">
                 <Input />
               </Form.Item>
-              <Form.Item label="ClientTypeId" name="ClientTypeId">
+              {/* <Form.Item label="ClientTypeId" name="ClientTypeId">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientPAN" name="ClientPAN">
+              </Form.Item> */}
+              <Form.Item label="PAN" name="ClientPAN">
                 <Input />
               </Form.Item>
-              <Form.Item label="ClientPhoneNumber" name="ClientPhoneNumber">
+              <Form.Item label="PhoneNumber" name="ClientPhoneNumber">
                 <Input />
               </Form.Item>
-              <Form.Item label="UserId" name="UserId">
+              {/* <Form.Item label="UserId" name="UserId">
                 <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientEmail" name="ClientEmail">
+              </Form.Item> */}
+              <Form.Item label="Email" name="ClientEmail">
                 <Input />
               </Form.Item>
 
-              <Form.Item label="ClientWebsite" name="ClientWebsite">
+              <Form.Item label="Website" name="ClientWebsite">
                 <Input />
               </Form.Item>
-              <Form.Item label="ClientContactPerson" name="ClientContactPerson">
+              <Form.Item label="ContactPerson" name="ClientContactPerson">
                 <Input />
               </Form.Item>
               <Form.Item
-                label="ClinetContactPersonMobile"
+                label="ContactPersonMobile"
                 name="ClinetContactPersonMobile"
               >
                 <Input />
               </Form.Item>
-              <Form.Item label="clientBanner" name="clientBanner">
+              <Form.Item label="Banner" name="clientBanner">
                 <Input />
               </Form.Item>
               <Form.Item label="RegisterDate" name="RegisterDate">

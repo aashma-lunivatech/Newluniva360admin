@@ -17,6 +17,10 @@ import RegisteredClient from "./Components/Client/RegisteredClient";
 import AddClientHeader from "./Components/Client/AddClientHeader";
 import ClientOnlinereportTable from "./Components/Client/ClientOnlinereportTable";
 import ClientDepartment from "./Components/Client/ClientDepartment";
+import DoctorsList from "./Components/Doctorspage/DoctorsList";
+import DoctorsListClientAndDepart from "./Components/Doctorspage/DoctorListClientAndDepart";
+import ClientListDocAvailable from "./Components/Client/ClientListDocAvailable";
+import DoctorSchedule from "./Components/Doctorspage/DoctorSchedule";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -70,6 +74,23 @@ const router = createBrowserRouter([
         path: "/clientdepartment",
         element: <ClientDepartment />,
       },
+      {
+        path: "/clientlistdoc",
+        element: <ClientListDocAvailable />,
+      },
+      {
+        path: "/doctorslist",
+        element: <DoctorsList />,
+      },
+      {
+        path: "/doctorschedule",
+        element: <DoctorSchedule />,
+      },
+      {
+        path: "/doctorslistbyclientdepart",
+        element: <DoctorsListClientAndDepart />,
+      },
+
       {
         path: "/adddoctor",
         element: <MainDoctorPage />,

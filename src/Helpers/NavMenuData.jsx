@@ -25,9 +25,15 @@ export const RouteDataAdmin = [
         // icon: CiMedicalCase,
       },
       {
-        id: 8,
-        label: "Appointment",
-        pathName: "/appointment",
+        id: 7.1,
+        label: "Appoinments",
+        pathName: "/appointments",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 7.2,
+        label: "Online Appoinment",
+        pathName: "/onlineappointments",
         // icon: CiMedicalCase,
       },
     ],
@@ -42,21 +48,52 @@ export const RouteDataAdmin = [
     subNav: [
       {
         id: 4.1,
-        label: "clients",
+        label: "Clients",
         pathName: "/clients",
         // icon: CiMedicalCase,
       },
       {
         id: 4.2,
-        label: "Client Report List",
+        label: " Report List",
         pathName: "/clientonlinereport",
         // icon: CiMedicalCase,
       },
 
       {
         id: 4.3,
-        label: "Client Department",
+        label: " Department",
         pathName: "/clientdepartment",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 4.4,
+        label: " Doctor",
+        pathName: "/clientlistdoc",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 3.2,
+        label: "DoctorsList",
+        pathName: "/doctorslist",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 3.3,
+        label: "Department 2",
+        pathName: "/doctorslistbyclientdepart",
+        // icon: CiMedicalCase,
+      },
+
+      {
+        id: 8.1,
+        label: "Doctor Schedule",
+        pathName: "/doctorschedule",
+        // icon: CiMedicalCase,
+      },
+      {
+        id: 8,
+        label: "Appointment",
+        pathName: "/appointment",
         // icon: CiMedicalCase,
       },
       // {
