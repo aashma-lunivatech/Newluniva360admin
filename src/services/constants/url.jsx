@@ -7,3 +7,5 @@ export const GetListOfDoctorDetailsByDepartment =
 export const InsertUpdateClientDetails = "InsertUpdateClientDetails";
 export const GetlistofClientForOnlineReport = "GetlistofClientForOnlineReport";
 export const GetListOfRegisteredClients = "GetListOfRegisteredClients";
+export const GetClientWiseDepartmentByClientId =
+  "GetClientWiseDepartmentByClientId";

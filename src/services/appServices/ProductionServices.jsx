@@ -1,4 +1,5 @@
 import {
+  GetClientWiseDepartmentByClientId,
   GetListOfDoctorDetailsByDepartment,
   GetListOfRegisteredClients,
   GetlistofClientForOnlineReport,
@@ -58,6 +59,44 @@ export const GetlistofClientForOnlineReports = async (successCallback) => {
 export const GetListOfRegisteredClientsluniva = async (successCallback) => {
   try {
     const response = await fetch(`${GetListOfRegisteredClients}`);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+//client wise department
+
+// export const GetClientWiseDepartmentByClientIds = async (
+//   data,
+//   successCallback
+// ) => {
+//   console.log(data, "datajhomaa");
+//   try {
+//     const response = await fetch(
+//       `${GetClientWiseDepartmentByClientId}?clientId=${data.clientId}`
+//     );
+//     if (response?.status === 200) {
+//       successCallback(response?.data);
+//     } else {
+//       successCallback([]);
+//     }
+//   } catch (errror) {
+//     successCallback([]);
+//   }
+// };
+
+export const getClientWiseDepartmentByClientIdluniva = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await fetch(
+      `${GetClientWiseDepartmentByClientId}?clientId=${data.clientId}`
+    );
     if (response?.status === 200) {
       successCallback(response?.data);
     } else {
