@@ -21,6 +21,12 @@ import DoctorsList from "./Components/Doctorspage/DoctorsList";
 import DoctorsListClientAndDepart from "./Components/Doctorspage/DoctorListClientAndDepart";
 import ClientListDocAvailable from "./Components/Client/ClientListDocAvailable";
 import DoctorSchedule from "./Components/Doctorspage/DoctorSchedule";
+import DoctorScheduleAppointment from "./Components/DoctorsServicespage/DoctorScheduleAppointment";
+import BookedOnlineAppointments from "./Components/DoctorsServicespage/BookedOnlineAppointments";
+import AddAppointmentTime from "./Components/DoctorsServicespage/AddAppointmentTime";
+import DoctorsProfilePageNew from "./Components/DoctorsServicespage/DoctorsProfilePageNew";
+import AddDoctorsProfilePage from "./Components/DoctorsServicespage/AddDoctorsProfilePage";
+import Departments from "./Components/Departments/Departments";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -47,8 +53,28 @@ const router = createBrowserRouter([
         element: <DoctorDetails />,
       },
       {
+        path: "/doctorprofile",
+        element: <DoctorsProfilePageNew />,
+      },
+      {
+        path: "/adddoctorprofile",
+        element: <AddDoctorsProfilePage />,
+      },
+      {
+        path: "/editdoctorprofile/edit/:id",
+        element: <AddDoctorsProfilePage />,
+      },
+      {
         path: "/doctor",
         element: <DoctorPageView />,
+      },
+      {
+        path: "/doctortime",
+        element: <DoctorScheduleAppointment />,
+      },
+      {
+        path: "/bookedonlineappointments",
+        element: <BookedOnlineAppointments />,
       },
       {
         path: "/clients",
@@ -61,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "/clientsform/edit/:id",
         element: <Client />,
+      },
+      {
+        path: "/appointmenttime",
+        element: <AddAppointmentTime />,
       },
       {
         path: "/registerclient",
@@ -94,6 +124,11 @@ const router = createBrowserRouter([
       {
         path: "/adddoctor",
         element: <MainDoctorPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/department",
+        element: <Departments />,
         errorElement: <ErrorPage />,
       },
     ],

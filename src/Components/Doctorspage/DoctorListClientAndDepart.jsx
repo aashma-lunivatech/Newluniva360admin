@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { GetlistofDoctorsByClientIdAndDepartmentIds } from "../../services/appServices/ProductionServices";
 
 const DoctorsListClientAndDepart = () => {
-  const [clientId, setClientId] = useState("");
+  const [docid, setDocid] = useState("");
+  const [appointmentdate, setAppointmentDate] = useState("");
   const [departmentId, setDepartmentId] = useState("");
   const [departmentList, setDepartmentList] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -76,7 +77,7 @@ const DoctorsListClientAndDepart = () => {
 
   const handleClick = () => {
     if (
-      clientId !== "" &&
+      docid !== "" &&
       departmentId !== "" &&
       !isNaN(clientId) &&
       !isNaN(departmentId)
@@ -84,7 +85,7 @@ const DoctorsListClientAndDepart = () => {
       setLoading(true);
 
       const data = {
-        clientId: clientId,
+        docid: docid,
         departmentId: departmentId,
       };
 
@@ -122,8 +123,8 @@ const DoctorsListClientAndDepart = () => {
               <Input
                 type="number"
                 style={{ width: 300 }}
-                value={clientId}
-                onChange={(e) => setClientId(e.target.value)}
+                value={docid}
+                onChange={(e) => setDocid(e.target.value)}
               />
               <label className="label-name">Department ID</label>
               <Input

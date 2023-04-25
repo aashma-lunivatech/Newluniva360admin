@@ -8,6 +8,7 @@ import {
   Form,
   Input,
   InputNumber,
+  Radio,
   Switch,
   Upload,
   message,
@@ -18,35 +19,20 @@ import styled from "styled-components";
 import { InsertUpdateClientDetailsluniva } from "../../services/appServices/ProductionServices";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Client = () => {
+const AddDoctorsProfilePage = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedId, setSelectedId] = useState(id);
-  const [bannerurl, setbannerurl] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
   const [buttondisable, setButtondisable] = useState(false);
-
-  const bannerprops = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList, "infodata");
-        console.log(info.fileList.name, "infofilename");
-        setbannerurl(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-        setbannerurl(info.file.name);
-      }
-    },
+  const [Radiobuttonvalue, setRadioButtonValue] = useState(1);
+  const radioOnChange = (e) => {
+    console.log("radio checked", e.target.value);
+    setRadioButtonValue(e.target.value);
   };
+  const { TextArea } = Input;
+
   const props = {
     name: "file",
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -69,9 +55,6 @@ const Client = () => {
   useEffect(() => {
     console.log(selectedId, "sekectednbsdnasb");
   }, [id]);
-  const getInitialValues = () => {
-    return { RID: selectedId };
-  };
 
   const initialValues = {
     RID: selectedId,
@@ -86,26 +69,29 @@ const Client = () => {
   };
   const handleSubmit = (e) => {
     let data = {
-      RID: e?.RID ?? 2,
-      ClientCode: e?.ClientCode ?? "Np",
-      ClientName: e?.ClientName,
-      ClientCountry: e?.ClientCountry ?? 1,
-      ClientState: e?.ClientState ?? 1,
-      ClientDistrict: e?.ClientDistrict ?? 1,
-      ClientMUNVDC: e?.ClientMUNVDC ?? 1,
-      ClientLocalAddress: e?.ClientLocalAddress,
-      ClientTypeId: e?.ClientTypeId ?? 1,
-      ClientPAN: e?.ClientPAN,
-      ClientPhoneNumber: e?.ClientPhoneNumber,
-      ClientEmail: e?.ClientEmail,
-      ClientWebsite: e?.ClientWebsite,
-      ClientLogo: imageUrl,
-      ClientContactPerson: e?.ClientContactPerson,
-      ClinetContactPersonMobile: e?.ClinetContactPersonMobile,
-      IsActive: e?.IsActive || true,
-      UserId: e?.UserId ?? 1,
-      RegisterDate: selectedDate?.format("YYYY-MM-DD"),
-      clientBanner: bannerurl,
+      DId: e?.DId,
+      DoctorName: e?.DoctorName,
+      DocMobileNo: e?.DocMobileNo,
+      DocContactNo: e?.DocContactNo,
+      DocGender: e?.DocGender,
+      DocEmail: e?.DocEmail,
+      DocQualification: e?.DocQualification,
+      DocSpecilization: e?.DocSpecilization,
+      DocExperience: e?.DocExperience,
+      NMCNumber: e?.NMCNumber,
+      DocWorkArea: e?.DocWorkArea,
+      DocLinks: e?.DocLinks,
+      DocImage: imageUrl,
+      DocDepartment: e?.DocDepartment,
+      DocAddress: e?.DocAddress,
+      DocCharge: e?.DocCharge,
+      UserType: e?.UserType,
+      DocIsActive: e?.IsActive || true,
+      UserId: e?.UserId,
+      ConferenceLinks: e?.ConferenceLinks,
+      DocLoginId: e?.DocLoginId,
+      DocRegisteredDate: selectedDate?.format("YYYY-MM-DD"),
+      DocDecription: e?.DocDecription,
     };
     InsertUpdateClientDetailsluniva(data, (res) => {
       console.log(res, "i am response");
@@ -131,20 +117,11 @@ const Client = () => {
   };
 
   return (
-    <ClientComponents>
+    <AddDoctorProfile>
       <div className="">
-        <Card
-          title="Client Details"
-          bordered={false}
-          style={
-            {
-              // width: 1240,
-            }
-          }
-        >
+        <Card title="Doctors Profile" bordered={false} style={{}}>
           <Col span={24}>
             <Form
-              // initialValues={getInitialValues}
               initialValues={initialValues}
               onFinish={handleSubmit}
               labelCol={{
@@ -155,66 +132,55 @@ const Client = () => {
               }}
               layout="horizontal"
               style={{
-                // maxWidth: 500,
                 marginTop: 10,
               }}
             >
-              {/* <Form.Item label="RID" name="RID">
-                <InputNumber />
-              </Form.Item> */}
-              {/* <Form.Item label="ClientCode" name="ClientCode">
-                <Input />
-              </Form.Item> */}
-              <Form.Item label="Name" name="ClientName">
-                <Input />
-              </Form.Item>
-              {/* <Form.Item label="ClientCountry" name="ClientCountry">
-                <InputNumber />
-              </Form.Item> */}
-              {/* <Form.Item label="ClientState" name="ClientState">
-                <InputNumber />
-              </Form.Item>
-              <Form.Item label="ClientDistrict" name="ClientDistrict">
-                <InputNumber />
-              </Form.Item> */}
-              {/* <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
-                <InputNumber />
-              </Form.Item> */}
-              <Form.Item label="LocalAddress" name="ClientLocalAddress">
-                <Input />
-              </Form.Item>
-              {/* <Form.Item label="ClientTypeId" name="ClientTypeId">
-                <InputNumber />
-              </Form.Item> */}
-              <Form.Item label="PAN" name="ClientPAN">
-                <Input />
-              </Form.Item>
-              <Form.Item label="PhoneNumber" name="ClientPhoneNumber">
-                <Input />
-              </Form.Item>
-              {/* <Form.Item label="UserId" name="UserId">
-                <InputNumber />
-              </Form.Item> */}
-              <Form.Item label="Email" name="ClientEmail">
-                <Input />
-              </Form.Item>
-
-              <Form.Item label="Website" name="ClientWebsite">
-                <Input />
-              </Form.Item>
-              <Form.Item label="ContactPerson" name="ClientContactPerson">
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="ContactPersonMobile"
-                name="ClinetContactPersonMobile"
-              >
+              <Form.Item label="Doctor Id" name="DId">
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
-              {/* <Form.Item label="Banner" name="clientBanner">
+              <Form.Item label="DocLoginId" name="DocLoginId">
                 <Input />
-              </Form.Item> */}
-              <Form.Item label="RegisterDate" name="RegisterDate">
+              </Form.Item>
+              <Form.Item label="Name" name="DoctorName">
+                <Input />
+              </Form.Item>
+              <Form.Item label="MobileNo" name="MobileNo">
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              <Form.Item label="DocContactNo" name="DocContactNo">
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              <Form.Item label="Gender" name="DocGender">
+                <Radio.Group onChange={radioOnChange} value={Radiobuttonvalue}>
+                  <Radio value={1}>Male</Radio>
+                  <Radio value={2}>Female</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item label="Email" name="DocEmail">
+                <Input />
+              </Form.Item>
+              <Form.Item label="DocEmail" name="DocEmail">
+                <Input />
+              </Form.Item>
+              <Form.Item label="DocQualification" name="DocQualification">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Specilization" name="DocSpecilization">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Experience" name="DocExperience">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Number" name="NMCNumber">
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              <Form.Item label="DocWorkArea" name="DocWorkArea">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Links" name="DocLinks">
+                <Input />
+              </Form.Item>
+              <Form.Item label="DocRegisteredDate" name="DocRegisteredDate">
                 <DatePicker
                   rules={[
                     {
@@ -227,13 +193,22 @@ const Client = () => {
                   style={{ width: "100%" }}
                 />
               </Form.Item>
-
-              <Form.Item label="Client Banner" name="clientBanner">
-                <Upload {...bannerprops}>
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
+              <Form.Item label="Department" name="DocDepartment">
+                <Input />
               </Form.Item>
-              <Form.Item label="Client logo" name="ClientLogo">
+              <Form.Item label="DocAddress" name="DocAddress">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Charge" name="DocCharge">
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              <Form.Item label="UserType" name="UserType">
+                <Input />
+              </Form.Item>
+              <Form.Item label="DocDecription" name="DocDecription">
+                <TextArea rows={4} />
+              </Form.Item>
+              <Form.Item label="Doctor Images" name="DocImage">
                 <Upload {...props}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
@@ -242,15 +217,19 @@ const Client = () => {
                 <Switch />
               </Form.Item>
               <Form.Item>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div
+                  className="Col-md-12"
+                  style={{ display: "flex", justifyContent: "flex-end" }}
+                >
                   <Button
                     disabled={buttondisable}
                     htmlType="submit"
                     // disabled={butDis}
+                    onClick={handleSubmit}
                     type="primary"
-                    className="sumit-button"
+                    className="sumit-button btn-load"
                   >
-                    Submit
+                    Add Doctors
                   </Button>
                 </div>
               </Form.Item>
@@ -258,9 +237,9 @@ const Client = () => {
           </Col>
         </Card>
       </div>
-    </ClientComponents>
+    </AddDoctorProfile>
   );
 };
 
-export default Client;
-const ClientComponents = styled.div``;
+export default AddDoctorsProfilePage;
+const AddDoctorProfile = styled.div``;

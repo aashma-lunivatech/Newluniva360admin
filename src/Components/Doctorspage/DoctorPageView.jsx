@@ -4,6 +4,7 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import DoctorPage from "./DoctorsPage";
 import Mainlayout from "../../Layouts/layout";
 import DoctorDetails from "../Settings/DoctorDetails";
+import DoctorsProfilePageNew from "../DoctorsServicespage/DoctorsProfilePageNew";
 const DoctorPageView = () => {
   const navigate = useNavigate();
   const handleRedirect = () => {
@@ -12,7 +13,7 @@ const DoctorPageView = () => {
   return (
     <div>
       <div className="">
-        <Card
+        {/* <Card
           title="Doctors Details"
           bordered={false}
           style={
@@ -20,8 +21,8 @@ const DoctorPageView = () => {
               // width: 1240,
             }
           }
-        >
-          <div className="add-button">
+        > */}
+        {/* <div className="add-button">
             <Button
               htmlType="submit"
               // disabled={butDis}
@@ -30,10 +31,11 @@ const DoctorPageView = () => {
             >
               Add Doctor
             </Button>
-          </div>
-        </Card>
+          </div> */}
+        {/* </Card> */}
+        <div>{/* <DoctorDetails /> */}</div>
         <div>
-          <DoctorDetails />
+          <DoctorsProfilePageNew />
         </div>
       </div>
     </div>
