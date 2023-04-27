@@ -27,3 +27,12 @@ export const GetBookedOnlineAppointmentDetailsByDocIdAndDate =
   "GetBookedOnlineAppointmentDetailsByDocIdAndDate";
 export const InsertUpdateAppointment = "InsertUpdateAppointment";
 export const CancelAppointmentByPatient = "CancelAppointmentByPatient";
+export const InsertUpdateClientwiseDepartment =
+  "InsertUpdateClientwiseDepartment";
+export const GetDepartmentList = "GetDepartmentList";
+export const InsertUpdateDepartmentByAdmin = "InsertUpdateDepartmentByAdmin";
+export const GetDepartmenDetailsById = "GetDepartmenDetailsById";
+export const GetListOfState = "GetListOfState";
+export const GetAllVDCList = "GetAllVDCList";
+export const GetListOfVDCByDistrictId = "GetListOfVDCByDistrictId";
+export const GetlistofDisctrictByStateId = "GetlistofDisctrictByStateId";

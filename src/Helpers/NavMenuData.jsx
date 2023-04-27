@@ -53,6 +53,12 @@ export const RouteDataAdmin = [
         // icon: CiMedicalCase,
       },
       {
+        id: 7.2,
+        label: "DepartmentList",
+        pathName: "/clientwisedepartment",
+        // icon: CiMedicalCase,
+      },
+      {
         id: 8,
         label: " Report List",
         pathName: "/clientonlinereport",
@@ -104,17 +110,32 @@ export const RouteDataAdmin = [
       // },
     ],
   },
+  // {
+  //   id: 15,
+  //   icon: SiStaffbase,
+  //   label: "Department",
+  //   // pathName: "/",
+  //   hasSubMenu: true,
+  //   subNav: [
+  //     {
+  //       id: 15.1,
+  //       label: "department",
+  //       pathName: "/department",
+  //       // icon: CiMedicalCase,
+  //     },
+  //   ],
+  // },
   {
-    id: 15,
+    id: 16,
     icon: SiStaffbase,
-    label: "Department",
+    label: "Admin",
     // pathName: "/",
     hasSubMenu: true,
     subNav: [
       {
-        id: 7,
-        label: "department",
-        pathName: "/department",
+        id: 16.1,
+        label: "Department",
+        pathName: "/admindepartment",
         // icon: CiMedicalCase,
       },
     ],

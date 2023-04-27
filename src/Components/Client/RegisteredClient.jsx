@@ -151,7 +151,8 @@ const RegisteredClient = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <a
+          <Button
+            className="btn-load"
             onClick={() =>
               navigate({
                 pathname: `/clientsform/edit/${record.RId}`,
@@ -159,7 +160,7 @@ const RegisteredClient = () => {
             }
           >
             Edit
-          </a>
+          </Button>
         </Space>
       ),
     },

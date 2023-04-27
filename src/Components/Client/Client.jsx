@@ -8,6 +8,7 @@ import {
   Form,
   Input,
   InputNumber,
+  Select,
   Switch,
   Upload,
   message,
@@ -15,7 +16,12 @@ import {
 } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
-import { InsertUpdateClientDetailsluniva } from "../../services/appServices/ProductionServices";
+import {
+  GetListOfStates,
+  GetListOfVDCByDistrictIds,
+  GetlistofDisctrictByStateIds,
+  InsertUpdateClientDetailsluniva,
+} from "../../services/appServices/ProductionServices";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Client = () => {
@@ -26,7 +32,11 @@ const Client = () => {
   const [bannerurl, setbannerurl] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
   const [buttondisable, setButtondisable] = useState(false);
-
+  const [statelist, setStateList] = useState();
+  const [districtlist, setDistrictList] = useState();
+  const [municiplalitylist, setMunicipality] = useState();
+  const [selectedstatevalue, setSelectedStateValue] = useState();
+  const [selecteddistrictvalue, setSelectedDistrict] = useState();
   const bannerprops = {
     name: "file",
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -66,51 +76,80 @@ const Client = () => {
       }
     },
   };
+  const handleStateChange = (e) => {
+    setSelectedStateValue(e);
+  };
+  const handleclientDistrict = (e) => {
+    setSelectedDistrict(e);
+  };
   useEffect(() => {
-    console.log(selectedId, "sekectednbsdnasb");
-  }, [id]);
-  const getInitialValues = () => {
-    return { RID: selectedId };
-  };
+    console.log(selectedstatevalue, "setselectdstatevalue");
+    console.log(id, "idparams");
+    let data = {
+      stateId: selectedstatevalue,
+    };
 
-  const initialValues = {
-    RID: selectedId,
-    clientcode: "Np",
-    ClientCountry: "nepal",
-    ClientState: 2,
-    ClientDistrict: 1,
-    ClientMUNVDC: 2,
-    ClientTypeId: 1,
-    UserId: 3,
-    // replace "default country" with the default value for ClientCountry
-  };
+    let munidata = {
+      districtId: selecteddistrictvalue,
+    };
+    GetListOfStates((res) => {
+      if (res?.StateList && res?.StateList.length > 0) {
+        setStateList(res?.StateList);
+      } else {
+        setStateList([]);
+        console.log("outof else block");
+      }
+    });
+    GetlistofDisctrictByStateIds(data, (res) => {
+      if (res?.DistrictList && res?.DistrictList.length > 0) {
+        setDistrictList(res?.DistrictList);
+        console.log("i am inside if block");
+        console.log(districtlist, "dis");
+      } else {
+        setDistrictList([]);
+        console.log("outof else distrcit block");
+      }
+    });
+    GetListOfVDCByDistrictIds(munidata, (res) => {
+      if (res?.VDCLIST && res?.VDCLIST.length > 0) {
+        setMunicipality(res?.VDCLIST);
+        console.log("i am inside if block");
+      } else {
+        setMunicipality([]);
+        console.log("outof else block");
+      }
+    });
+    console.log(data, "data");
+  }, [selectedstatevalue, selecteddistrictvalue]);
+
   const handleSubmit = (e) => {
     let data = {
-      RID: e?.RID ?? 2,
       ClientCode: e?.ClientCode ?? "Np",
       ClientName: e?.ClientName,
-      ClientCountry: e?.ClientCountry ?? 1,
-      ClientState: e?.ClientState ?? 1,
-      ClientDistrict: e?.ClientDistrict ?? 1,
-      ClientMUNVDC: e?.ClientMUNVDC ?? 1,
+      ClientCountry: e?.ClientCountry,
+      ClientState: e?.ClientState,
+      ClientDistrict: e?.ClientDistrict,
+      ClientMUNVDC: e?.ClientMUNVDC,
       ClientLocalAddress: e?.ClientLocalAddress,
-      ClientTypeId: e?.ClientTypeId ?? 1,
+      ClientTypeId: e?.ClientTypeId,
       ClientPAN: e?.ClientPAN,
       ClientPhoneNumber: e?.ClientPhoneNumber,
       ClientEmail: e?.ClientEmail,
       ClientWebsite: e?.ClientWebsite,
-      ClientLogo: imageUrl,
+      // ClientLogo: imageUrl,
+      ClientLogo: "abc.png",
       ClientContactPerson: e?.ClientContactPerson,
       ClinetContactPersonMobile: e?.ClinetContactPersonMobile,
       IsActive: e?.IsActive || true,
       UserId: e?.UserId ?? 1,
       RegisterDate: selectedDate?.format("YYYY-MM-DD"),
-      clientBanner: bannerurl,
+      // clientBanner: bannerurl,
+      clientBanner: "banner.jpg",
     };
     InsertUpdateClientDetailsluniva(data, (res) => {
       console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
-        notification.success("client details Added Successfully");
+        message.success("client details Added Successfully");
         notification.config({
           placement: "topRight",
           duration: 3,
@@ -144,8 +183,9 @@ const Client = () => {
         >
           <Col span={24}>
             <Form
+              form={form}
               // initialValues={getInitialValues}
-              initialValues={initialValues}
+              // initialValues={initialValues}
               onFinish={handleSubmit}
               labelCol={{
                 span: 8,
@@ -171,15 +211,75 @@ const Client = () => {
               {/* <Form.Item label="ClientCountry" name="ClientCountry">
                 <InputNumber />
               </Form.Item> */}
-              {/* <Form.Item label="ClientState" name="ClientState">
-                <InputNumber />
+              <Form.Item label="ClientState" name="ClientState">
+                {/* <InputNumber /> */}
+                <Select
+                  onChange={handleStateChange}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {statelist !== undefined &&
+                    statelist.map((e) => (
+                      <Option
+                        title={e.StateName}
+                        value={e.StateId}
+                        key={e.StateId}
+                      >
+                        {e.StateName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item label="ClientDistrict" name="ClientDistrict">
-                <InputNumber />
-              </Form.Item> */}
-              {/* <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
-                <InputNumber />
-              </Form.Item> */}
+                <Select
+                  onChange={handleclientDistrict}
+                  showSearch
+                  defaultValue=""
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {districtlist !== undefined &&
+                    districtlist.map((e) => (
+                      <Option title={e.District} value={e.DId} key={e.DId}>
+                        {e.District}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
+              <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
+                {/* <InputNumber /> */}
+                <Select
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {municiplalitylist !== undefined &&
+                    municiplalitylist.map((e) => (
+                      <Option title={e.Name} value={e.VdcID} key={e.VdcID}>
+                        {e.Name}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
               <Form.Item label="LocalAddress" name="ClientLocalAddress">
                 <Input />
               </Form.Item>

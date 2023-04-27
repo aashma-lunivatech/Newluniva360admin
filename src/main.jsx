@@ -27,6 +27,10 @@ import AddAppointmentTime from "./Components/DoctorsServicespage/AddAppointmentT
 import DoctorsProfilePageNew from "./Components/DoctorsServicespage/DoctorsProfilePageNew";
 import AddDoctorsProfilePage from "./Components/DoctorsServicespage/AddDoctorsProfilePage";
 import Departments from "./Components/Departments/Departments";
+import GetClientWiseDepartment from "./Components/Client/GetClientWiseDepartment";
+import AddClientWiseDepartment from "./Components/Client/AddClientWiseDepartment";
+import AdminDepartment from "./Components/Admin/AdminDepartment";
+import AddAdminDepartment from "./Components/Admin/AddAdminDepartment";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -127,8 +131,42 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
+        path: "/clientwisedepartment",
+        element: <GetClientWiseDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/addclientwisedepartment",
+        element: <AddClientWiseDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/editclientwisedepartment/edit/:id",
+        element: <AddClientWiseDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "/department",
         element: <Departments />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/admindepartment",
+        element: <AdminDepartment />,
+        errorElement: <ErrorPage />,
+      },
+
+      {
+        path: "/addadminwisedepartment",
+        element: <AddAdminDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      // sdnmsdnasmdnasm
+      // /editdoctorprofile/edit/:id
+
+      {
+        path: "/editaddadminwisedepartment/edit/:id",
+        element: <AddAdminDepartment />,
         errorElement: <ErrorPage />,
       },
     ],
