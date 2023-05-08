@@ -112,12 +112,12 @@ export const RouteDataAdmin = [
         // icon: CiMedicalCase,
       },
 
-      {
-        id: 13,
-        label: "Doctor Schedule",
-        pathName: "/doctorschedule",
-        // icon: CiMedicalCase,
-      },
+      // {
+      //   id: 13,
+      //   label: "Doctor Schedule",
+      //   pathName: "/doctorschedule",
+      //   // icon: CiMedicalCase,
+      // },
       {
         id: 14,
         label: "Appointment",
