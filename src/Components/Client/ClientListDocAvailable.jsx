@@ -79,7 +79,7 @@ const ClientListDocAvailable = () => {
       };
       GetlistOfClientsWhereDoctorIsAvaliables(data, (res) => {
         console.log(res, "res");
-        if (res?.clientlist.length > 0) {
+        if (res?.clientlist && res?.clientlist.length > 0) {
           //   setDepartmentList(res?.clientlist);
           setDepartmentList(res?.clientlist);
           console.log(res?.clientlist);

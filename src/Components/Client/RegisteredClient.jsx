@@ -8,6 +8,7 @@ import { Button, Space, Table, Tag } from "antd";
 import styled from "styled-components";
 import { GetListOfRegisteredClients } from "../../services/constants/url";
 import { useNavigate } from "react-router-dom";
+import DateTimeBAdge from "../Common/DateTimeBAdge";
 
 const RegisteredClient = () => {
   const navigate = useNavigate();
@@ -97,6 +98,7 @@ const RegisteredClient = () => {
       title: "RegisterDate",
       dataIndex: "RegisterDate",
       key: "RegisterDate",
+      render: (val) => <DateTimeBAdge data={val} />,
     },
 
     {
@@ -179,9 +181,6 @@ const RegisteredClient = () => {
     // },
   ];
   useEffect(() => {
-    const data = {
-      departmentId: 0,
-    };
     GetListOfRegisteredClientsluniva((res) => {
       console.log(res, "res");
       if (res?.ClientList.length > 0) {

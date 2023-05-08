@@ -15,7 +15,7 @@ const DoctorsList = () => {
       };
       GetlistofDoctorsByClientIds(data, (res) => {
         console.log(res, "res");
-        if (res?.DoctorList.length > 0) {
+        if (res?.DoctorList && res?.DoctorList.length > 0) {
           setDepartmentList(res?.DoctorList);
         } else {
           setDepartmentList([]);

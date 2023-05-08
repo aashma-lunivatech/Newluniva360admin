@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GetListOfDoctorDetails } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
+import DateTimeBAdge from "../Common/DateTimeBAdge";
 
 const DoctorsProfilePageNew = () => {
   const [inputValue, setInputValue] = useState("");
@@ -52,11 +53,7 @@ const DoctorsProfilePageNew = () => {
       dataIndex: "DocSpecilization",
       key: "DocSpecilization",
     },
-    {
-      title: "Experience",
-      dataIndex: "DocExperience",
-      key: "DocExperience",
-    },
+
     {
       title: "Experience",
       dataIndex: "DocExperience",
@@ -67,6 +64,7 @@ const DoctorsProfilePageNew = () => {
       dataIndex: "NMCNumber",
       key: "NMCNumber",
     },
+
     {
       title: "Links",
       dataIndex: "DocLinks",
@@ -82,6 +80,7 @@ const DoctorsProfilePageNew = () => {
       title: "DocRegisteredDate",
       dataIndex: "DocRegisteredDate",
       key: "DocRegisteredDate",
+      render: (val) => <DateTimeBAdge data={val} />,
     },
     {
       title: "Department",
@@ -135,15 +134,16 @@ const DoctorsProfilePageNew = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <a
+          <Button
+            className="btn-load"
             onClick={() =>
               navigate({
-                pathname: `/editdoctorprofile/edit/${record.DId}`,
+                pathname: `/editdoctorprofile/edit/${record.DepartmentId}`,
               })
             }
           >
             Edit
-          </a>
+          </Button>
         </Space>
       ),
     },
@@ -165,7 +165,7 @@ const DoctorsProfilePageNew = () => {
       };
       GetListOfDoctorDetails(data, (res) => {
         console.log(res, "res");
-        if (res?.DoctorList.length > 0) {
+        if (res?.DoctorList && res?.DoctorList.length > 0) {
           setDepartmentList(res?.DoctorList);
         } else {
           setDepartmentList([]);

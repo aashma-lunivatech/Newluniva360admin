@@ -32,67 +32,56 @@ const AddAdminDepartment = () => {
   const [buttondisable, setButtondisable] = useState(false);
   const [departmentlist, setDepartmentList] = useState([]);
   const [useridselected, setuseriddetails] = useState();
-
-  const bannerprops = {
+  const [files, setFiles] = useState();
+  const props = {
     name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    // action:
+    //   "https://lunivacare.ddns.net/Luniva360mHealthAPI/Luniva360mHealthAPI/Luniva360mHealthApi/UploadClientLogo",
     headers: {
       authorization: "authorization-text",
     },
     onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList, "infodata");
-        console.log(info.fileList.name, "infofilename");
-        setImageUrl(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
+      console.log(info);
+      setFiles(info.file);
+      setLogoPath(info.file);
     },
   };
   const handleLogoChange = (info) => {
-    if (info.file.status === "done") {
-      setLogoPath(info.file.response.path);
-      console.log(info.file.response.path, "uploadfileresponse");
-    }
+    setLogoPath(info.file);
   };
+
   useEffect(() => {
     if (useridselected !== undefined) form.resetFields();
   }, [useridselected]);
+
   useEffect(() => {
     let data = {
       departId: id,
     };
-    GetDepartmenDetailsByIds(data, (res) => {
-      if (res?.Department && res?.Department.length > 0) {
-        setDepartmentList(res?.Department);
-        setuseriddetails(res?.Department[0]);
-        console.log(departmentlist, "departmentlist");
-        console.log("i am inside if block");
-      } else {
-        setDepartmentList([]);
-        console.log("outof else block");
-      }
-    });
-  }, []);
-  useEffect(() => {
     if (useridselected === undefined) {
-      GetDepartmenDetailsByIds((val) => {
-        console.log(val, "vals");
-      }, id);
-      DId: "";
+      GetDepartmenDetailsByIds(data, (res) => {
+        if (res?.Department && res?.Department.length > 0) {
+          setDepartmentList(res?.Department);
+          setuseriddetails(res?.Department[0]);
+          console.log(departmentlist, "departmentlist");
+          console.log(useridselected, "useridswlected");
+          console.log("i am inside if block");
+        } else {
+          setDepartmentList([]);
+          console.log("outof else block");
+        }
+      });
     }
     console.log(useridselected, "useridselected");
     const selecteddata = useridselected;
   }, [useridselected]);
   const handleSubmit = (values) => {
+    const formData = new FormData();
+    formData.append("LogoPath", values.LogoPath);
     let data = {
       DId: useridselected ? id : 0,
       DepartmentName: values?.DepartmentName,
-      LogoPath: "abc.png",
-      //   IsActive: e?.IsActive,
+      LogoPath: formData,
       IsActive:
         values?.IsActive === undefined || values?.IsActive === true
           ? true
@@ -159,26 +148,22 @@ const AddAdminDepartment = () => {
               >
                 <Switch />
               </Form.Item>
+
               <Form.Item
                 label="Logo "
                 name="LogoPath"
                 values="LogoPath"
                 getValueFromEvent={(e) => e.file}
               >
-                <Upload onChange={handleLogoChange} {...bannerprops}>
+                <Upload {...props}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
-                {/* {logoPath && (
-                  <img
-                    src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${imageUrl}`}
-                    alt="logo"
-                    style={{ maxWidth: "100%" }}
-                  />
-                )} */}
-                {logoPath && (
-                  <img src={imageUrl} alt="logo" style={{ maxWidth: "100%" }} />
-                )}
               </Form.Item>
+
+              {/* <Form.Item name="LogoPath" values="LogoPath" label="LogoPath">
+                <Upload action="http://localhost:50801/Luniva360mHealthApi/UploadClientLogo" />
+                Upload
+              </Form.Item> */}
               {/* <Form.Item>
                 <input type="file" name="file" values={logoPath} />
               </Form.Item> */}
@@ -212,6 +197,5 @@ const AddAdminDepartment = () => {
     </ClientComponents>
   );
 };
-
 export default AddAdminDepartment;
 const ClientComponents = styled.div``;

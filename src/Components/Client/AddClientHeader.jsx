@@ -24,6 +24,7 @@ const AddClientHeader = () => {
             <Button
               htmlType="submit"
               // disabled={butDis}
+              className="btn-load"
               type="primary"
               onClick={() => handleRedirect()}
             >

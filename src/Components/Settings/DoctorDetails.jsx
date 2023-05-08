@@ -78,21 +78,6 @@ const DoctorDetails = () => {
           src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
         />
       ),
-      // render: (DocImage) => {
-      //   if (Array.isArray(DocImage)) {
-      //     return DocImage.map((image) => (
-      //       <img
-      //         src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${image}`}
-      //       />
-      //     ));
-      //   } else {
-      //     return (
-      //       <img
-      //         src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
-      //       />
-      //     );
-      //   }
-      // },
     },
     {
       title: "DocRegisteredDate",

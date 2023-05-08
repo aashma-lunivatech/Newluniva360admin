@@ -1,11 +1,14 @@
 import { Button, Card, Input, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GetDocTimeScheduleForAppointments } from "../../services/appServices/ProductionServices";
+import {
+  GetAppointmentSettingsByDoctorIds,
+  GetDocTimeScheduleForAppointments,
+} from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import DateTimeBAdge from "../Common/DateTimeBAdge";
-const DoctorScheduleAppointment = () => {
+const AppointmentSettings = () => {
   const [inputValue, setInputValue] = useState("");
   const [departmentList, setDepartmentList] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,11 +18,7 @@ const DoctorScheduleAppointment = () => {
       dataIndex: "DsId",
       key: "DsId",
     },
-    // {
-    //   title: "DoctorName",
-    //   dataIndex: "DoctorName",
-    //   key: "DoctorName",
-    // },
+
     {
       title: "DoctId",
       dataIndex: "DoctId",
@@ -112,10 +111,10 @@ const DoctorScheduleAppointment = () => {
       const data = {
         docId: inputValue,
       };
-      GetDocTimeScheduleForAppointments(data, (res) => {
+      GetAppointmentSettingsByDoctorIds(data, (res) => {
         console.log(res, "res");
-        if (res?.AppointmentTime && res?.AppointmentTime.length > 0) {
-          setDepartmentList(res.AppointmentTime);
+        if (res?.DoctorAppointment && res?.DoctorAppointment.length > 0) {
+          setDepartmentList(res.DoctorAppointment);
         } else {
           setDepartmentList([]);
         }
@@ -131,7 +130,7 @@ const DoctorScheduleAppointment = () => {
     <DoctorSchedulelist>
       <div className="">
         <Card
-          title="Doctor Schedule for appointment"
+          title="Appointment Settings"
           bordered={false}
           style={
             {
@@ -140,7 +139,7 @@ const DoctorScheduleAppointment = () => {
           }
         >
           <div className="add-button">
-            <Button
+            {/* <Button
               htmlType="submit"
               // disabled={butDis}
               type="primary"
@@ -148,7 +147,7 @@ const DoctorScheduleAppointment = () => {
               onClick={() => handleRedirect()}
             >
               Add Appointments
-            </Button>
+            </Button> */}
           </div>
           <ClientDepartmentButton>
             <div>
@@ -186,7 +185,7 @@ const DoctorScheduleAppointment = () => {
   );
 };
 
-export default DoctorScheduleAppointment;
+export default AppointmentSettings;
 const DoctorSchedulelist = styled.div`
   .table-div {
     margin-top: 10px;

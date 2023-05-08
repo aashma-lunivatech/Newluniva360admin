@@ -1,10 +1,7 @@
 import { Button, Card, Input, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  GetDepartmentLists,
-  getClientWiseDepartmentByClientIdluniva,
-} from "../../services/appServices/ProductionServices";
+import { getClientWiseDepartmentByClientIdluniva } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 
 const GetClientWiseDepartment = () => {
@@ -27,7 +24,7 @@ const GetClientWiseDepartment = () => {
       };
       getClientWiseDepartmentByClientIdluniva(data, (res) => {
         console.log(res, "res");
-        if (res?.DepartmentList.length > 0) {
+        if (res?.DepartmentList && res?.DepartmentList.length > 0) {
           setDepartmentList(res?.DepartmentList);
         } else {
           setDepartmentList([]);
@@ -39,6 +36,11 @@ const GetClientWiseDepartment = () => {
     }
   };
   const columns = [
+    {
+      title: "CDId",
+      dataIndex: "CDId",
+      key: "CDId",
+    },
     {
       title: "DepartmentId",
       dataIndex: "DepartmentId",
@@ -81,7 +83,7 @@ const GetClientWiseDepartment = () => {
             className="btn-load"
             onClick={() =>
               navigate({
-                pathname: `/editclientwisedepartment/edit/${record.DepartmentId}`,
+                pathname: `/editclientwisedepartment/edit/${record.CDId}`,
               })
             }
           >

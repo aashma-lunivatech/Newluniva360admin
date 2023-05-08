@@ -21,7 +21,6 @@ import DoctorsList from "./Components/Doctorspage/DoctorsList";
 import DoctorsListClientAndDepart from "./Components/Doctorspage/DoctorListClientAndDepart";
 import ClientListDocAvailable from "./Components/Client/ClientListDocAvailable";
 import DoctorSchedule from "./Components/Doctorspage/DoctorSchedule";
-import DoctorScheduleAppointment from "./Components/DoctorsServicespage/DoctorScheduleAppointment";
 import BookedOnlineAppointments from "./Components/DoctorsServicespage/BookedOnlineAppointments";
 import AddAppointmentTime from "./Components/DoctorsServicespage/AddAppointmentTime";
 import DoctorsProfilePageNew from "./Components/DoctorsServicespage/DoctorsProfilePageNew";
@@ -31,6 +30,17 @@ import GetClientWiseDepartment from "./Components/Client/GetClientWiseDepartment
 import AddClientWiseDepartment from "./Components/Client/AddClientWiseDepartment";
 import AdminDepartment from "./Components/Admin/AdminDepartment";
 import AddAdminDepartment from "./Components/Admin/AddAdminDepartment";
+import DoctorScheduleAppointment from "./Components/DoctorsServicespage/DoctorScheduleAppointment";
+import AddDrAvailableTimeAppoinment from "./Components/DoctorsServicespage/AddDrAvailableTimeAppoinment";
+import AddNewDrAvailableTimeAppoinment from "./Components/DoctorsServicespage/AddNewDrAvailableAppointment";
+import AppointmentSettings from "./Components/Appointment/AppointmentSettings";
+import ClientWiseDoctorSchedule from "./Components/Doctorspage/AddClientWiseDoctorSchedule";
+import AddClientWiseDoctorSchedule from "./Components/Doctorspage/AddClientWiseDoctorSchedule";
+import DoctorSchdeuleClient from "./Components/Client/DoctorSchdeuleClient";
+import ClientRootPage from "./Components/SeparateClientPage/ClientRootPage";
+import ClientLandingPage from "./Components/SeparateClientPage/ClientLandingPage";
+import UploadClientLogo from "./Components/ImageuploadField/UploadClientLogo";
+import UploadBannerImage from "./Components/ImageuploadField/UploadBannerImage";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -42,6 +52,22 @@ const router = createBrowserRouter([
     element: <Homepage />,
     errorElement: <ErrorPage />,
   },
+  // {
+  //   path: "/",
+  //   element: <ClientRootPage />,
+  //   errorElement: <ErrorPage />,
+  //   children: [
+  //     {
+  //       path: "/clientlandingpage",
+  //       element: <ClientLandingPage />,
+  //     },
+  //     {
+  //       // path: "/adddoctortimeappointment",
+  //       // element: <AddDrAvailableTimeAppoinment />,
+  //       // element: <AddNewDrAvailableTimeAppoinment />,
+  //     },
+  //   ],
+  // },
 
   {
     path: "/",
@@ -51,6 +77,16 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <TopMainSection />,
+      },
+      {
+        path: "/adddoctortimeappointment",
+        element: <AddDrAvailableTimeAppoinment />,
+        // element: <AddNewDrAvailableTimeAppoinment />,
+      },
+      {
+        path: "/editdoctoravailableschdeule/edit/:id",
+        element: <AddDrAvailableTimeAppoinment />,
+        // element: <AddNewDrAvailableTimeAppoinment />,
       },
       {
         path: "/appointment",
@@ -121,6 +157,14 @@ const router = createBrowserRouter([
         element: <DoctorSchedule />,
       },
       {
+        path: "/clientwisedrschedule",
+        element: <AddClientWiseDoctorSchedule />,
+      },
+      {
+        path: "/drschdeuleclient",
+        element: <DoctorSchdeuleClient />,
+      },
+      {
         path: "/doctorslistbyclientdepart",
         element: <DoctorsListClientAndDepart />,
       },
@@ -133,6 +177,17 @@ const router = createBrowserRouter([
       {
         path: "/clientwisedepartment",
         element: <GetClientWiseDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/addclientwisedtschedule",
+        element: <AddClientWiseDoctorSchedule />,
+        errorElement: <ErrorPage />,
+      },
+
+      {
+        path: "/editclientdrschdule/edit/:id",
+        element: <AddClientWiseDoctorSchedule />,
         errorElement: <ErrorPage />,
       },
       {
@@ -167,6 +222,21 @@ const router = createBrowserRouter([
       {
         path: "/editaddadminwisedepartment/edit/:id",
         element: <AddAdminDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/appointmentsettings",
+        element: <AppointmentSettings />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/uploadclientlogo",
+        element: <UploadClientLogo />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/uploadbannerimage",
+        element: <UploadBannerImage />,
         errorElement: <ErrorPage />,
       },
     ],

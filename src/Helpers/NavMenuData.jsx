@@ -1,7 +1,17 @@
-import { AiOutlineHome, AiOutlineLaptop } from "react-icons/Ai";
+import {
+  AiOutlineHome,
+  AiFillProfile,
+  AiOutlineCheck,
+  AiOutlineDesktop,
+  AiFillSetting,
+  AiOutlineUser,
+  AiTwotoneBook,
+  AiOutlineMeh,
+  AiOutlineUpload,
+  AiOutlineGlobal,
+} from "react-icons/Ai";
 import { CiMedicalCase } from "react-icons/Ci";
 import { SiStaffbase } from "react-icons/Si";
-import Client from "../Components/Client/Client";
 export const RouteDataAdmin = [
   {
     id: 1,
@@ -22,26 +32,32 @@ export const RouteDataAdmin = [
         id: 3,
         label: "Profile",
         pathName: "/doctor",
-        // icon: CiMedicalCase,
+        icon: AiFillProfile,
       },
       {
         id: 4,
-        label: "Appoinment",
+        label: "Appointment",
         pathName: "/doctortime",
-        // icon: CiMedicalCase,
+        icon: AiOutlineCheck,
       },
       {
         id: 5,
-        label: "Online Appoinment",
+        label: "Online App ",
         pathName: "/bookedonlineappointments",
-        // icon: CiMedicalCase,
+        icon: AiOutlineDesktop,
+      },
+      {
+        id: 5.5,
+        label: "Settings",
+        pathName: "/appointmentsettings",
+        icon: AiFillSetting,
       },
     ],
   },
   {
     id: 6,
     // icon: GiDoctorFace,
-    icon: CiMedicalCase,
+    icon: AiOutlineUser,
     label: "Clients",
     // pathName: "/clients",
     hasSubMenu: true,
@@ -50,26 +66,32 @@ export const RouteDataAdmin = [
         id: 7,
         label: "Client",
         pathName: "/clients",
-        // icon: CiMedicalCase,
+        icon: AiOutlineUser,
       },
       {
         id: 7.2,
         label: "DepartmentList",
         pathName: "/clientwisedepartment",
-        // icon: CiMedicalCase,
+        icon: AiTwotoneBook,
       },
+      // {
+      //   id: 8,
+      //   label: " Report List",
+      //   pathName: "/clientonlinereport",
+      //   // icon: CiMedicalCase,
+      // },
       {
-        id: 8,
-        label: " Report List",
-        pathName: "/clientonlinereport",
-        // icon: CiMedicalCase,
+        id: 8.1,
+        label: "Dr Schdeule",
+        pathName: "/drschdeuleclient",
+        icon: AiOutlineMeh,
       },
 
       {
         id: 9,
         label: " Department",
         pathName: "/clientdepartment",
-        // icon: CiMedicalCase,
+        icon: AiOutlineGlobal,
       },
       {
         id: 10,
@@ -136,7 +158,19 @@ export const RouteDataAdmin = [
         id: 16.1,
         label: "Department",
         pathName: "/admindepartment",
-        // icon: CiMedicalCase,
+        icon: AiOutlineGlobal,
+      },
+      {
+        id: 16.2,
+        label: "ClientLogo",
+        pathName: "/uploadclientlogo",
+        icon: AiOutlineUpload,
+      },
+      {
+        id: 16.3,
+        label: "Banner Image",
+        pathName: "/uploadbannerimage",
+        icon: AiOutlineUpload,
       },
     ],
   },

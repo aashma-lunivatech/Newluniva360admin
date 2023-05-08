@@ -5,6 +5,7 @@ import {
   GetClientWiseDoctorsAvailableTimeForAppointments,
   GetlistofDoctorsByClientIdAndDepartmentIds,
 } from "../../services/appServices/ProductionServices";
+import { useNavigate } from "react-router-dom";
 
 const DoctorSchedule = () => {
   const [clientId, setClientId] = useState("");
@@ -82,7 +83,10 @@ const DoctorSchedule = () => {
 
     //
   ];
-
+  const navigate = useNavigate();
+  const handleRedirect = () => {
+    navigate("/clientwisedrschedule");
+  };
   const handleClick = () => {
     if (
       clientId !== "" ||
@@ -99,7 +103,7 @@ const DoctorSchedule = () => {
       GetClientWiseDoctorsAvailableTimeForAppointments(data, (res) => {
         console.log(res, "res");
 
-        if (res?.DoctorTime.length > 0) {
+        if (res?.DoctorTime && res?.DoctorTime.length > 0) {
           setDepartmentList(res?.DoctorTime);
         } else {
           setDepartmentList([]);
@@ -116,7 +120,7 @@ const DoctorSchedule = () => {
     <Doctorlistsdepart>
       <div className="">
         <Card
-          title="Doctors List of Appointment"
+          title="Doctors List of Appointment for clients"
           bordered={false}
           style={
             {
@@ -124,6 +128,17 @@ const DoctorSchedule = () => {
             }
           }
         >
+          <div className="add-button">
+            <Button
+              htmlType="submit"
+              // disabled={butDis}
+              type="primary"
+              className="btn-load"
+              onClick={() => handleRedirect()}
+            >
+              Add Doctor Schedule
+            </Button>
+          </div>
           <ClientDepartmentButton>
             <div>
               <label className="label-name">Client ID</label>

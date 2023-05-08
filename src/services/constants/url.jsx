@@ -36,3 +36,18 @@ export const GetListOfState = "GetListOfState";
 export const GetAllVDCList = "GetAllVDCList";
 export const GetListOfVDCByDistrictId = "GetListOfVDCByDistrictId";
 export const GetlistofDisctrictByStateId = "GetlistofDisctrictByStateId";
+export const UploadClientLogo = "UploadClientLogo";
+export const InsertUpdateDoctorDetails = "InsertUpdateDoctorDetails";
+export const GetListOfRegisteredClientById = "GetListOfRegisteredClientById";
+export const InsertUpdateDoctorAvailableTimeForAppointment =
+  "InsertUpdateDoctorAvailableTimeForAppointment";
+export const GetAppointmentSettingsByDoctorId =
+  "GetAppointmentSettingsByDoctorId";
+export const GetAppointmentSettingsById = "GetAppointmentSettingsById";
+export const GetDoctorAvailableTimeinClientById =
+  "GetDoctorAvailableTimeinClientById";
+export const InsertUpdateClientWiseDoctorTime =
+  "InsertUpdateClientWiseDoctorTime";
+
+// image upload
+export const InsertUpdateBannerImage = "InsertUpdateBannerImage";

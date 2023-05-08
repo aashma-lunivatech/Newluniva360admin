@@ -1,12 +1,17 @@
+import axios from "axios";
 import {
   GetAllVDCList,
+  GetAppointmentSettingsByDoctorId,
+  GetAppointmentSettingsById,
   GetBookedOnlineAppointmentDetailsByDocIdAndDate,
   GetClientWiseDepartmentByClientId,
   GetClientWiseDoctorsAvailableTimeForAppointment,
   GetDepartmenDetailsById,
   GetDepartmentList,
   GetDocTimeScheduleForAppointment,
+  GetDoctorAvailableTimeinClientById,
   GetListOfDoctorDetailsByDepartment,
+  GetListOfRegisteredClientById,
   GetListOfRegisteredClients,
   GetListOfState,
   GetListOfVDCByDistrictId,
@@ -16,9 +21,14 @@ import {
   GetlistofDoctorsByClientId,
   GetlistofDoctorsByClientIdAndDepartmentId,
   InsertUpdateAppointment,
+  InsertUpdateBannerImage,
   InsertUpdateClientDetails,
+  InsertUpdateClientWiseDoctorTime,
   InsertUpdateClientwiseDepartment,
   InsertUpdateDepartmentByAdmin,
+  InsertUpdateDoctorAvailableTimeForAppointment,
+  InsertUpdateDoctorDetails,
+  UploadClientLogo,
 } from "../constants/url";
 import { fetch, seperateStoreJson, store } from "../utils/httpUtil";
 //getdoctorlist
@@ -46,6 +56,40 @@ export const InsertUpdateClientDetailsluniva = async (
 ) => {
   try {
     const response = await store(`${InsertUpdateClientDetails}`, data);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (error) {
+    successCallback([]);
+  }
+};
+
+// appointmenttime
+export const InsertUpdateDoctorAvailableTimeForAppointments = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await store(
+      `${InsertUpdateDoctorAvailableTimeForAppointment}`,
+      data
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (error) {
+    successCallback([]);
+  }
+};
+
+// doctors profile details
+export const InsertUpdateDoctorDetailss = async (data, successCallback) => {
+  try {
+    const response = await store(`${InsertUpdateDoctorDetails}`, data);
     if (response?.status === 200) {
       successCallback(response?.data);
     } else {
@@ -169,6 +213,22 @@ export const GetlistOfClientsWhereDoctorIsAvaliables = async (
     successCallback([]);
   }
 };
+// registerclientvia id
+
+export const GetListOfRegisteredClientByIds = async (data, successCallback) => {
+  try {
+    const response = await fetch(
+      `${GetListOfRegisteredClientById}?id=${data.id}`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
 export const GetClientWiseDoctorsAvailableTimeForAppointments = async (
   data,
   successCallback
@@ -205,7 +265,56 @@ export const GetDocTimeScheduleForAppointments = async (
     successCallback([]);
   }
 };
-//
+//Doctor settings
+
+export const GetAppointmentSettingsByDoctorIds = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await fetch(
+      `${GetAppointmentSettingsByDoctorId}?docId=${data.docId}`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+export const GetDoctorAvailableTimeinClientByIds = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await fetch(
+      `${GetDoctorAvailableTimeinClientById}?id=${data.id}`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+
+export const GetAppointmentSettingsByIds = async (data, successCallback) => {
+  try {
+    const response = await fetch(`${GetAppointmentSettingsById}?id=${data.id}`);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+
 export const GetBookedOnlineAppointmentDetailsByDocIdAndDates = async (
   data,
   successCallback
@@ -225,6 +334,7 @@ export const GetBookedOnlineAppointmentDetailsByDocIdAndDates = async (
 };
 
 export const InsertUpdateAppointments = async (data, successCallback) => {
+  console.log(data, "data from production");
   try {
     const response = await store(`${InsertUpdateAppointment}`, data);
     if (response?.status === 200) {
@@ -294,6 +404,24 @@ export const InsertUpdateClientwiseDepartments = async (
     successCallback([]);
   }
 };
+
+// insert Dr Schedule according to client
+export const InsertUpdateClientWiseDoctorTimes = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await store(`${InsertUpdateClientWiseDoctorTime}`, data);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (error) {
+    successCallback([]);
+  }
+};
+
 // insert update admin wise department
 export const InsertUpdateDepartmentByAdmins = async (data, successCallback) => {
   try {
@@ -360,6 +488,49 @@ export const GetlistofDisctrictByStateIds = async (data, successCallback) => {
       successCallback([]);
     }
   } catch (errror) {
+    successCallback([]);
+  }
+};
+// for an imagessss
+
+// export const UploadClientLogos = async (formData, successCallback) => {
+//   try {
+//     const response = await store(UploadClientLogo, {
+//       formData,
+//     });
+
+//     if (response?.status === 200) {
+//       const result = await response.json();
+//       successCallback(result);
+//     } else {
+//       successCallback(null);
+//     }
+//   } catch (error) {
+//     successCallback(null);
+//   }
+// };
+export const UploadClientLogos = async (formData, successCallback) => {
+  try {
+    const response = await store(`${UploadClientLogo}`, formData);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback(response?.data);
+    }
+  } catch (error) {
+    successCallback([]);
+  }
+};
+
+export const InsertUpdateBannerImages = async (formData, successCallback) => {
+  try {
+    const response = await store(`${InsertUpdateBannerImage}`, formData);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback(response?.data);
+    }
+  } catch (error) {
     successCallback([]);
   }
 };

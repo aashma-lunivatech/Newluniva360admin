@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 import styled from "styled-components";
 import {
+  GetListOfRegisteredClientByIds,
   GetListOfStates,
   GetListOfVDCByDistrictIds,
   GetlistofDisctrictByStateIds,
@@ -37,26 +38,22 @@ const Client = () => {
   const [municiplalitylist, setMunicipality] = useState();
   const [selectedstatevalue, setSelectedStateValue] = useState();
   const [selecteddistrictvalue, setSelectedDistrict] = useState();
+  const [editvalue, setEditvalue] = useState();
+  const [clientList, setClientList] = useState();
+  const [clientFile, setClientFile] = useState();
   const bannerprops = {
     name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
     headers: {
       authorization: "authorization-text",
     },
     onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList, "infodata");
-        console.log(info.fileList.name, "infofilename");
-        setbannerurl(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-        setbannerurl(info.file.name);
-      }
+      console.log(info);
+      setClientFile(info.file);
     },
   };
+  useEffect(() => {
+    console.log(clientFile, "clientfile");
+  });
   const props = {
     name: "file",
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -76,12 +73,42 @@ const Client = () => {
       }
     },
   };
+  let finaldate = selectedDate?.format("YYYY-MM-DD");
+  let currentDate = new Date().toISOString().split("T")[0];
+  console.log(currentDate, "currentdate");
+  useEffect(() => {
+    console.log(selectedDate, "selecteddate");
+    if (editvalue !== undefined) {
+      form.resetFields();
+      console.log("in am inside editfield valuie");
+    }
+  }, [editvalue]);
+  useEffect(() => {
+    if (editvalue === undefined) {
+      let data = {
+        id: id,
+      };
+      GetListOfRegisteredClientByIds(data, (res) => {
+        console.log(res, "resho");
+        if (res?.ClientList && res?.ClientList.length > 0) {
+          setEditvalue(res?.ClientList[0]);
+          setClientList(res?.clientList);
+          // setEditvalue(res?.ClientList[0]);
+          console.log(editvalue, "editevalueshoo");
+        } else {
+          setClientList([]);
+          console.log("out of if else get data");
+        }
+      });
+    }
+  }, [editvalue]);
   const handleStateChange = (e) => {
     setSelectedStateValue(e);
   };
   const handleclientDistrict = (e) => {
     setSelectedDistrict(e);
   };
+
   useEffect(() => {
     console.log(selectedstatevalue, "setselectdstatevalue");
     console.log(id, "idparams");
@@ -121,31 +148,37 @@ const Client = () => {
     });
     console.log(data, "data");
   }, [selectedstatevalue, selecteddistrictvalue]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = (values) => {
+    console.log(values, "values");
+    const formData = new FormData();
+    formData.append("ClientLogo", values.ClientLogo.file);
+    // console.log(imgdata, "imgdata");
+    console.log(formData, "formdataho");
     let data = {
-      ClientCode: e?.ClientCode ?? "Np",
-      ClientName: e?.ClientName,
-      ClientCountry: e?.ClientCountry,
-      ClientState: e?.ClientState,
-      ClientDistrict: e?.ClientDistrict,
-      ClientMUNVDC: e?.ClientMUNVDC,
-      ClientLocalAddress: e?.ClientLocalAddress,
-      ClientTypeId: e?.ClientTypeId,
-      ClientPAN: e?.ClientPAN,
-      ClientPhoneNumber: e?.ClientPhoneNumber,
-      ClientEmail: e?.ClientEmail,
-      ClientWebsite: e?.ClientWebsite,
+      RId: editvalue ? id : 0,
+      ClientCode: values?.ClientCode ?? "Np",
+      ClientName: values?.ClientName,
+      ClientCountry: values?.ClientCountry ?? "Np",
+      ClientState: values?.ClientState,
+      ClientDistrict: values?.ClientDistrict,
+      ClientMUNVDC: values?.ClientMUNVDC,
+      ClientLocalAddress: values?.ClientLocalAddress,
+      ClientTypeId: values?.ClientTypeId ?? "assdnbn",
+      ClientPAN: values?.ClientPAN,
+      ClientPhoneNumber: values?.ClientPhoneNumber,
+      ClientEmail: values?.ClientEmail,
+      ClientWebsite: values?.ClientWebsite,
       // ClientLogo: imageUrl,
-      ClientLogo: "abc.png",
-      ClientContactPerson: e?.ClientContactPerson,
-      ClinetContactPersonMobile: e?.ClinetContactPersonMobile,
-      IsActive: e?.IsActive || true,
-      UserId: e?.UserId ?? 1,
-      RegisterDate: selectedDate?.format("YYYY-MM-DD"),
-      // clientBanner: bannerurl,
+      ClientLogo: formData,
+      ClientContactPerson: values?.ClientContactPerson,
+      ClinetContactPersonMobile: values?.ClinetContactPersonMobile,
+      IsActive: values?.IsActive || true,
+      UserId: values?.UserId,
+      RegisterDate: finaldate ?? currentDate,
+
       clientBanner: "banner.jpg",
     };
+    console.log(data, "clientdata");
     InsertUpdateClientDetailsluniva(data, (res) => {
       console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
@@ -159,9 +192,9 @@ const Client = () => {
           },
         });
         setButtondisable(true);
-        setTimeout(function () {
-          window.location.reload();
-        }, 4000);
+        // setTimeout(function () {
+        //   window.location.reload();
+        // }, 4000);
       } else {
         notification.warning("Error!");
       }
@@ -184,8 +217,7 @@ const Client = () => {
           <Col span={24}>
             <Form
               form={form}
-              // initialValues={getInitialValues}
-              // initialValues={initialValues}
+              initialValues={editvalue}
               onFinish={handleSubmit}
               labelCol={{
                 span: 8,
@@ -205,13 +237,31 @@ const Client = () => {
               {/* <Form.Item label="ClientCode" name="ClientCode">
                 <Input />
               </Form.Item> */}
-              <Form.Item label="Name" name="ClientName">
+              <Form.Item
+                label="Name"
+                name="ClientName"
+                values="ClientName"
+                rules={[{ required: true, message: "Name is required" }]}
+              >
                 <Input />
+              </Form.Item>
+              <Form.Item
+                label="UserId"
+                name="UserId"
+                values="UserId"
+                rules={[{ required: true, message: "Id is required" }]}
+              >
+                <InputNumber style={{ width: "100%" }} />
               </Form.Item>
               {/* <Form.Item label="ClientCountry" name="ClientCountry">
                 <InputNumber />
               </Form.Item> */}
-              <Form.Item label="ClientState" name="ClientState">
+              <Form.Item
+                label="ClientState"
+                name="ClientState"
+                values="ClientState"
+                rules={[{ required: true, message: "State is required" }]}
+              >
                 {/* <InputNumber /> */}
                 <Select
                   onChange={handleStateChange}
@@ -237,7 +287,12 @@ const Client = () => {
                     ))}
                 </Select>
               </Form.Item>
-              <Form.Item label="ClientDistrict" name="ClientDistrict">
+              <Form.Item
+                label="ClientDistrict"
+                name="ClientDistrict"
+                values="ClientDistrict"
+                rules={[{ required: true, message: "District is required" }]}
+              >
                 <Select
                   onChange={handleclientDistrict}
                   showSearch
@@ -259,7 +314,14 @@ const Client = () => {
                     ))}
                 </Select>
               </Form.Item>
-              <Form.Item label="ClientMUNVDC" name="ClientMUNVDC">
+              <Form.Item
+                label="ClientMUNVDC"
+                name="ClientMUNVDC"
+                values="ClientMUNVDC"
+                rules={[
+                  { required: true, message: "Municipality is required" },
+                ]}
+              >
                 {/* <InputNumber /> */}
                 <Select
                   showSearch
@@ -280,65 +342,120 @@ const Client = () => {
                     ))}
                 </Select>
               </Form.Item>
-              <Form.Item label="LocalAddress" name="ClientLocalAddress">
+              <Form.Item
+                label="LocalAddress"
+                name="ClientLocalAddress"
+                values="ClientLocalAddress"
+                rules={[{ required: true, message: "Address is required" }]}
+              >
                 <Input />
               </Form.Item>
               {/* <Form.Item label="ClientTypeId" name="ClientTypeId">
                 <InputNumber />
               </Form.Item> */}
-              <Form.Item label="PAN" name="ClientPAN">
+              <Form.Item
+                label="PAN"
+                name="ClientPAN"
+                values="ClientPAN"
+                rules={[{ required: true, message: "PAN is required" }]}
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="PhoneNumber" name="ClientPhoneNumber">
+              <Form.Item
+                label="PhoneNumber"
+                name="ClientPhoneNumber"
+                values="ClientPhoneNumber"
+                rules={[
+                  { required: true, message: "ClientPhoneNumber is required" },
+                ]}
+              >
                 <Input />
               </Form.Item>
               {/* <Form.Item label="UserId" name="UserId">
                 <InputNumber />
               </Form.Item> */}
-              <Form.Item label="Email" name="ClientEmail">
+              <Form.Item
+                label="Email"
+                name="ClientEmail"
+                values="ClientEmail"
+                rules={[{ required: true, message: "ClientEmail is required" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Website" name="ClientWebsite">
+              <Form.Item
+                label="Website"
+                name="ClientWebsite"
+                values="ClientWebsite"
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="ContactPerson" name="ClientContactPerson">
+              <Form.Item
+                label="ContactPerson"
+                name="ClientContactPerson"
+                values="ClientContactPerson"
+              >
                 <Input />
               </Form.Item>
               <Form.Item
                 label="ContactPersonMobile"
                 name="ClinetContactPersonMobile"
+                values="ClinetContactPersonMobile"
               >
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
               {/* <Form.Item label="Banner" name="clientBanner">
                 <Input />
-              </Form.Item> */}
-              <Form.Item label="RegisterDate" name="RegisterDate">
-                <DatePicker
-                  rules={[
-                    {
-                      required: true,
-                      message: "Date is required!",
-                    },
-                  ]}
-                  value={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
 
-              <Form.Item label="Client Banner" name="clientBanner">
+              </Form.Item> */}
+              {editvalue ? (
+                ""
+              ) : (
+                <Form.Item label="RegisterDate" name="RegisterDate">
+                  <DatePicker
+                    rules={[
+                      {
+                        required: true,
+                        message: "Date is required!",
+                      },
+                    ]}
+                    value={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    style={{ width: "100%" }}
+                  />
+                </Form.Item>
+              )}
+
+              {/* <Form.Item
+                label="Client Banner"
+                name="clientBanner"
+                values="clientBanner"
+              >
                 <Upload {...bannerprops}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
-              </Form.Item>
-              <Form.Item label="Client logo" name="ClientLogo">
-                <Upload {...props}>
+              </Form.Item> */}
+              <Form.Item
+                label="Client logo"
+                name="ClientLogo"
+                values="ClientLogo"
+              >
+                <Upload {...bannerprops}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
+                {/* {clientFile && (
+                  <img
+                    src={URL.createObjectURL(clientFile)}
+                    alt="uploaded file"
+                  />
+                )} */}
               </Form.Item>
-              <Form.Item label="is Active" valuePropName="checked">
+              <Form.Item
+                label="is Active"
+                valuePropName="checked"
+                name="IsActive"
+                values="IsActive"
+              >
                 <Switch />
               </Form.Item>
               <Form.Item>
