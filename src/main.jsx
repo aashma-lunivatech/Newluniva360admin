@@ -41,6 +41,11 @@ import ClientRootPage from "./Components/SeparateClientPage/ClientRootPage";
 import ClientLandingPage from "./Components/SeparateClientPage/ClientLandingPage";
 import UploadClientLogo from "./Components/ImageuploadField/UploadClientLogo";
 import UploadBannerImage from "./Components/ImageuploadField/UploadBannerImage";
+import ClientparentForm from "./Components/Client/ClientparentForm";
+import { App } from "antd";
+import Department from "./Components/SeparateClientPage/ClientDepartment/Department";
+import CustomerDashboard from "./Components/CustomerPages/DashboardCustomer/CustomerDashboard";
+import UploadDoctorImage from "./Components/ImageuploadField/UploadDoctorImage";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -48,26 +53,30 @@ const router = createBrowserRouter([
   //   errorElement: <ErrorPage />,
   // },
   {
+    path: "/customer",
+    element: <CustomerDashboard />,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/login",
     element: <Homepage />,
     errorElement: <ErrorPage />,
   },
-  // {
-  //   path: "/",
-  //   element: <ClientRootPage />,
-  //   errorElement: <ErrorPage />,
-  //   children: [
-  //     {
-  //       path: "/clientlandingpage",
-  //       element: <ClientLandingPage />,
-  //     },
-  //     {
-  //       // path: "/adddoctortimeappointment",
-  //       // element: <AddDrAvailableTimeAppoinment />,
-  //       // element: <AddNewDrAvailableTimeAppoinment />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/clientlandingpage",
+    element: <ClientRootPage />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/clientlandingpage",
+        element: <ClientLandingPage />,
+      },
+      {
+        path: "/clientlandingpage/department",
+        element: <Department />,
+      },
+    ],
+  },
 
   {
     path: "/",
@@ -76,7 +85,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <TopMainSection />,
+        element: <ClientLandingPage />,
       },
       {
         path: "/adddoctortimeappointment",
@@ -122,7 +131,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/clientsform",
-        element: <Client />,
+        element: <ClientparentForm />,
       },
       {
         path: "/clientsform/edit/:id",
@@ -239,11 +248,17 @@ const router = createBrowserRouter([
         element: <UploadBannerImage />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/UploadDoctorImage",
+        element: <UploadDoctorImage />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} fallbackElement={<>Loading...</>} />
+    <App />
   </React.StrictMode>
 );

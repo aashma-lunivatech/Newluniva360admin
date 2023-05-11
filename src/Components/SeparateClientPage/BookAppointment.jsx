@@ -5,7 +5,7 @@ const BookAppointment = () => {
   return (
     <div>
       <Space direction="vertical" size={16}>
-        <Card title="Book Appointment">
+        <Card style={{ width: "1200" }} title="Book Appointment">
           <p>Card content</p>
         </Card>
       </Space>

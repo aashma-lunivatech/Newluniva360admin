@@ -74,12 +74,12 @@ export const RouteDataAdmin = [
         pathName: "/clientwisedepartment",
         icon: AiTwotoneBook,
       },
-      // {
-      //   id: 8,
-      //   label: " Report List",
-      //   pathName: "/clientonlinereport",
-      //   // icon: CiMedicalCase,
-      // },
+      {
+        id: 8,
+        label: " Report List",
+        pathName: "/clientonlinereport",
+        // icon: CiMedicalCase,
+      },
       {
         id: 8.1,
         label: "Dr Schdeule",
@@ -105,12 +105,12 @@ export const RouteDataAdmin = [
         pathName: "/doctorslist",
         // icon: CiMedicalCase,
       },
-      {
-        id: 12,
-        label: "Department 2",
-        pathName: "/doctorslistbyclientdepart",
-        // icon: CiMedicalCase,
-      },
+      // {
+      //   id: 12,
+      //   label: "Department 2",
+      //   pathName: "/doctorslistbyclientdepart",
+      //   // icon: CiMedicalCase,
+      // },
 
       // {
       //   id: 13,
@@ -118,12 +118,12 @@ export const RouteDataAdmin = [
       //   pathName: "/doctorschedule",
       //   // icon: CiMedicalCase,
       // },
-      {
-        id: 14,
-        label: "Appointment",
-        pathName: "/appointment",
-        // icon: CiMedicalCase,
-      },
+      // {
+      //   id: 14,
+      //   label: "Appointment",
+      //   pathName: "/appointment",
+      //   // icon: CiMedicalCase,
+      // },
       // {
       //   id: 4.2,
       //   label: "Appointment",
@@ -151,7 +151,6 @@ export const RouteDataAdmin = [
     id: 16,
     icon: SiStaffbase,
     label: "Admin",
-    // pathName: "/",
     hasSubMenu: true,
     subNav: [
       {

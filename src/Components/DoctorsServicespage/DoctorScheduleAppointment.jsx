@@ -1,12 +1,58 @@
-import { Button, Card, Input, Space, Table } from "antd";
+import { Button, Card, Input, Space, Table, Checkbox, Form } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GetDocTimeScheduleForAppointments } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+const { TextArea } = Input;
 import DateTimeBAdge from "../Common/DateTimeBAdge";
+import { Modal } from "antd";
+const onFinish = (values) => {
+  console.log("Success:", values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
+const modalContent = (
+  <div>
+    <Form
+      name="basic"
+      labelCol={{
+        span: 5,
+      }}
+      wrapperCol={{
+        span: 16,
+      }}
+      style={{
+        maxWidth: 600,
+      }}
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+    >
+      <Form.Item
+        label="Reason "
+        name="remarks"
+        rules={[
+          {
+            required: true,
+            message: "Please input your remarks!",
+          },
+        ]}
+      >
+        <TextArea rows={4} />
+      </Form.Item>
+    </Form>
+  </div>
+);
+
 const DoctorScheduleAppointment = () => {
   const [inputValue, setInputValue] = useState("");
+  const [visible, setVisible] = useState(false);
+
   const [departmentList, setDepartmentList] = useState(null);
   const [loading, setLoading] = useState(false);
   const columns = [
@@ -92,11 +138,15 @@ const DoctorScheduleAppointment = () => {
           >
             Edit
           </Button>
+          <Button onClick={() => setVisible(true)} className="btn-load">
+            Cancel
+          </Button>
         </Space>
       ),
     },
     //
   ];
+
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate("/adddoctortimeappointment");
@@ -182,6 +232,15 @@ const DoctorScheduleAppointment = () => {
           )}
         </div>
       )}
+      <Modal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        onOk={() => {
+          // Handle OK button click
+        }}
+      >
+        {modalContent}
+      </Modal>
     </DoctorSchedulelist>
   );
 };

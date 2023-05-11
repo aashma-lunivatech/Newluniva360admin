@@ -1,7 +1,10 @@
 import { Button, Card, Input, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GetListOfDoctorDetails } from "../../services/appServices/ProductionServices";
+import {
+  GetDoctorDetailsByDoctorIds,
+  GetListOfDoctorDetails,
+} from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 import DateTimeBAdge from "../Common/DateTimeBAdge";
 
@@ -138,7 +141,7 @@ const DoctorsProfilePageNew = () => {
             className="btn-load"
             onClick={() =>
               navigate({
-                pathname: `/editdoctorprofile/edit/${record.DepartmentId}`,
+                pathname: `/editdoctorprofile/edit/${record.DId}`,
               })
             }
           >
@@ -161,19 +164,18 @@ const DoctorsProfilePageNew = () => {
     ) {
       setLoading(true);
       const data = {
-        departmentId: inputValue,
+        docId: inputValue,
       };
-      GetListOfDoctorDetails(data, (res) => {
+      GetDoctorDetailsByDoctorIds(data, (res) => {
         console.log(res, "res");
-        if (res?.DoctorList && res?.DoctorList.length > 0) {
-          setDepartmentList(res?.DoctorList);
+        if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+          setDepartmentList(res?.DoctorDetails);
         } else {
           setDepartmentList([]);
         }
         setLoading(false);
       });
     } else {
-      // Display error message or do nothing
       console.log("out of block");
     }
   };
@@ -203,7 +205,7 @@ const DoctorsProfilePageNew = () => {
           </div>
           <ClientDepartmentButton>
             <div>
-              <label className="label-name">Department ID</label>
+              <label className="label-name">doctor ID</label>
               <Input
                 id="input"
                 type="number"

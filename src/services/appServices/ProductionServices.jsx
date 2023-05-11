@@ -10,6 +10,7 @@ import {
   GetDepartmentList,
   GetDocTimeScheduleForAppointment,
   GetDoctorAvailableTimeinClientById,
+  GetDoctorDetailsByDoctorId,
   GetListOfDoctorDetailsByDepartment,
   GetListOfRegisteredClientById,
   GetListOfRegisteredClients,
@@ -531,6 +532,21 @@ export const InsertUpdateBannerImages = async (formData, successCallback) => {
       successCallback(response?.data);
     }
   } catch (error) {
+    successCallback([]);
+  }
+};
+
+export const GetDoctorDetailsByDoctorIds = async (data, successCallback) => {
+  try {
+    const response = await fetch(
+      `${GetDoctorDetailsByDoctorId}?docId=${data.docId}`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
     successCallback([]);
   }
 };

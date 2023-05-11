@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { UploadOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -8,22 +7,18 @@ import {
   Form,
   Input,
   InputNumber,
-  Radio,
   Select,
   Switch,
-  Upload,
   message,
-  notification,
 } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 import {
+  GetDepartmentLists,
   GetListOfDoctorDetails,
-  InsertUpdateClientDetailsluniva,
   InsertUpdateDoctorDetailss,
 } from "../../services/appServices/ProductionServices";
 import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 const AddDoctorsProfilePage = () => {
   const { Option } = Select;
@@ -31,36 +26,24 @@ const AddDoctorsProfilePage = () => {
   console.log(id, "idhoma");
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState(null);
-  const [imageUrl, setImageUrl] = useState([]);
   const [buttondisable, setButtondisable] = useState(false);
   const [gendervalue, setGendervalue] = useState("");
   const [editedvaluedoctor, setEditedValueDoctor] = useState();
   const [departmentlist, setDepartmentList] = useState();
   const [previousValue, setPreviousValue] = useState();
+  const [departmentname, setDepartmentName] = useState();
+  const [departmentselect, setdepartmentselect] = useState();
+
   const selectOnchange = (value) => {
     console.log(value, "selected value ");
     setGendervalue(value);
   };
-  const { TextArea } = Input;
-  const props = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList, "infodata");
-        console.log(info.fileList.name, "infofilename");
-        setImageUrl(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+
+  const handledepartmentselect = (e) => {
+    setdepartmentselect(e);
   };
+  const navigate = useNavigate();
+  const { TextArea } = Input;
   let finaldate = selectedDate?.format("YYYY-MM-DD");
   let currentDate = new Date().toISOString().split("T")[0];
   console.log(finaldate, "finaldate");
@@ -70,7 +53,15 @@ const AddDoctorsProfilePage = () => {
   useEffect(() => {
     console.log(editedvaluedoctor, "sekectednbsdnasb");
   }, [id]);
-
+  useEffect(() => {
+    GetDepartmentLists((res) => {
+      if (res?.DepartmentList && res?.DepartmentList.length > 0) {
+        setDepartmentName(res?.DepartmentList);
+      } else {
+        setDepartmentName([]);
+      }
+    });
+  }, []);
   useEffect(() => {
     console.log(gendervalue, "gendervalue");
     if (editedvaluedoctor === undefined) {
@@ -92,7 +83,7 @@ const AddDoctorsProfilePage = () => {
   }, []);
   const handleSubmit = (values) => {
     let data = {
-      DId: editedvaluedoctor ? parseInt(id) : 0,
+      DId: editedvaluedoctor ? id : 0,
       DoctorName: values?.DoctorName,
       DocMobileNo: values?.DocMobileNo,
       DocContactNo: values?.DocContactNo.toString(),
@@ -101,7 +92,7 @@ const AddDoctorsProfilePage = () => {
       DocQualification: values?.DocQualification ?? "mbbs",
       DocSpecilization: values?.DocSpecilization,
       DocExperience: values?.DocExperience,
-      NMCNumber: values?.NMCNumber.toString(),
+      NMCNumber: values?.NMCNumber,
       DocWorkArea: values?.DocWorkArea,
       DocLinks: values?.DocLinks,
       DocImage: "abc.png",
@@ -119,34 +110,6 @@ const AddDoctorsProfilePage = () => {
       ConferenceLink: values?.ConferenceLink ?? "abc.com",
       DepartmentId: values?.DepartmentId,
     };
-
-    // const data = {
-    //   DId: 3,
-    //   DoctorName: "sample string 201",
-    //   DocMobileNo: "sample string 3",
-    //   DocContactNo: "sample string 8",
-    //   DocGender: "sample string 5",
-    //   DocEmail: "sample string 6",
-    //   DocQualification: "sample string 7",
-    //   DocSpecilization: "sample string 8",
-    //   DocExperience: "sample string 9",
-    //   NMCNumber: "sample string 10",
-    //   DocWorkArea: "sample string 11",
-    //   DocLinks: "sample string 12",
-    //   DocImage: "sample string 13",
-    //   DocIsActive: true,
-    //   DocRegisteredDate: "2023-05-01T12:47:56.4187268+05:45",
-    //   DocDepartment: "sample string 16",
-    //   DocAddress: "sample string 17",
-    //   DocCharge: 18.0,
-    //   DocLoginId: 19,
-    //   UserType: "sample string 20",
-    //   DocDecription: "sample string 21",
-    //   ConferenceLink: "sample string 22",
-    //   DepartmentId: 23,
-    // };
-    // return console.log(data, "data");
-
     InsertUpdateDoctorDetailss(data, (res) => {
       console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
@@ -159,13 +122,20 @@ const AddDoctorsProfilePage = () => {
             border: "1px solid #b7eb8f",
           },
         });
-        setButtondisable(true);
-        setTimeout(function () {
-          window.location.reload();
-        }, 4000);
+        // setButtondisable(true);
+        // setTimeout(function () {
+        //   window.location.reload();
+        // }, 4000);
       } else {
         message.warning("Error!");
       }
+      setTimeout(() => {
+        navigate("/UploadDoctorImage", {
+          state: {
+            enteredvalue: editedvaluedoctor ? editedvaluedoctor : values,
+          },
+        });
+      }, 2000);
     });
     console.log(data, "i am a data");
   };
@@ -247,11 +217,34 @@ const AddDoctorsProfilePage = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                label="DepartmentId"
+                label="Department"
                 name="DepartmentId"
                 values="DepartmentId"
               >
-                <Input />
+                <Select
+                  onChange={handledepartmentselect}
+                  showSearch
+                  defaultValue=""
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {departmentname !== undefined &&
+                    departmentname.map((e) => (
+                      <Option
+                        title={e.DepartmentName}
+                        value={e.DId}
+                        key={e.DId}
+                      >
+                        {e.DepartmentName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
 
               {editedvaluedoctor ? (
@@ -394,15 +387,6 @@ const AddDoctorsProfilePage = () => {
                 <TextArea rows={4} />
               </Form.Item>
               <Form.Item
-                label="Doctor Images"
-                name="DocImage"
-                values="DocImage"
-              >
-                <Upload {...props}>
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
-              </Form.Item>
-              <Form.Item
                 label="is Active"
                 values="DocIsActive"
                 valuePropName="checked"
@@ -423,8 +407,8 @@ const AddDoctorsProfilePage = () => {
                     className="sumit-button btn-load"
                   >
                     {editedvaluedoctor
-                      ? "Edit Doctors Profile"
-                      : "Add Doctors Profile"}
+                      ? "Edit Doctors Profile and next"
+                      : "Add Doctors and Next"}
                   </Button>
                 </div>
               </Form.Item>

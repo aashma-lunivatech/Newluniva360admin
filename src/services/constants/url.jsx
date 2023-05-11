@@ -51,3 +51,7 @@ export const InsertUpdateClientWiseDoctorTime =
 
 // image upload
 export const InsertUpdateBannerImage = "InsertUpdateBannerImage";
+
+// client dashboard
+
+export const GetDoctorDetailsByDoctorId = "GetDoctorDetailsByDoctorId";

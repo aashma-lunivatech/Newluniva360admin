@@ -6,7 +6,14 @@ export const ClientRouteDataAdmin = [
     id: 1,
     icon: AiOutlineHome,
     label: "Client Dashboard",
-    pathName: "/clientdashboard",
+    pathName: "/clientlandingpage",
+    hasSubMenu: false,
+  },
+  {
+    id: 2,
+    icon: AiOutlineHome,
+    label: "Department",
+    pathName: "/clientlandingpage/department",
     hasSubMenu: false,
   },
 ];

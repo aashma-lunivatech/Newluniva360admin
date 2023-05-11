@@ -4,54 +4,58 @@ import {
   Col,
   Form,
   InputNumber,
-  Switch,
   Upload,
   message,
+  notification,
 } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import { InsertUpdateBannerImages } from "../../services/appServices/ProductionServices";
-const UploadBannerImage = () => {
+import { UploadClientLogos } from "../../services/appServices/ProductionServices";
+import { useLocation, useNavigate } from "react-router-dom";
+const UploadDoctorImage = () => {
+  const location = useLocation();
+  const enteredid = location.state.enteredvalue.RId;
+  console.log(enteredid, "clientlistnavigatedata");
   const [form] = Form.useForm();
   const [LogoPath, setLogoPath] = useState();
-  const clientData = JSON.parse(localStorage.getItem("clientData"));
-  const clientiDStorage = parseInt(clientData.UserId);
-  const props = {
+  const navigate = useNavigate();
+  const photoprops = {
     name: "file",
     headers: {
       authorization: "authorization-text",
     },
     onChange(info) {
       console.log(info);
-      console.log(info.file, "bannerupload");
+      //   setFiles(info.file);
+      console.log(info.file.originFileObj, "orginfileobj");
       setLogoPath(info.file.originFileObj);
     },
   };
   const handleSubmit = (values) => {
     console.log(values, "values");
     const formData = new FormData();
-    formData.append("bid", 0);
-    formData.append("clientid", clientiDStorage);
-    formData.append("userid", clientiDStorage);
-    formData.append("isactive", values?.isactive || true);
+    formData.append("clientid", enteredid);
     formData.append("filepath", LogoPath);
-    InsertUpdateBannerImages(formData, (res) => {
+
+    UploadClientLogos(formData, (res) => {
+      // message.success("Client logo added Successfully");
       if (res && res.filename) {
-        message.success(`Client banner ${res.filename} added Successfully`);
+        message.success(`Client logo ${res.filename} added Successfully`);
       } else {
         message.warning("Failed to upload client logo");
       }
-      setTimeout(function () {
-        window.location.replace("/clients");
-      }, 4000);
+      navigate("/uploadbannerimage");
+      // setTimeout(function () {
+      //   window.location.reload("/clients");
+      // }, 5000);
     });
-    console.log(formData, "i am a bannerdata");
+    console.log(formData, "i am a data");
   };
   return (
     <div>
       <div className="">
         <Card
-          title="Client  Logo "
+          title="Doctor  Logo "
           bordered={false}
           style={
             {
@@ -76,30 +80,16 @@ const UploadBannerImage = () => {
                 marginTop: 10,
               }}
             >
-              {/* <Form.Item label="Banner Id" name="bid" values="bid">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
               {/* <Form.Item label="Client Id" name="clientid" values="clientid">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
-              {/* <Form.Item label="User Id" name="userid" values="userid">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item> */}
               <Form.Item
-                name="isactive"
-                values="isactive"
-                label="is Active"
-                valuePropName="checked"
-              >
-                <Switch />
-              </Form.Item>
-              <Form.Item
-                label="Banner Image"
+                label="Doctor Image "
                 name="filepath"
                 values="filepath"
                 getValueFromEvent={(e) => e.file}
               >
-                <Upload {...props}>
+                <Upload {...photoprops}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
               </Form.Item>
@@ -112,7 +102,7 @@ const UploadBannerImage = () => {
                     type="primary"
                     className="sumit-button btn-load"
                   >
-                    Add Banner
+                    Add Doctor Logo
                   </Button>
                 </div>
               </Form.Item>
@@ -124,4 +114,4 @@ const UploadBannerImage = () => {
   );
 };
 
-export default UploadBannerImage;
+export default UploadDoctorImage;

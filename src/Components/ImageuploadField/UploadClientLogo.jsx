@@ -8,14 +8,18 @@ import {
   message,
   notification,
 } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { UploadClientLogos } from "../../services/appServices/ProductionServices";
+import { useLocation, useNavigate } from "react-router-dom";
 const UploadClientLogo = () => {
+  const location = useLocation();
+  const enteredid = location.state.enteredvalue.RId;
+  console.log(enteredid, "clientlistnavigatedata");
   const [form] = Form.useForm();
   const [LogoPath, setLogoPath] = useState();
-
-  const props = {
+  const navigate = useNavigate();
+  const photoprops = {
     name: "file",
     headers: {
       authorization: "authorization-text",
@@ -30,19 +34,20 @@ const UploadClientLogo = () => {
   const handleSubmit = (values) => {
     console.log(values, "values");
     const formData = new FormData();
-    formData.append("clientid", values?.clientid);
+    formData.append("clientid", enteredid);
     formData.append("filepath", LogoPath);
 
     UploadClientLogos(formData, (res) => {
-      message.success("Client logo added Successfully");
-      //   setTimeout(function () {
-      //     window.location.reload();
-      //   }, 4000);
-      //   if (res === "") {
-      //     message.success("Client logo added Successfully");
-      //   } else {
-      //     message.warning("");
-      //   }
+      // message.success("Client logo added Successfully");
+      if (res && res.filename) {
+        message.success(`Client logo ${res.filename} added Successfully`);
+      } else {
+        message.warning("Failed to upload client logo");
+      }
+      navigate("/uploadbannerimage");
+      // setTimeout(function () {
+      //   window.location.reload("/clients");
+      // }, 5000);
     });
     console.log(formData, "i am a data");
   };
@@ -75,16 +80,16 @@ const UploadClientLogo = () => {
                 marginTop: 10,
               }}
             >
-              <Form.Item label="Client Id" name="clientid" values="clientid">
+              {/* <Form.Item label="Client Id" name="clientid" values="clientid">
                 <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 label="Client Logo "
                 name="filepath"
                 values="filepath"
                 getValueFromEvent={(e) => e.file}
               >
-                <Upload {...props}>
+                <Upload {...photoprops}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
               </Form.Item>

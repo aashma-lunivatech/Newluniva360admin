@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { getClientWiseDepartmentByClientIdluniva } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 
-const GetClientWiseDepartment = () => {
+const GetClientWiseDepartment = ({ nextForm }) => {
+  console.log(nextForm, "nextForm");
   const [departmentList, setDepartmentList] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -79,13 +80,23 @@ const GetClientWiseDepartment = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button
+          {/* <Button
             className="btn-load"
             onClick={() =>
               navigate({
                 pathname: `/editclientwisedepartment/edit/${record.CDId}`,
               })
             }
+          >
+            Edit
+          </Button> */}
+          <Button
+            className="btn-load"
+            onClick={() => {
+              navigate({
+                pathname: `/editclientwisedepartment/edit/${record.CDId}`,
+              });
+            }}
           >
             Edit
           </Button>

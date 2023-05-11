@@ -196,15 +196,15 @@ const AddDrAvailableTimeAppoinment = () => {
                 marginTop: 10,
               }}
             >
-              <Form.Item
+              {/* <Form.Item
                 label="DsId"
                 name="DsId"
                 initialValue={editedappointment ? editedappointment.DsId : ""}
                 values="DsId"
                 rules={[{ required: true, message: "DsId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
+                <InputNumber style={{ width: "100%" }} disabled={true} />
+              </Form.Item> */}
               <Form.Item
                 label="DoctId"
                 name="DoctId"
@@ -212,7 +212,7 @@ const AddDrAvailableTimeAppoinment = () => {
                 initialValue={editedappointment ? editedappointment.DoctId : ""}
                 rules={[{ required: true, message: "DoctId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
+                <InputNumber style={{ width: "100%" }} disabled={true} />
               </Form.Item>
               <Form.Item
                 label="DShift"

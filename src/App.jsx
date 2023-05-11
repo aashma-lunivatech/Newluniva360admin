@@ -1,21 +1,14 @@
-// import { Route, Routes } from "react-router-dom";
-// import Mainlayout from "./Layouts/layout";
-// import Homepage from "./Pages/Homepage/Homepage";
-// import Login from "./Pages/Login/Login";
-// import PrivateOutlet from "./Routes/PrivateOutlet";
+import Client from "./Components/Client/Client";
+import ClientContext from "./Components/ContextApi/ClientContext";
 
-// import "../app.css";
-// function App() {
-//   return (
-//     <div className="App">
-//       <Routes>
-//         <Route path="/login" element={<Login />}></Route>
-//         <Route path="/*" element={<PrivateOutlet />}>
-//           <Route path="*" element={<Mainlayout />} />
-//         </Route>
-//         <Route path="" element={<Homepage />}></Route>
-//       </Routes>
-//     </div>
-//   );
-// }
-// export default App;
+function App() {
+  const [clientData, setClientData] = useState({});
+
+  return (
+    <ClientContext.Provider value={{ clientData, setClientData }}>
+      {/* Your components go here */}
+      <Client />
+    </ClientContext.Provider>
+  );
+}
+export default App;

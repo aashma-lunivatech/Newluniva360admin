@@ -25,13 +25,12 @@ import {
 } from "../../services/appServices/ProductionServices";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Client = () => {
+const Client = ({ nextForm, onEdit }) => {
+  console.log(nextForm, "nextform");
   const { id } = useParams();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedId, setSelectedId] = useState(id);
-  const [bannerurl, setbannerurl] = useState([]);
-  const [imageUrl, setImageUrl] = useState([]);
   const [buttondisable, setButtondisable] = useState(false);
   const [statelist, setStateList] = useState();
   const [districtlist, setDistrictList] = useState();
@@ -40,39 +39,7 @@ const Client = () => {
   const [selecteddistrictvalue, setSelectedDistrict] = useState();
   const [editvalue, setEditvalue] = useState();
   const [clientList, setClientList] = useState();
-  const [clientFile, setClientFile] = useState();
-  const bannerprops = {
-    name: "file",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      console.log(info);
-      setClientFile(info.file);
-    },
-  };
-  useEffect(() => {
-    console.log(clientFile, "clientfile");
-  });
-  const props = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList, "infodata");
-        console.log(info.fileList.name, "infofilename");
-        setImageUrl(info.file.name);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
+  const [enteredvalue, setEnteredValue] = useState();
   let finaldate = selectedDate?.format("YYYY-MM-DD");
   let currentDate = new Date().toISOString().split("T")[0];
   console.log(currentDate, "currentdate");
@@ -108,7 +75,6 @@ const Client = () => {
   const handleclientDistrict = (e) => {
     setSelectedDistrict(e);
   };
-
   useEffect(() => {
     console.log(selectedstatevalue, "setselectdstatevalue");
     console.log(id, "idparams");
@@ -150,58 +116,55 @@ const Client = () => {
   }, [selectedstatevalue, selecteddistrictvalue]);
   const handleSubmit = (values) => {
     console.log(values, "values");
-    const formData = new FormData();
-    formData.append("ClientLogo", values.ClientLogo.file);
-    // console.log(imgdata, "imgdata");
-    console.log(formData, "formdataho");
     let data = {
       RId: editvalue ? id : 0,
       ClientCode: values?.ClientCode ?? "Np",
       ClientName: values?.ClientName,
       ClientCountry: values?.ClientCountry ?? "Np",
-      ClientState: values?.ClientState,
-      ClientDistrict: values?.ClientDistrict,
-      ClientMUNVDC: values?.ClientMUNVDC,
+      ClientState: values?.ClientState ?? editvalue.ClientState,
+      ClientDistrict: values?.ClientDistrict ?? editvalue.ClientState,
+      ClientMUNVDC: values?.ClientMUNVDC ?? editvalue.ClientState,
       ClientLocalAddress: values?.ClientLocalAddress,
       ClientTypeId: values?.ClientTypeId ?? "assdnbn",
       ClientPAN: values?.ClientPAN,
       ClientPhoneNumber: values?.ClientPhoneNumber,
       ClientEmail: values?.ClientEmail,
       ClientWebsite: values?.ClientWebsite,
-      // ClientLogo: imageUrl,
-      ClientLogo: formData,
+      ClientLogo: "abc.png",
       ClientContactPerson: values?.ClientContactPerson,
       ClinetContactPersonMobile: values?.ClinetContactPersonMobile,
       IsActive: values?.IsActive || true,
       UserId: values?.UserId,
       RegisterDate: finaldate ?? currentDate,
-
       clientBanner: "banner.jpg",
     };
-    console.log(data, "clientdata");
+    // setEnteredValue(data);
     InsertUpdateClientDetailsluniva(data, (res) => {
       console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success("client details Added Successfully");
-        notification.config({
-          placement: "topRight",
-          duration: 3,
-          style: {
-            backgroundColor: "#f6ffed",
-            border: "1px solid #b7eb8f",
-          },
-        });
-        setButtondisable(true);
+
+        // nextForm;
+        // if (editvalue === undefined ? nextForm : nextForm)
+
+        // setButtondisable(true);
         // setTimeout(function () {
         //   window.location.reload();
         // }, 4000);
       } else {
-        notification.warning("Error!");
+        message.warning("Error!");
       }
+      nextForm;
     });
-    console.log(data, "i am a data");
+    setEnteredValue(values);
+    setTimeout(() => {
+      navigate("/uploadclientlogo", {
+        state: { enteredvalue: editvalue ? editvalue : values },
+      });
+    }, 2000);
   };
 
+  console.log(typeof nextForm, "ajsdasj");
   return (
     <ClientComponents>
       <div className="">
@@ -425,31 +388,6 @@ const Client = () => {
                   />
                 </Form.Item>
               )}
-
-              {/* <Form.Item
-                label="Client Banner"
-                name="clientBanner"
-                values="clientBanner"
-              >
-                <Upload {...bannerprops}>
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
-              </Form.Item> */}
-              <Form.Item
-                label="Client logo"
-                name="ClientLogo"
-                values="ClientLogo"
-              >
-                <Upload {...bannerprops}>
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
-                {/* {clientFile && (
-                  <img
-                    src={URL.createObjectURL(clientFile)}
-                    alt="uploaded file"
-                  />
-                )} */}
-              </Form.Item>
               <Form.Item
                 label="is Active"
                 valuePropName="checked"
@@ -461,13 +399,13 @@ const Client = () => {
               <Form.Item>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button
+                    className="btn-load"
                     disabled={buttondisable}
                     htmlType="submit"
                     // disabled={butDis}
                     type="primary"
-                    className="sumit-button"
                   >
-                    Submit
+                    Submit and Next
                   </Button>
                 </div>
               </Form.Item>
