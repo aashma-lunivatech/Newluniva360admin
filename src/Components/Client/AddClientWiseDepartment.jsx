@@ -15,6 +15,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import {
   GetDepartmentLists,
+  GetListOfRegisteredClientsluniva,
   InsertUpdateClientwiseDepartments,
   getClientWiseDepartmentByClientIdluniva,
 } from "../../services/appServices/ProductionServices";
@@ -26,15 +27,36 @@ const AddClientWiseDepartment = () => {
   const [form] = Form.useForm();
   const [departmentlist, setDepartmentList] = useState();
   const [buttondisable, setButtondisable] = useState(false);
+  const [alldepartmentlist, setAllDepartmentList] = useState();
+  const [clientlist, setClientList] = useState();
   const [selectedid, setselectedid] = useState();
+  const [departmentselect, setDepartmentselect] = useState();
+  const [clientselect, setClientSelect] = useState();
+  const handledepartmentselect = (e) => {
+    setDepartmentselect(e);
+  };
+
+  const handleclientselect = (e) => {
+    setClientSelect(e);
+  };
   useEffect(() => {
     if (selectedid !== undefined) form.resetFields();
   }, [selectedid]);
-
   useEffect(() => {
-    // GetDepartmentLists((res) => {
-    //   setAallDepartmentList(res.DepartmentList);
-    // });
+    GetListOfRegisteredClientsluniva((res) => {
+      // console.log(res, "res");
+      if (res?.ClientList.length > 0) {
+        setClientList(res?.ClientList);
+      } else {
+        // console.log("out of if else");
+        setClientList([]);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    GetDepartmentLists((res) => {
+      setAllDepartmentList(res.DepartmentList);
+    });
     let data = {
       clientId: id,
     };
@@ -72,14 +94,15 @@ const AddClientWiseDepartment = () => {
           ? true
           : false,
     };
+    console.log(data, "data of department");
     InsertUpdateClientwiseDepartments(data, (res) => {
       console.log(res, "i am response of post");
       if (res?.SuccessMsg == true) {
         message.success("client department Added Successfully");
         setButtondisable(true);
-        setTimeout(function () {
-          window.location.reload();
-        }, 4000);
+        // setTimeout(function () {
+        //   window.location.reload();
+        // }, 4000);
       } else {
         notification.warning("Error!");
       }
@@ -117,55 +140,83 @@ const AddClientWiseDepartment = () => {
                   marginTop: 10,
                 }}
               >
-                <Form.Item label="CDId" name="CDId" values="CDId">
-                  <InputNumber style={{ width: "100%" }} />
-                </Form.Item>
-
-                {/* <Form.Item label="ClientId" name="ClientId">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
-                {selectedid ? (
-                  <Form.Item
-                    style={{ display: "none" }}
-                    label="ClientId"
-                    name="ClientId"
-                    values="ClientId"
-                  >
-                    <input type="hidden" />
-                  </Form.Item>
-                ) : (
+                {selectedid === true && (
                   <Form.Item label="ClientId" name="ClientId" values="ClientId">
-                    <InputNumber style={{ width: "100%" }} />
+                    <Select
+                      onChange={handleclientselect}
+                      showSearch
+                      filterOption={(input, option) => {
+                        return (
+                          option.key
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0 ||
+                          option.title
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
+                    >
+                      {clientlist !== undefined &&
+                        clientlist.map((e) => (
+                          <Option
+                            title={e.ClientName}
+                            value={e.RId}
+                            key={e.RId}
+                          >
+                            {e.ClientName}
+                          </Option>
+                        ))}
+                    </Select>
                   </Form.Item>
                 )}
+
+                {/* <Form.Item label="ClientId" name="ClientId" values="ClientId">
+                  <Select
+                    onChange={handleclientselect}
+                    showSearch
+                    filterOption={(input, option) => {
+                      return (
+                        option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                          0 ||
+                        option.title
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      );
+                    }}
+                  >
+                    {clientlist !== undefined &&
+                      clientlist.map((e) => (
+                        <Option title={e.ClientName} value={e.RId} key={e.RId}>
+                          {e.ClientName}
+                        </Option>
+                      ))}
+                  </Select>
+                </Form.Item> */}
                 <Form.Item
                   label="Department"
                   name="DepartmentId"
                   values="DepartmentId"
                 >
-                  <InputNumber style={{ width: "100%" }} />
-                  {/* <Select
-                  showSearch
-                  filterOption={(input, option) => {
-                    return (
-                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
-                        0 ||
-                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
-                        0
-                    );
-                  }}
-                >
-                  {alldepartmentlist !== undefined &&
-                    alldepartmentlist.map((e) => (
-                      <Option
-                        title={e.DepartmentName}
-                        value={e.DId}
-                        key={e.DId}
-                      >
-                        {e.DepartmentName}
-                      </Option>
-                    ))}
-                </Select> */}
+                  <Select
+                    onChange={handledepartmentselect}
+                    showSearch
+                    filterOption={(input, option) => {
+                      return (
+                        option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                          0 ||
+                        option.title
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      );
+                    }}
+                  >
+                    {alldepartmentlist !== undefined &&
+                      alldepartmentlist.map((e) => (
+                        <Option title={e.ClientName} value={e.DId} key={e.DId}>
+                          {e.DepartmentName}
+                        </Option>
+                      ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   label="is Active"

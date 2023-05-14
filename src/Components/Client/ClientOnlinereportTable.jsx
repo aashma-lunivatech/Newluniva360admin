@@ -82,11 +82,11 @@ const ClientOnlinereportTable = () => {
       departmentId: 0,
     };
     GetlistofClientForOnlineReports((res) => {
-      console.log(res, "res");
+      // console.log(res, "res");
       if (res?.ClientList.length > 0) {
         setObtaindata(res?.ClientList);
       } else {
-        console.log("out of if else");
+        // console.log("out of if else");
       }
     });
   }, []);

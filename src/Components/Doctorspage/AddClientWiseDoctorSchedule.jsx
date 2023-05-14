@@ -22,7 +22,7 @@ import dayjs from "dayjs";
 const AddClientWiseDoctorSchedule = () => {
   const { id } = useParams();
   const { Option } = Select;
-  console.log(id, "id of previous value");
+  // console.log(id, "id of previous value");
   const [appointmentlist, setAppointmentList] = useState();
   const [buttondisable, setButtondisable] = useState(false);
   const [selectedShift, setSelectedShift] = useState();
@@ -39,38 +39,38 @@ const AddClientWiseDoctorSchedule = () => {
   // const [defaultdate, setDefaultDate] = useState();
   dayjs.extend(customParseFormat);
   useEffect(() => {
-    console.log(sunday, "dayvalue");
+    // console.log(sunday, "dayvalue");
     // console.log(defaultdate, "defaultdate");
   }, []);
   const [form] = Form.useForm();
   const timeString = "1:30 AM - 2:30AM";
   const sunOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setSunday(timeString);
   };
 
   const monOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setMonday(timeString);
   };
   const TueOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setTuesday(timeString);
   };
   const WedOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setWednesday(timeString);
   };
   const ThuOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setThursday(timeString);
   };
   const FriOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setFriday(timeString);
   };
   const SatOnChange = (time, timeString) => {
-    console.log(timeString, "timestring");
+    // console.log(timeString, "timestring");
     setSaturday(timeString);
   };
 
@@ -78,13 +78,13 @@ const AddClientWiseDoctorSchedule = () => {
     if (availableTime !== undefined) form.resetFields();
   }, [availableTime]);
   useEffect(() => {
-    console.log(availableTime, "availableTime");
+    // console.log(availableTime, "availableTime");
     if (availableTime === undefined) {
       const data = {
         id: id,
       };
       GetDoctorAvailableTimeinClientByIds(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DoctorAvailableTime && res?.DoctorAvailableTime.length > 0) {
           setAvailableTime(res?.DoctorAvailableTime[0]);
           setAppointmentList(res?.DoctorAvailableTime);
@@ -147,9 +147,9 @@ const AddClientWiseDoctorSchedule = () => {
       Sat: formateedtdata.Sat.replace(/,/g, "-"),
       AppTimeGap: values?.AppTimeGap,
     };
-    console.log(Friday, "friday");
+    // console.log(Friday, "friday");
     InsertUpdateClientWiseDoctorTimes(data, (res) => {
-      console.log(res, "i am response");
+      // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success(res?.Message);
         message.config({

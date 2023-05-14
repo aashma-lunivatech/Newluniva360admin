@@ -167,7 +167,7 @@ const DoctorsProfilePageNew = () => {
         docId: inputValue,
       };
       GetDoctorDetailsByDoctorIds(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
           setDepartmentList(res?.DoctorDetails);
         } else {
@@ -176,7 +176,7 @@ const DoctorsProfilePageNew = () => {
         setLoading(false);
       });
     } else {
-      console.log("out of block");
+      // console.log("out of block");
     }
   };
 

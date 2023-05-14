@@ -14,7 +14,7 @@ const ClientDepartment = () => {
         clientId: inputValue,
       };
       getClientWiseDepartmentByClientIdluniva(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DepartmentList && res?.DepartmentList.length > 0) {
           setDepartmentList(res?.DepartmentList);
         } else {

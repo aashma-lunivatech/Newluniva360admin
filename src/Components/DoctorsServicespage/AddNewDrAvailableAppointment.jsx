@@ -12,6 +12,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
+  GetAppointmentSettingsByIds,
   GetDocTimeScheduleForAppointments,
   InsertUpdateDoctorAvailableTimeForAppointments,
 } from "../../services/appServices/ProductionServices";
@@ -39,26 +40,26 @@ const AddNewDrAvailableTimeAppoinment = () => {
   };
 
   useEffect(() => {
-    console.log(editedappointment, "editedappointment");
-    console.log(startTime, endTime, "start and endtime");
-    console.log();
+    // console.log(editedappointment, "editedappointment");
+    // console.log(startTime, endTime, "start and endtime");
+    // console.log();
   }, []);
   useEffect(() => {
     if (editedappointment !== undefined) form.resetFields();
   }, [editedappointment]);
   useEffect(() => {
-    console.log(editedappointment, "aile ko time time");
+    // console.log(editedappointment, "aile ko time time");
     if (editedappointment === undefined) {
       let data = {
-        docId: id,
+        id: id,
       };
-      GetDocTimeScheduleForAppointments(data, (res) => {
-        console.log(res, "res appointment");
-        console.log(editedappointment, "aile print gareko");
-        if (res?.AppointmentTime && res?.AppointmentTime.length > 0) {
-          setAppointmentList(res?.AppointmentTime);
-          setEditedAppointment(res?.AppointmentTime[0]);
-          console.log(editedappointment, "editeappoinmetnt time");
+      GetAppointmentSettingsByIds(data, (res) => {
+        // console.log(res, "res appointment");
+        // console.log(editedappointment, "aile print gareko");
+        if (res?.DoctorAppointment && res?.DoctorAppointment.length > 0) {
+          setAppointmentList(res?.DoctorAppointment);
+          setEditedAppointment(res?.DoctorAppointment[0]);
+          // console.log(editedappointment, "editeappoinmetnt time");
         } else {
           setAppointmentList([]);
         }
@@ -97,7 +98,7 @@ const AddNewDrAvailableTimeAppoinment = () => {
     // );
     // console.log(Friday, "friday");
     InsertUpdateDoctorAvailableTimeForAppointments(data, (res) => {
-      console.log(res, "i am response");
+      // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success({ message });
         message.config({
@@ -113,7 +114,7 @@ const AddNewDrAvailableTimeAppoinment = () => {
         message.warning("Error!");
       }
     });
-    console.log(data, "i am a data");
+    // console.log(data, "i am a data");
   };
   return (
     <div>

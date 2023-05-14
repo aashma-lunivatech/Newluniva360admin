@@ -50,7 +50,7 @@ const AddAppointmentTime = () => {
       AppTime: values?.AppTime,
     };
     InsertUpdateAppointments(data, (res) => {
-      console.log(res, "i am response");
+      // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success("Appointment Added Successfully");
 
@@ -62,11 +62,11 @@ const AddAppointmentTime = () => {
         message.warning("Error!");
       }
     });
-    console.log(data, "i am a data");
+    // console.log(data, "i am a data");
   };
   const handleChange = (value) => {
     setSelectedvalue(value);
-    console.log(value, "value");
+    // console.log(value, "value");
   };
   return (
     <AddDoctorAppointment>

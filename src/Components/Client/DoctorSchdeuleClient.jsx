@@ -32,7 +32,7 @@ const DoctorSchdeuleClient = () => {
       };
 
       GetClientWiseDoctorsAvailableTimeForAppointments(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
 
         if (res?.DoctorTime && res?.DoctorTime.length > 0) {
           setDepartmentList(res?.DoctorTime);
@@ -149,7 +149,7 @@ const DoctorSchdeuleClient = () => {
     <Doctorlists>
       <div className="">
         <Card
-          title="Department List"
+          title="Doctor Schdule"
           bordered={false}
           style={
             {
@@ -158,7 +158,18 @@ const DoctorSchdeuleClient = () => {
           }
         >
           <ClientDepartmentButton>
-            <h3>Doctor Schdule</h3>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3></h3>
+              <Button
+                htmlType="submit"
+                className="btn-load"
+                // disabled={butDis}
+                type="primary"
+                onClick={() => handleRedirect()}
+              >
+                Add Schdeule
+              </Button>
+            </div>
             <div className="add-button">
               <div>
                 <div>
@@ -169,7 +180,9 @@ const DoctorSchdeuleClient = () => {
                     value={clientId}
                     onChange={(e) => setClientId(e.target.value)}
                   />
-                  <label className="label-name">Doctor ID</label>
+                  <label style={{ marginLeft: "20px" }} className="label-name">
+                    Doctor ID
+                  </label>
                   <Input
                     type="number"
                     style={{ width: 300 }}
@@ -181,15 +194,6 @@ const DoctorSchdeuleClient = () => {
                   </Button>
                 </div>
               </div>
-              <Button
-                htmlType="submit"
-                className="btn-load"
-                // disabled={butDis}
-                type="primary"
-                onClick={() => handleRedirect()}
-              >
-                Add Schdeule
-              </Button>
             </div>
           </ClientDepartmentButton>
         </Card>

@@ -90,7 +90,7 @@ const DoctorsListClientAndDepart = () => {
       };
 
       GetlistofDoctorsByClientIdAndDepartmentIds(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
 
         if (res?.DoctorList && res?.DoctorList.length > 0) {
           setDepartmentList(res?.DoctorList);

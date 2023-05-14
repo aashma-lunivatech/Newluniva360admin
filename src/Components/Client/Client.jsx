@@ -26,7 +26,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 const Client = ({ nextForm, onEdit }) => {
-  console.log(nextForm, "nextform");
+  // console.log(nextForm, "nextform");
   const { id } = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -42,12 +42,12 @@ const Client = ({ nextForm, onEdit }) => {
   const [enteredvalue, setEnteredValue] = useState();
   let finaldate = selectedDate?.format("YYYY-MM-DD");
   let currentDate = new Date().toISOString().split("T")[0];
-  console.log(currentDate, "currentdate");
+  // console.log(currentDate, "currentdate");
   useEffect(() => {
-    console.log(selectedDate, "selecteddate");
+    // console.log(selectedDate, "selecteddate");
     if (editvalue !== undefined) {
       form.resetFields();
-      console.log("in am inside editfield valuie");
+      // console.log("in am inside editfield valuie");
     }
   }, [editvalue]);
   useEffect(() => {
@@ -56,15 +56,15 @@ const Client = ({ nextForm, onEdit }) => {
         id: id,
       };
       GetListOfRegisteredClientByIds(data, (res) => {
-        console.log(res, "resho");
+        // console.log(res, "resho");
         if (res?.ClientList && res?.ClientList.length > 0) {
           setEditvalue(res?.ClientList[0]);
           setClientList(res?.clientList);
           // setEditvalue(res?.ClientList[0]);
-          console.log(editvalue, "editevalueshoo");
+          // console.log(editvalue, "editevalueshoo");
         } else {
           setClientList([]);
-          console.log("out of if else get data");
+          // console.log("out of if else get data");
         }
       });
     }
@@ -76,8 +76,8 @@ const Client = ({ nextForm, onEdit }) => {
     setSelectedDistrict(e);
   };
   useEffect(() => {
-    console.log(selectedstatevalue, "setselectdstatevalue");
-    console.log(id, "idparams");
+    // console.log(selectedstatevalue, "setselectdstatevalue");
+    // console.log(id, "idparams");
     let data = {
       stateId: selectedstatevalue,
     };
@@ -90,32 +90,32 @@ const Client = ({ nextForm, onEdit }) => {
         setStateList(res?.StateList);
       } else {
         setStateList([]);
-        console.log("outof else block");
+        // console.log("outof else block");
       }
     });
     GetlistofDisctrictByStateIds(data, (res) => {
       if (res?.DistrictList && res?.DistrictList.length > 0) {
         setDistrictList(res?.DistrictList);
-        console.log("i am inside if block");
-        console.log(districtlist, "dis");
+        // console.log("i am inside if block");
+        // console.log(districtlist, "dis");
       } else {
         setDistrictList([]);
-        console.log("outof else distrcit block");
+        // console.log("outof else distrcit block");
       }
     });
     GetListOfVDCByDistrictIds(munidata, (res) => {
       if (res?.VDCLIST && res?.VDCLIST.length > 0) {
         setMunicipality(res?.VDCLIST);
-        console.log("i am inside if block");
+        // console.log("i am inside if block");
       } else {
         setMunicipality([]);
-        console.log("outof else block");
+        // console.log("outof else block");
       }
     });
-    console.log(data, "data");
+    // console.log(data, "data");
   }, [selectedstatevalue, selecteddistrictvalue]);
   const handleSubmit = (values) => {
-    console.log(values, "values");
+    // console.log(values, "values");
     let data = {
       RId: editvalue ? id : 0,
       ClientCode: values?.ClientCode ?? "Np",
@@ -140,7 +140,7 @@ const Client = ({ nextForm, onEdit }) => {
     };
     // setEnteredValue(data);
     InsertUpdateClientDetailsluniva(data, (res) => {
-      console.log(res, "i am response");
+      // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success("client details Added Successfully");
 
@@ -164,7 +164,7 @@ const Client = ({ nextForm, onEdit }) => {
     }, 2000);
   };
 
-  console.log(typeof nextForm, "ajsdasj");
+  // console.log(typeof nextForm, "ajsdasj");
   return (
     <ClientComponents>
       <div className="">

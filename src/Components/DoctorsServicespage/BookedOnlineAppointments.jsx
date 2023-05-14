@@ -82,7 +82,7 @@ const BookedOnlineAppointments = () => {
         docId: inputValue,
       };
       GetDocTimeScheduleForAppointments(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.AppointmentTime && res?.AppointmentTime.length > 0) {
           setDepartmentList(res.AppointmentTime);
         } else {
@@ -92,7 +92,7 @@ const BookedOnlineAppointments = () => {
       });
     } else {
       // Display error message or do nothing
-      console.log("out of block");
+      // console.log("out of block");
     }
   };
 

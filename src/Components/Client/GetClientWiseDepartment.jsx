@@ -5,7 +5,7 @@ import { getClientWiseDepartmentByClientIdluniva } from "../../services/appServi
 import { useNavigate } from "react-router-dom";
 
 const GetClientWiseDepartment = ({ nextForm }) => {
-  console.log(nextForm, "nextForm");
+  // console.log(nextForm, "nextForm");
   const [departmentList, setDepartmentList] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ const GetClientWiseDepartment = ({ nextForm }) => {
         clientId: inputValue,
       };
       getClientWiseDepartmentByClientIdluniva(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DepartmentList && res?.DepartmentList.length > 0) {
           setDepartmentList(res?.DepartmentList);
         } else {

@@ -46,6 +46,10 @@ import { App } from "antd";
 import Department from "./Components/SeparateClientPage/ClientDepartment/Department";
 import CustomerDashboard from "./Components/CustomerPages/DashboardCustomer/CustomerDashboard";
 import UploadDoctorImage from "./Components/ImageuploadField/UploadDoctorImage";
+import DoctorRegistrationOnline from "./Components/OnlineConsultation/RegisterDoctorOnline/DoctorRegistrationOnline";
+import PatientsVitals from "./Components/Patients/PatientsVitals";
+import AddPatientVitals from "./Components/Patients/AddPatientVitals";
+import PatientsVitalsDateWise from "./Components/Patients/PatientsVitalsDatewise";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -251,6 +255,31 @@ const router = createBrowserRouter([
       {
         path: "/UploadDoctorImage",
         element: <UploadDoctorImage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/onlinedoctorregistration",
+        element: <DoctorRegistrationOnline />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/patientsvitalss",
+        element: <PatientsVitals />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/addpatientvitals",
+        element: <AddPatientVitals />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/editpatientvitals/edit/:id",
+        element: <AddPatientVitals />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/patientsvitalssdatewise",
+        element: <PatientsVitalsDateWise />,
         errorElement: <ErrorPage />,
       },
     ],

@@ -25,7 +25,6 @@ const UploadClientLogo = () => {
       authorization: "authorization-text",
     },
     onChange(info) {
-      console.log(info);
       //   setFiles(info.file);
       console.log(info.file.originFileObj, "orginfileobj");
       setLogoPath(info.file.originFileObj);

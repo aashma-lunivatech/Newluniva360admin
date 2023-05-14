@@ -15,11 +15,10 @@ const Mainlayout = ({}) => {
   const [subnavdata, setSubNavData] = useState([]);
   useEffect(() => {
     setSideBarDataNew(RouteDataAdmin);
-    console.log(sideBarDataNew, "sidebardatanew");
-    console.log(subnavdata, "subMenuItems");
+    // console.log(sideBarDataNew, "sidebardatanew");
+    // console.log(subnavdata, "subMenuItems");
   });
   const HandleSelection = (e) => {
-    console.log(e, "selected homa");
     setSelectedData(e.key);
   };
   const {

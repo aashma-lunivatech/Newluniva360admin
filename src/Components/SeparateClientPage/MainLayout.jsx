@@ -42,7 +42,6 @@ const MainLayout = ({}) => {
             top: "0",
             overflow: "auto",
             height: "100vh",
-            position: "fixed",
             minWidth: "239px",
             maxWidth: "300px",
           }}

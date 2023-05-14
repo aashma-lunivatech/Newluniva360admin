@@ -101,7 +101,7 @@ const DoctorSchedule = () => {
       };
 
       GetClientWiseDoctorsAvailableTimeForAppointments(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
 
         if (res?.DoctorTime && res?.DoctorTime.length > 0) {
           setDepartmentList(res?.DoctorTime);

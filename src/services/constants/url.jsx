@@ -55,3 +55,12 @@ export const InsertUpdateBannerImage = "InsertUpdateBannerImage";
 // client dashboard
 
 export const GetDoctorDetailsByDoctorId = "GetDoctorDetailsByDoctorId";
+export const GetpatientVitalsDetailsByUserId =
+  "GetpatientVitalsDetailsByUserId";
+export const GetFamilyRelationShipDetails = "GetFamilyRelationShipDetails";
+export const InsertUpdateDailyVitalsOfPatient =
+  "InsertUpdateDailyVitalsOfPatient";
+export const GetpatientVitalsDetailsByUserIdAndVitalOfFamily =
+  "GetpatientVitalsDetailsByUserIdAndVitalOfFamily";
+export const GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRange =
+  "GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRange";

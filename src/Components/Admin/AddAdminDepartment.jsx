@@ -41,7 +41,7 @@ const AddAdminDepartment = () => {
       authorization: "authorization-text",
     },
     onChange(info) {
-      console.log(info);
+      // console.log(info);
       setFiles(info.file);
       setLogoPath(info.file);
     },
@@ -63,16 +63,16 @@ const AddAdminDepartment = () => {
         if (res?.Department && res?.Department.length > 0) {
           setDepartmentList(res?.Department);
           setuseriddetails(res?.Department[0]);
-          console.log(departmentlist, "departmentlist");
-          console.log(useridselected, "useridswlected");
-          console.log("i am inside if block");
+          // console.log(departmentlist, "departmentlist");
+          // console.log(useridselected, "useridswlected");
+          // console.log("i am inside if block");
         } else {
           setDepartmentList([]);
-          console.log("outof else block");
+          // console.log("outof else block");
         }
       });
     }
-    console.log(useridselected, "useridselected");
+    // console.log(useridselected, "useridselected");
     const selecteddata = useridselected;
   }, [useridselected]);
   const handleSubmit = (values) => {
@@ -88,7 +88,7 @@ const AddAdminDepartment = () => {
           : false,
     };
     InsertUpdateDepartmentByAdmins(data, (res) => {
-      console.log(res, "i am response");
+      // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
         message.success("Department   Added Successfully");
         setButtondisable(true);
@@ -99,7 +99,7 @@ const AddAdminDepartment = () => {
         notification.warning("Error!");
       }
     });
-    console.log(data, "i am a data");
+    // console.log(data, "i am a data");
   };
 
   return (

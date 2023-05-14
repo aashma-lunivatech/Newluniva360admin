@@ -78,11 +78,11 @@ const ClientListDocAvailable = () => {
         docId: inputValue,
       };
       GetlistOfClientsWhereDoctorIsAvaliables(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.clientlist && res?.clientlist.length > 0) {
           //   setDepartmentList(res?.clientlist);
           setDepartmentList(res?.clientlist);
-          console.log(res?.clientlist);
+          // console.log(res?.clientlist);
         } else {
           setDepartmentList([]);
         }
@@ -90,7 +90,7 @@ const ClientListDocAvailable = () => {
       });
     } else {
       // Display error message or do nothing
-      console.log("out of block");
+      // console.log("out of block");
     }
   };
 

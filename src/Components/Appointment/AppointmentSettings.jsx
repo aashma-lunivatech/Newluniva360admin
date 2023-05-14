@@ -112,7 +112,7 @@ const AppointmentSettings = () => {
         docId: inputValue,
       };
       GetAppointmentSettingsByDoctorIds(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DoctorAppointment && res?.DoctorAppointment.length > 0) {
           setDepartmentList(res.DoctorAppointment);
         } else {
@@ -122,7 +122,7 @@ const AppointmentSettings = () => {
       });
     } else {
       // Display error message or do nothing
-      console.log("out of block");
+      // console.log("out of block");
     }
   };
 

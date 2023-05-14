@@ -142,11 +142,11 @@ const DoctorDetails = () => {
       departmentId: 0,
     };
     GetListOfDoctorDetails(data, (res) => {
-      console.log(res, "res");
+      // console.log(res, "res");
       if (res?.DoctorList.length > 0) {
         setObtaindata(res?.DoctorList);
       } else {
-        console.log("out of if else");
+        // console.log("out of if else");
       }
     });
   }, []);

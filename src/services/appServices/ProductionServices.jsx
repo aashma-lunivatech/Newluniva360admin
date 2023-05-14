@@ -11,6 +11,7 @@ import {
   GetDocTimeScheduleForAppointment,
   GetDoctorAvailableTimeinClientById,
   GetDoctorDetailsByDoctorId,
+  GetFamilyRelationShipDetails,
   GetListOfDoctorDetailsByDepartment,
   GetListOfRegisteredClientById,
   GetListOfRegisteredClients,
@@ -21,11 +22,15 @@ import {
   GetlistofDisctrictByStateId,
   GetlistofDoctorsByClientId,
   GetlistofDoctorsByClientIdAndDepartmentId,
+  GetpatientVitalsDetailsByUserId,
+  GetpatientVitalsDetailsByUserIdAndVitalOfFamily,
+  GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRange,
   InsertUpdateAppointment,
   InsertUpdateBannerImage,
   InsertUpdateClientDetails,
   InsertUpdateClientWiseDoctorTime,
   InsertUpdateClientwiseDepartment,
+  InsertUpdateDailyVitalsOfPatient,
   InsertUpdateDepartmentByAdmin,
   InsertUpdateDoctorAvailableTimeForAppointment,
   InsertUpdateDoctorDetails,
@@ -335,7 +340,6 @@ export const GetBookedOnlineAppointmentDetailsByDocIdAndDates = async (
 };
 
 export const InsertUpdateAppointments = async (data, successCallback) => {
-  console.log(data, "data from production");
   try {
     const response = await store(`${InsertUpdateAppointment}`, data);
     if (response?.status === 200) {
@@ -550,3 +554,86 @@ export const GetDoctorDetailsByDoctorIds = async (data, successCallback) => {
     successCallback([]);
   }
 };
+// get patients vitals
+
+export const GetpatientVitalsDetailsByUserIds = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await fetch(
+      `${GetpatientVitalsDetailsByUserId}?userid=${data.userid}`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+export const GetFamilyRelationShipDetailss = async (successCallback) => {
+  try {
+    const response = await fetch(`${GetFamilyRelationShipDetails}`);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+// InsertUpdateDailyVitalsOfPatient
+export const InsertUpdateDailyVitalsOfPatients = async (
+  data,
+  successCallback
+) => {
+  try {
+    console.log(data, "data in production");
+    const response = await store(`${InsertUpdateDailyVitalsOfPatient}`, data);
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (error) {
+    successCallback([]);
+  }
+};
+
+// GetpatientVitalsDetailsByUserIdAndVitalOfFamily
+export const GetpatientVitalsDetailsByUserIdAndVitalOfFamilys = async (
+  data,
+  successCallback
+) => {
+  try {
+    const response = await fetch(
+      `${GetpatientVitalsDetailsByUserIdAndVitalOfFamily}?userid=${data.userid}&vitalsof=${data.vitalsof},`
+    );
+    if (response?.status === 200) {
+      successCallback(response?.data);
+    } else {
+      successCallback([]);
+    }
+  } catch (errror) {
+    successCallback([]);
+  }
+};
+// GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRange
+export const GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRanges =
+  async (data, successCallback) => {
+    try {
+      const response = await fetch(
+        `${GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRange}?userid=${data.userid}&vitalsof=${data.vitalsof} &fromdate=${data.fromdate}&todate=${data.todate},`
+      );
+      if (response?.status === 200) {
+        successCallback(response?.data);
+      } else {
+        successCallback([]);
+      }
+    } catch (errror) {
+      successCallback([]);
+    }
+  };

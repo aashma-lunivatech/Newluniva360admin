@@ -9,18 +9,18 @@ const DoctorListApifetched = () => {
   const [totallist, setTotalList] = useState();
 
   useEffect(() => {
-    console.log(doctorlist, "doctorlist");
+    // console.log(doctorlist, "doctorlist");
     let data = {
       docId: 17,
     };
     if (doctorlist === undefined) {
-      console.log(doctorlist, "doctorlist");
+      // console.log(doctorlist, "doctorlist");
       GetDoctorDetailsByDoctorIds(data, (res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
           setDoctorList(res?.DoctorDetails);
         } else {
-          console.log("out of if else");
+          // console.log("out of if else");
           setTotalList([]);
         }
       });

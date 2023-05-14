@@ -22,13 +22,13 @@ const UploadBannerImage = () => {
       authorization: "authorization-text",
     },
     onChange(info) {
-      console.log(info);
+      // console.log(info);
       console.log(info.file, "bannerupload");
       setLogoPath(info.file.originFileObj);
     },
   };
   const handleSubmit = (values) => {
-    console.log(values, "values");
+    // console.log(values, "values");
     const formData = new FormData();
     formData.append("bid", 0);
     formData.append("clientid", clientiDStorage);
@@ -45,7 +45,6 @@ const UploadBannerImage = () => {
         window.location.replace("/clients");
       }, 4000);
     });
-    console.log(formData, "i am a bannerdata");
   };
   return (
     <div>

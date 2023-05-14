@@ -13,17 +13,16 @@ import {
 } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
+
+import { useNavigate, useParams } from "react-router-dom";
 import {
   GetDepartmentLists,
   GetListOfDoctorDetails,
-  InsertUpdateDoctorDetailss,
-} from "../../services/appServices/ProductionServices";
-import { useNavigate, useParams } from "react-router-dom";
+} from "../../../services/appServices/ProductionServices";
 
-const AddDoctorsProfilePage = () => {
+const DoctorRegistrationOnline = () => {
   const { Option } = Select;
   const { id } = useParams();
-  // console.log(id, "idhoma");
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState(null);
   const [buttondisable, setButtondisable] = useState(false);
@@ -143,7 +142,7 @@ const AddDoctorsProfilePage = () => {
   return (
     <AddDoctorProfile>
       <div className="">
-        <Card title="Doctors Profile" bordered={false} style={{}}>
+        <Card title="Online Doctor Registration" bordered={false} style={{}}>
           <Col span={24}>
             <Form
               form={form}
@@ -420,5 +419,5 @@ const AddDoctorsProfilePage = () => {
   );
 };
 
-export default AddDoctorsProfilePage;
+export default DoctorRegistrationOnline;
 const AddDoctorProfile = styled.div``;
