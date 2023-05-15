@@ -16,13 +16,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import {
   GetFamilyRelationShipDetailss,
-  GetListOfDoctorDetails,
   GetpatientVitalsDetailsByUserIds,
   InsertUpdateDailyVitalsOfPatients,
-  InsertUpdateDoctorDetailss,
 } from "../../services/appServices/ProductionServices";
 import { useNavigate, useParams } from "react-router-dom";
-import { SiBetfair } from "react-icons/Si";
 
 const AddPatientVitals = () => {
   const dateFormat = "YYYY/MM/DD";
@@ -84,10 +81,11 @@ const AddPatientVitals = () => {
       EntryDate: entrydate ?? currentDate,
       UserId: values?.UserId,
     };
-    console.log(data, "data");
+    console.log(data.VId, "data");
     InsertUpdateDailyVitalsOfPatients(data, (res) => {
+      console.log(data, "ia am saurey");
       // console.log(res, "i am response");
-      if (res?.SuccessMsg == true) {
+      if (res?.SuccessMsg === true) {
         message.success(`${res.Message}`);
         message.config({
           placement: "topRight",
@@ -102,7 +100,7 @@ const AddPatientVitals = () => {
         //   window.location.reload();
         // }, 4000);
       } else {
-        message.warning(`${res?.Message}`);
+        message.warning(`${res.Message}`);
       }
     });
     console.log(data, "Vitals");

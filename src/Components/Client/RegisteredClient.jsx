@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  GetListOfDoctorDetails,
-  GetListOfRegisteredClientsluniva,
-  GetlistofClientForOnlineReports,
-} from "../../services/appServices/ProductionServices";
+import { GetListOfRegisteredClientsluniva } from "../../services/appServices/ProductionServices";
 import { Button, Space, Table, Tag } from "antd";
+import { Avatar } from "antd";
 import styled from "styled-components";
 import { GetListOfRegisteredClients } from "../../services/constants/url";
 import { useNavigate } from "react-router-dom";
 import DateTimeBAdge from "../Common/DateTimeBAdge";
+import { UserOutlined } from "@ant-design/icons";
 
 const RegisteredClient = () => {
   const navigate = useNavigate();
@@ -106,10 +104,29 @@ const RegisteredClient = () => {
       dataIndex: "ClientBanner",
       key: "ClientBanner",
       render: (ClientBanner) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientBanner}`}
-        />
+        <>
+          <>
+            {ClientBanner &&
+            ClientBanner.includes("/") &&
+            ClientBanner.length > 6 ? (
+              <img
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientBanner}`}
+              />
+            ) : (
+              <div>
+                <Avatar
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                  icon={
+                    <UserOutlined
+                      style={{ marginTop: "20px", fontSize: "48px" }}
+                    />
+                  }
+                />
+              </div>
+            )}
+          </>
+        </>
       ),
     },
 
@@ -118,21 +135,54 @@ const RegisteredClient = () => {
       dataIndex: "ClientLogo",
       key: "ClientLogo",
       render: (ClientLogo) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientLogo}`}
-        />
+        <>
+          {ClientLogo && ClientLogo.includes("/") && ClientLogo.length > 6 ? (
+            <img
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientLogo}`}
+            />
+          ) : (
+            <div>
+              <Avatar
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                icon={
+                  <UserOutlined
+                    style={{ marginTop: "20px", fontSize: "48px" }}
+                  />
+                }
+              />
+            </div>
+          )}
+        </>
       ),
     },
+
     {
       title: "ClientBanner2",
       dataIndex: "ClientBanner2",
       key: "ClientBanner2",
       render: (ClientBanner2) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientBanner2}`}
-        />
+        <>
+          {ClientBanner2 &&
+          ClientBanner2.includes("/") &&
+          ClientBanner2.length > 6 ? (
+            <img
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientBanner2}`}
+            />
+          ) : (
+            <div>
+              <Avatar
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                icon={
+                  <UserOutlined
+                    style={{ marginTop: "20px", fontSize: "48px" }}
+                  />
+                }
+              />
+            </div>
+          )}
+        </>
       ),
     },
 

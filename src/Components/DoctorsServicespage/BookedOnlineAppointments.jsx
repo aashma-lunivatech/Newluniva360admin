@@ -1,72 +1,106 @@
-import { Button, Card, Input, Space, Table } from "antd";
+import { Button, Card, Col, DatePicker, Input, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GetDocTimeScheduleForAppointments } from "../../services/appServices/ProductionServices";
-
+import {
+  GetBookedOnlineAppointmentDetailsByDocIdAndDates,
+  GetDocTimeScheduleForAppointments,
+} from "../../services/appServices/ProductionServices";
+import DateTimeBAdge from "../Common/DateTimeBAdge";
+import { useNavigate } from "react-router-dom";
+const { RangePicker } = DatePicker;
 const BookedOnlineAppointments = () => {
   const [inputValue, setInputValue] = useState("");
-  const [departmentList, setDepartmentList] = useState(null);
+  const [bookedlist, setBookedList] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedDate, setselectedDates] = useState([]);
+  const formatDates = (values) => {
+    const startDate = values.format("YYYY-MM-DD");
+    setselectedDates(startDate);
+  };
+  const navigate = useNavigate();
+  const handleRedirect = () => {
+    navigate("/appointmenttime");
+  };
   const columns = [
     {
-      title: "DsId",
-      dataIndex: "DsId",
-      key: "DsId",
+      title: "ApId",
+      dataIndex: "ApId",
+      key: "ApId",
     },
     {
-      title: "DoctorName",
-      dataIndex: "DoctorName",
-      key: "DoctorName",
+      title: "DocId",
+      dataIndex: "DocId",
+      key: "DocId",
     },
     {
-      title: "DoctId",
-      dataIndex: "DoctId",
-      key: "DoctId",
+      title: "AppointmentDate",
+      dataIndex: "AppointmentDate",
+      key: "AppointmentDate",
+      render: (val) => <DateTimeBAdge data={val} />,
     },
     {
-      title: "DShift",
-      dataIndex: "DShift",
-      key: "DShift",
+      title: "AppTime",
+      dataIndex: "AppTime",
+      key: "AppTime",
     },
     {
-      title: "Sun",
-      dataIndex: "Sun",
-      key: "Sun",
+      title: "AppointmentReason",
+      dataIndex: "AppointmentReason",
+      key: "AppointmentReason",
     },
     {
-      title: "Mon",
-      dataIndex: "Mon",
-      key: "Mon",
+      title: "AppointmentFor",
+      dataIndex: "AppointmentFor",
+      key: "AppointmentFor",
     },
     {
-      title: "Tue",
-      dataIndex: "Tue",
-      key: "Tue",
+      title: "PatientName",
+      dataIndex: "PatientName",
+      key: "PatientName",
     },
     {
-      title: "Wed",
-      dataIndex: "Wed",
-      key: "Wed",
+      title: "PatAge",
+      dataIndex: "PatAge",
+      key: "PatAge",
     },
     {
-      title: "Thu",
-      dataIndex: "Thu",
-      key: "Thu",
+      title: "AppointmentStatus",
+      dataIndex: "AppointmentStatus",
+      key: "AppointmentStatus",
     },
     {
-      title: "Fri",
-      dataIndex: "Fri",
-      key: "Fri",
+      title: "AppointmentRemarks",
+      dataIndex: "AppointmentRemarks",
+      key: "AppointmentRemarks",
     },
     {
-      title: "Sat",
-      dataIndex: "Sat",
-      key: "Sat",
+      title: "AppointmentType",
+      dataIndex: "AppointmentType",
+      key: "AppointmentType",
     },
     {
-      title: "AppTimeGap",
-      dataIndex: "AppTimeGap",
-      key: "AppTimeGap",
+      title: "EntryDate",
+      dataIndex: "EntryDate",
+      key: "EntryDate",
+      render: (val) => <DateTimeBAdge data={val} />,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            className="btn-load"
+            onClick={() =>
+              navigate(`/appointmenttime/edit/${record.DocId}`, {
+                state: { entereddate: selectedDate },
+              })
+            }
+          >
+            Edit
+          </Button>
+        </Space>
+      ),
     },
     //
   ];
@@ -80,13 +114,14 @@ const BookedOnlineAppointments = () => {
       setLoading(true);
       const data = {
         docId: inputValue,
+        appointmentDate: selectedDate,
       };
-      GetDocTimeScheduleForAppointments(data, (res) => {
+      GetBookedOnlineAppointmentDetailsByDocIdAndDates(data, (res) => {
         // console.log(res, "res");
-        if (res?.AppointmentTime && res?.AppointmentTime.length > 0) {
-          setDepartmentList(res.AppointmentTime);
+        if (res?.BookedTime && res?.BookedTime.length > 0) {
+          setBookedList(res.BookedTime);
         } else {
-          setDepartmentList([]);
+          setBookedList([]);
         }
         setLoading(false);
       });
@@ -109,6 +144,15 @@ const BookedOnlineAppointments = () => {
           }
         >
           <ClientDepartmentButton>
+            <Button
+              htmlType="submit"
+              className="btn-load"
+              // disabled={butDis}
+              type="primary"
+              onClick={() => handleRedirect()}
+            >
+              Add Appointments
+            </Button>
             <div>
               <label className="label-name">Doctor ID</label>
               <Input
@@ -118,6 +162,17 @@ const BookedOnlineAppointments = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
+              <label style={{ marginLeft: "10px" }} className="label-name">
+                Dates
+              </label>
+              {/* <Input
+                id="input"
+                type="number"
+                style={{ width: 300 }}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              /> */}
+              <DatePicker onChange={(dates) => formatDates(dates)} />
               <Button className="btn-load" onClick={handleClick}>
                 Load
               </Button>
@@ -125,9 +180,9 @@ const BookedOnlineAppointments = () => {
           </ClientDepartmentButton>
         </Card>
       </div>
-      {departmentList === null ? (
+      {bookedlist === null ? (
         ""
-      ) : departmentList.length === 0 ? (
+      ) : bookedlist.length === 0 ? (
         <div className="data-not-found">No data found</div>
       ) : (
         <div className="ant-card-head table-data table-div">
@@ -136,7 +191,7 @@ const BookedOnlineAppointments = () => {
               <span className="data-not-found">Data Not Found</span>
             </div>
           ) : (
-            <Table dataSource={departmentList} columns={columns} />
+            <Table dataSource={bookedlist} columns={columns} />
           )}
         </div>
       )}

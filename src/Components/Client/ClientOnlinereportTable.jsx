@@ -47,10 +47,28 @@ const ClientOnlinereportTable = () => {
       dataIndex: "ClientLogo",
       key: "ClientLogo",
       render: (ClientLogo) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientLogo}`}
-        />
+        <>
+          {ClientLogo ? (
+            <img
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${ClientLogo}`}
+            />
+          ) : (
+            <div
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+                backgroundColor: "#ccc",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              No Image
+            </div>
+          )}
+        </>
       ),
     },
 

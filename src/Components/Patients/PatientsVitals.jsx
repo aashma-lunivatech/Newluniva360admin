@@ -170,7 +170,7 @@ const PatientsVitals = () => {
                 type="primary"
                 onClick={() => handleRedirect()}
               >
-                Add Vitalss
+                Add Vitals
               </Button>
             </div>
             <div className="add-button">
@@ -204,7 +204,7 @@ const PatientsVitals = () => {
       {vitaldetails === null ? (
         ""
       ) : vitaldetails.length === 0 ? (
-        <div className="data-not-found">No data found</div>
+        <div className="data-not-found">Data Not found</div>
       ) : (
         <div className="ant-card-head table-data table-div">
           {loading ? (

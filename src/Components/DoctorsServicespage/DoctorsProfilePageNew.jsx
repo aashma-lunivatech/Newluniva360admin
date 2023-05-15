@@ -1,5 +1,6 @@
-import { Button, Card, Input, Space, Table, Tag } from "antd";
+import { Avatar, Button, Card, Input, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import {
   GetDoctorDetailsByDoctorIds,
@@ -28,10 +29,25 @@ const DoctorsProfilePageNew = () => {
       dataIndex: "DocImage",
       key: "DocImage",
       render: (DocImage) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
-        />
+        <>
+          {DocImage && DocImage.includes("/") && DocImage.length > 6 ? (
+            <img
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${DocImage}`}
+            />
+          ) : (
+            <div>
+              <Avatar
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                icon={
+                  <UserOutlined
+                    style={{ marginTop: "20px", fontSize: "48px" }}
+                  />
+                }
+              />
+            </div>
+          )}
+        </>
       ),
     },
     {

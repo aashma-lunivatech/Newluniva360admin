@@ -1,9 +1,9 @@
-import { Button, Card, Input, Space, Table, Tag } from "antd";
+import { Avatar, Button, Card, Input, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getClientWiseDepartmentByClientIdluniva } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
-
+import { UserOutlined } from "@ant-design/icons";
 const GetClientWiseDepartment = ({ nextForm }) => {
   // console.log(nextForm, "nextForm");
   const [departmentList, setDepartmentList] = useState(null);
@@ -57,10 +57,29 @@ const GetClientWiseDepartment = ({ nextForm }) => {
       dataIndex: "LogoPath",
       key: "LogoPath",
       render: (LogoPath) => (
-        <img
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-          src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${LogoPath}`}
-        />
+        // <img
+        //   style={{ width: 100, height: 100, borderRadius: 50 }}
+        //   src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${LogoPath}`}
+        // />
+        <>
+          {LogoPath && LogoPath.includes("/") && LogoPath.length > 6 ? (
+            <img
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${LogoPath}`}
+            />
+          ) : (
+            <div>
+              <Avatar
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+                icon={
+                  <UserOutlined
+                    style={{ marginTop: "20px", fontSize: "48px" }}
+                  />
+                }
+              />
+            </div>
+          )}
+        </>
       ),
     },
     {

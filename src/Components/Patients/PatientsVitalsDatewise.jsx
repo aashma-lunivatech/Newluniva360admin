@@ -9,15 +9,11 @@ import {
   Col,
   message,
 } from "antd";
-
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import DateTimeBAdge from "../Common/DateTimeBAdge";
-import {
-  GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRanges,
-  GetpatientVitalsDetailsByUserIds,
-} from "../../services/appServices/ProductionServices";
+import { GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRanges } from "../../services/appServices/ProductionServices";
 import moment from "moment";
 const { RangePicker } = DatePicker;
 const PatientsVitalsDateWise = () => {
@@ -27,17 +23,34 @@ const PatientsVitalsDateWise = () => {
   const [userid, setUserid] = useState();
   const [vitalsid, setVitalsid] = useState();
   const [doctorid, setDoctorId] = useState("");
-  const [dates, setDates] = useState([]);
-
+  const [selectedDate, setselectedDates] = useState();
+  useEffect(() => {
+    console.log(selectedDate, "dateshoma");
+  });
+  const formatDates = (values) => {
+    const startDate = values[0].format("YYYY-MM-DD");
+    const endDate = values[1].format("YYYY-MM-DD");
+    setselectedDates([startDate, endDate]);
+  };
+  // function onRangeChange(dates, dateStrings) {
+  //   console.log("Selected Range:", dates);
+  //   console.log("Formatted Selected Range:", dateStrings);
+  // }
   const handleClick = () => {
-    if (userid && vitalsid && !isNaN(userid) && !isNaN(vitalsid) && dates) {
+    if (
+      userid &&
+      vitalsid &&
+      !isNaN(userid) &&
+      !isNaN(vitalsid) &&
+      selectedDate
+    ) {
       // changed conditions for valid input
       setLoading(true);
       let data = {
         userid: parseInt(userid),
         vitalsof: parseInt(vitalsid),
-        fromdate: dates[0],
-        todate: dates[1],
+        fromdate: selectedDate[0],
+        todate: selectedDate[1],
       };
       console.log(data, "dateentered");
       GetpatientVitalsDetailsByUserIdAndVitalOfFamilyAndDateRanges(
@@ -56,9 +69,6 @@ const PatientsVitalsDateWise = () => {
       // add an error message or notification for invalid input
     }
   };
-  useEffect(() => {
-    console.log(dates, "dates");
-  });
   const columns = [
     {
       title: "UserId",
@@ -174,26 +184,22 @@ const PatientsVitalsDateWise = () => {
                       <label className="label-name">User ID</label>
                       <Input
                         type="number"
-                        style={{ width: 300 }}
+                        style={{ width: 200 }}
                         value={userid}
                         onChange={(e) => setUserid(e.target.value)}
                       />
                       <label className="label-name">Vitals ID</label>
                       <Input
                         type="number"
-                        style={{ width: 300 }}
+                        style={{ width: 200 }}
                         value={vitalsid}
                         onChange={(e) => setVitalsid(e.target.value)}
                       />
+                      <label className="label-name">Date:</label>
                       <div>
                         <RangePicker
-                          onChange={(values) => {
-                            setDates(
-                              values.map((item) => {
-                                return moment(item).format("YYYY-MM-DD");
-                              })
-                            );
-                          }}
+                          onChange={(dates) => formatDates(dates)}
+                          style={{ width: "100%" }}
                         />
                       </div>
                     </div>

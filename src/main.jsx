@@ -146,6 +146,10 @@ const router = createBrowserRouter([
         element: <AddAppointmentTime />,
       },
       {
+        path: "/appointmenttime/edit/:id",
+        element: <AddAppointmentTime />,
+      },
+      {
         path: "/registerclient",
         element: <RegisteredClient />,
       },

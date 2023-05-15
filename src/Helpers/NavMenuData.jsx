@@ -41,11 +41,17 @@ export const RouteDataAdmin = [
       //   icon: AiOutlineCheck,
       // },
       // {
-      //   id: 5,
-      //   label: "Online App ",
-      //   pathName: "/bookedonlineappointments",
+      //   id: 5.8,
+      //   label: "Add Appointment",
+      //   pathName: "/appointmenttime",
       //   icon: AiOutlineDesktop,
       // },
+      {
+        id: 5,
+        label: "Online Appointment",
+        pathName: "/bookedonlineappointments",
+        icon: AiOutlineDesktop,
+      },
       // {
       //   id: 5.5,
       //   label: "Settings",
@@ -203,13 +209,13 @@ export const RouteDataAdmin = [
     subNav: [
       {
         id: 20.6,
-        label: "Vitals",
+        label: "Add Vitals",
         pathName: "/patientsvitalss",
         icon: SiStaffbase,
       },
       {
         id: 20.7,
-        label: "Vitals",
+        label: " View Vitals Datewise",
         pathName: "/patientsvitalssdatewise",
         icon: SiStaffbase,
       },
