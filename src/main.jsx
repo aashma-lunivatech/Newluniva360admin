@@ -50,6 +50,8 @@ import DoctorRegistrationOnline from "./Components/OnlineConsultation/RegisterDo
 import PatientsVitals from "./Components/Patients/PatientsVitals";
 import AddPatientVitals from "./Components/Patients/AddPatientVitals";
 import PatientsVitalsDateWise from "./Components/Patients/PatientsVitalsDatewise";
+import PathologyLab from "./Components/PathologyLabDashboard/PathologyLab";
+import BookTestBill from "./Components/PathologyLabDashboard/BookTestBill";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -90,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <ClientLandingPage />,
+      },
+      {
+        path: "/pathologydashboard",
+        element: <PathologyLab />,
       },
       {
         path: "/adddoctortimeappointment",
@@ -284,6 +290,11 @@ const router = createBrowserRouter([
       {
         path: "/patientsvitalssdatewise",
         element: <PatientsVitalsDateWise />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/BookTestBill",
+        element: <BookTestBill />,
         errorElement: <ErrorPage />,
       },
     ],

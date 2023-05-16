@@ -17,6 +17,12 @@ const BookedOnlineAppointments = () => {
     const startDate = values.format("YYYY-MM-DD");
     setselectedDates(startDate);
   };
+  const handleEdit = (record) => {
+    navigate(`/appointmenttime/edit/${record.ApId}`, {
+      state: { selectedrecord: record },
+    });
+  };
+
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate("/appointmenttime");
@@ -89,14 +95,17 @@ const BookedOnlineAppointments = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button
+          {/* <Button
             className="btn-load"
             onClick={() =>
-              navigate(`/appointmenttime/edit/${record.DocId}`, {
+              navigate(`/appointmenttime/edit/${record.ApId}`, {
                 state: { entereddate: selectedDate },
               })
             }
           >
+            Edit
+          </Button> */}
+          <Button className="btn-load" onClick={() => handleEdit(record)}>
             Edit
           </Button>
         </Space>
@@ -143,7 +152,7 @@ const BookedOnlineAppointments = () => {
             }
           }
         >
-          <ClientDepartmentButton>
+          <div className="add-appointmnetbtn">
             <Button
               htmlType="submit"
               className="btn-load"
@@ -153,6 +162,8 @@ const BookedOnlineAppointments = () => {
             >
               Add Appointments
             </Button>
+          </div>
+          <ClientDepartmentButton>
             <div>
               <label className="label-name">Doctor ID</label>
               <Input
@@ -172,7 +183,10 @@ const BookedOnlineAppointments = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               /> */}
-              <DatePicker onChange={(dates) => formatDates(dates)} />
+              <DatePicker
+                style={{ width: "25%" }}
+                onChange={(dates) => formatDates(dates)}
+              />
               <Button className="btn-load" onClick={handleClick}>
                 Load
               </Button>
@@ -207,6 +221,10 @@ const DoctorSchedulelist = styled.div`
   .data-not-found {
     font-size: 18px;
     color: red;
+  }
+  .add-appointmnetbtn {
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 const ClientDepartmentButton = styled.div``;

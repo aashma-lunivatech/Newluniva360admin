@@ -15,6 +15,11 @@ const PatientsVitals = () => {
   const handleRedirect = () => {
     navigate("/addpatientvitals");
   };
+  const handleEdit = (record) => {
+    navigate(`/editpatientvitals/edit/${record.VId}`, {
+      state: { selectedrecord: record },
+    });
+  };
   //   const handleClick = () => {
   //     if (
   //       userid !== "" ||
@@ -133,14 +138,18 @@ const PatientsVitals = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button
+          {/* <Button
             className="btn-load"
             onClick={() =>
               navigate({
-                pathname: `/editpatientvitals/edit/${record.UserId}`,
+                pathname: `/editpatientvitals/edit/${record.VId}`,
+                state: { entereddate: record },
               })
             }
           >
+            Edit
+          </Button> */}
+          <Button className="btn-load" onClick={() => handleEdit(record)}>
             Edit
           </Button>
         </Space>

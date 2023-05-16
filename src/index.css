@@ -77,6 +77,9 @@ justify-content: flex-end;
   font-size: 16px;
   margin: 4px;
 }
+.btn-load :hover{
+  color: white;
+}
 .label-name {
   font-size: 14px;
   font-weight: 700;

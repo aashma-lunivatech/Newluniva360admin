@@ -130,14 +130,12 @@ const PatientsVitalsDateWise = () => {
       dataIndex: "ClinicalSymptoms",
       key: "ClinicalSymptoms",
     },
-
     {
       title: "EntryDate",
       dataIndex: "EntryDate",
       key: "EntryDate",
       render: (val) => <DateTimeBAdge data={val} />,
     },
-
     {
       title: "Action",
       key: "action",
@@ -147,7 +145,7 @@ const PatientsVitalsDateWise = () => {
             className="btn-load"
             onClick={() =>
               navigate({
-                pathname: `/editpatientvitals/edit/${record.UserId}`,
+                pathname: `/editpatientvitals/edit/${record.VId}`,
               })
             }
           >

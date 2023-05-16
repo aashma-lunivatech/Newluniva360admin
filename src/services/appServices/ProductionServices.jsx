@@ -591,7 +591,6 @@ export const InsertUpdateDailyVitalsOfPatients = async (
   successCallback
 ) => {
   try {
-    console.log(data, "data in production");
     const response = await store(`${InsertUpdateDailyVitalsOfPatient}`, data);
     if (response?.status === 200) {
       successCallback(response?.data);

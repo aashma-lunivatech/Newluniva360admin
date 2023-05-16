@@ -25,20 +25,23 @@ import {
 } from "../../services/appServices/ProductionServices";
 import dayjs from "dayjs";
 const AddAppointmentTime = () => {
+  const location = useLocation();
   const { id } = useParams();
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState();
   const [buttondisable, setButtondisable] = useState(false);
-  const [selectedvalue, setSelectedvalue] = useState();
   const [entrydate, setEntrydate] = useState();
-  const [bookedlist, setBookedList] = useState(null);
   const [editedvalue, setEditedValue] = useState();
-  const [selectedvaluedate, setSelectdevalue] = useState();
-  const location = useLocation();
-  const valueofselection = location.state.entereddate;
-  console.log(valueofselection, "value os selection");
+
   const dateFormat = "YYYY/MM/DD";
 
+  console.log(editedvalue, "editedvalue");
+
+  const selectedrecords = location.state?.selectedrecord;
+
+  useEffect(() => {
+    setEditedValue(selectedrecords);
+  }, [editedvalue]);
   const formatDates = (values) => {
     const startDate = values.format("YYYY-MM-DD");
     setSelectedDate(startDate);
@@ -46,6 +49,7 @@ const AddAppointmentTime = () => {
   const formatentrydates = (values) => {
     const startDate = values.format("YYYY-MM-DD");
     setEntrydate(startDate);
+    console.log(startDate, "startdate");
   };
   useEffect(() => {
     if (editedvalue !== undefined) {
@@ -54,32 +58,33 @@ const AddAppointmentTime = () => {
   }, [editedvalue]);
 
   console.log(id);
-  useEffect(() => {
-    console.log(editedvalue, selectedDate, "selectdate", "editedvalue");
-    if (editedvalue === undefined) {
-      const data = {
-        docId: id,
-        appointmentDate: valueofselection,
-      };
-      console.log(data, "dataho");
-      GetBookedOnlineAppointmentDetailsByDocIdAndDates(data, (res) => {
-        if (res?.BookedTime && res?.BookedTime.length > 0) {
-          console.log(res, "resjhomaamam");
-          setEditedValue(res?.BookedTime[0]);
-          setBookedList(res.BookedTime);
-        } else {
-          setBookedList([]);
-        }
-      });
-    }
-  }, [editedvalue]);
+
+  // useEffect(() => {
+  //   console.log(editedvalue, selectedDate, "selectdate", "editedvalue");
+  //   if (editedvalue === undefined) {
+  //     const data = {
+  //       docId: id,
+  //       appointmentDate: valueofselection,
+  //     };
+  //     console.log(data, "dataho");
+  //     GetBookedOnlineAppointmentDetailsByDocIdAndDates(data, (res) => {
+  //       if (res?.BookedTime && res?.BookedTime.length > 0) {
+  //         console.log(res, "resjhomaamam");
+  //         setEditedValue(res?.BookedTime[0]);
+  //         setBookedList(res.BookedTime);
+  //       } else {
+  //         setBookedList([]);
+  //       }
+  //     });
+  //   }
+  // }, [editedvalue]);
 
   const handleSubmit = (values) => {
     let data = {
-      ApId: editedvalue ? id : 0,
+      ApId: editedvalue ? parseInt(id) : 0,
       DocId: values?.DocId,
-      CovidId: values?.CovidId,
-      AppointmentDate: selectedDate,
+      AppointmentDate: selectedDate ?? editedvalue.AppointmentDate,
+      AppTime: values?.AppTime,
       AppointmentReason: values?.AppointmentReason,
       AppointmentFor: values?.AppointmentFor,
       PatientName: values?.PatientName,
@@ -87,30 +92,26 @@ const AddAppointmentTime = () => {
       AppointmentStatus: values?.AppointmentStatus,
       AppointmentRemarks: values?.AppointmentRemarks,
       AppointmentType: values?.AppointmentType,
-      EntryDate: entrydate,
+      EntryDate: entrydate ?? editedvalue.EntryDate,
       AppUserId: values?.AppUserId,
       UserId: 5,
-      AppTime: values?.AppTime,
+      CovidId: values?.CovidId,
     };
     InsertUpdateAppointments(data, (res) => {
-      // console.log(res, "i am response");
+      console.log(data, "i am response");
       if (res?.SuccessMsg == true) {
         message.success("Appointment Added Successfully");
-
         setButtondisable(true);
         // setTimeout(function () {
         //   window.location.reload();
         // }, 4000);
       } else {
-        message.warning("Error!");
+        message.warning(res?.Message);
       }
     });
     console.log(data, "i am a data");
   };
-  const handleChange = (value) => {
-    setSelectedvalue(value);
-    // console.log(value, "value");
-  };
+
   return (
     <AddDoctorAppointment>
       <div className="">
@@ -157,32 +158,6 @@ const AddAppointmentTime = () => {
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
               <Form.Item
-                label="AppUserId"
-                name="AppUserId"
-                values="AppUserId"
-                initialValue={editedvalue ? editedvalue.AppUserId : ""}
-                rules={[{ required: true, message: "AppUserId is required" }]}
-              >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
-              {/* <Form.Item
-                label="UserId"
-                name="UserId"
-                values="UserId"
-                rules={[{ required: true, message: "UserId is required" }]}
-              >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
-              <Form.Item
-                label="CovidId"
-                name="CovidId"
-                values="CovidId"
-                initialValue={editedvalue ? editedvalue.CovidId : ""}
-                rules={[{ required: true, message: "CovidId is required" }]}
-              >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
-              <Form.Item
                 // initialValue={
                 //   editedvalue
                 //     ? dayjs(
@@ -193,18 +168,16 @@ const AddAppointmentTime = () => {
                 // }
                 label="Appointment date"
                 name="AppointmentDate"
-                // values="AppointmentDate"
+                values="AppointmentDate"
                 rules={[
                   { required: true, message: "AppointmentDate is required" },
                 ]}
-                // initialValue={
-                //   editedvalue
-                //     ? dayjs(editedvalue.valueofselection, "YYYY-MM-DD")
-                //     : null
-                // }
                 initialValue={
                   editedvalue
-                    ? dayjs(valueofselection.split("T")[0], "YYYY-MM-DD")
+                    ? dayjs(
+                        editedvalue.AppointmentDate.split("T")[0],
+                        "YYYY-MM-DD"
+                      )
                     : null
                 }
               >
@@ -221,6 +194,7 @@ const AddAppointmentTime = () => {
                   value={selectedDate}
                 />
               </Form.Item>
+
               <Form.Item
                 label="AppTime"
                 name="AppTime"
@@ -234,13 +208,12 @@ const AddAppointmentTime = () => {
                 label="AppointmentReason"
                 name="AppointmentReason"
                 values="AppointmentReason"
+                initialValue={editedvalue ? editedvalue.AppointmentReason : ""}
                 rules={[
                   { required: true, message: "AppointmentReason is required" },
                 ]}
               >
-                <div className="date-selection">
-                  <TextArea rows={4} />
-                </div>
+                <TextArea rows={4} />
               </Form.Item>
               <Form.Item
                 label="AppointmentFor"
@@ -316,7 +289,7 @@ const AddAppointmentTime = () => {
                 ]}
                 initialValue={
                   editedvalue
-                    ? dayjs(valueofselection.split("T")[0], "YYYY-MM-DD")
+                    ? dayjs(editedvalue.EntryDate.split("T")[0], "YYYY-MM-DD")
                     : null
                 }
                 // initialValue={
@@ -338,6 +311,33 @@ const AddAppointmentTime = () => {
                   value={entrydate}
                 />
               </Form.Item>
+              <Form.Item
+                label="AppUserId"
+                name="AppUserId"
+                values="AppUserId"
+                initialValue={editedvalue ? editedvalue.AppUserId : ""}
+                rules={[{ required: true, message: "AppUserId is required" }]}
+              >
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              {/* <Form.Item
+                label="UserId"
+                name="UserId"
+                values="UserId"
+                rules={[{ required: true, message: "UserId is required" }]}
+              >
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item> */}
+              <Form.Item
+                label="CovidId"
+                name="CovidId"
+                values="CovidId"
+                initialValue={editedvalue ? editedvalue.CovidId : ""}
+                rules={[{ required: true, message: "CovidId is required" }]}
+              >
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+
               <Form.Item>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button

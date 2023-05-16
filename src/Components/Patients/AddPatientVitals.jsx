@@ -19,7 +19,7 @@ import {
   GetpatientVitalsDetailsByUserIds,
   InsertUpdateDailyVitalsOfPatients,
 } from "../../services/appServices/ProductionServices";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const AddPatientVitals = () => {
   const dateFormat = "YYYY/MM/DD";
@@ -32,29 +32,34 @@ const AddPatientVitals = () => {
   const [editedvitalvalue, setEditedvitalvalue] = useState();
   const [familyList, setFamilyList] = useState();
   //   const [relationshipselected, setrelationship] = useState();
-  const [vitaldetails, setVitalDetails] = useState();
   //   const handlerelationship = (e) => {
   //     setrelationship(e);
   //     console.log(e, "relationshipselected");
   //   };
-  const navigate = useNavigate();
+
   const { TextArea } = Input;
+  const location = useLocation();
+  const previousdata = location.state?.selectedrecord;
+  console.log(previousdata, "previous data");
   useEffect(() => {
+    setEditedvitalvalue(previousdata);
+  });
+  const datas = useEffect(() => {
     if (editedvitalvalue !== undefined) form.resetFields();
   }, [editedvitalvalue]);
-  useEffect(() => {
-    let data = {
-      userid: id,
-    };
-    GetpatientVitalsDetailsByUserIds(data, (res) => {
-      if (res?.ItemList && res?.ItemList.length > 0) {
-        setVitalDetails(res?.ItemList);
-        setEditedvitalvalue(res?.ItemList[0]);
-      } else {
-        setVitalDetails([]);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   let data = {
+  //     userid: id,
+  //   };
+  //   GetpatientVitalsDetailsByUserIds(data, (res) => {
+  //     if (res?.ItemList && res?.ItemList.length > 0) {
+  //       setVitalDetails(res?.ItemList);
+  //       setEditedvitalvalue(res?.ItemList[0]);
+  //     } else {
+  //       setVitalDetails([]);
+  //     }
+  //   });
+  // }, []);
   useEffect(() => {
     GetFamilyRelationShipDetailss((res) => {
       if (res?.FamilyList && res?.FamilyList.length > 0) {
@@ -81,26 +86,16 @@ const AddPatientVitals = () => {
       EntryDate: entrydate ?? currentDate,
       UserId: values?.UserId,
     };
-    console.log(data.VId, "data");
     InsertUpdateDailyVitalsOfPatients(data, (res) => {
-      console.log(data, "ia am saurey");
-      // console.log(res, "i am response");
+      console.log(data, "i am inside insert service");
       if (res?.SuccessMsg === true) {
-        message.success(`${res.Message}`);
-        message.config({
-          placement: "topRight",
-          duration: 3,
-          style: {
-            backgroundColor: "#f6ffed",
-            border: "1px solid #b7eb8f",
-          },
-        });
+        message.success(res?.Message);
         // setButtondisable(true);
         // setTimeout(function () {
         //   window.location.reload();
         // }, 4000);
       } else {
-        message.warning(`${res.Message}`);
+        message.warning(res.Message);
       }
     });
     console.log(data, "Vitals");
