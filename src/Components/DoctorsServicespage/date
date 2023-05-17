@@ -1,6 +1,6 @@
 // const formattedTime = moment(timeString, "HH:mm:ss");
-    // const hour = formattedTime.hour(); // extract hour value
-    // const min = formattedTime.minute();
-    // const second = formattedTime.second(); // extract second value
-    // console.log(hour, min, second, "hour,min and second values");
-    // console.log(time, timeString, "imatimestringhop");
+// const hour = formattedTime.hour(); // extract hour value
+// const min = formattedTime.minute();
+// const second = formattedTime.second(); // extract second value
+// console.log(hour, min, second, "hour,min and second values");
+// console.log(time, timeString, "imatimestringhop");

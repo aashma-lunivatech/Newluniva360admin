@@ -77,6 +77,13 @@ justify-content: flex-end;
   font-size: 16px;
   margin: 4px;
 }
+.save-btn-float-right{
+  float: right;
+}
+.print-companyname{
+  display: flex;
+  justify-content: center;
+}
 .btn-load :hover{
   color: white;
 }
@@ -133,4 +140,7 @@ justify-content: flex-end;
 /* antd chart card */
 .ant-card-bordered {
   margin-right: 10px;
+}
+.ant-descriptions-view{
+  margin-left: 12px;
 }

@@ -52,12 +52,19 @@ import AddPatientVitals from "./Components/Patients/AddPatientVitals";
 import PatientsVitalsDateWise from "./Components/Patients/PatientsVitalsDatewise";
 import PathologyLab from "./Components/PathologyLabDashboard/PathologyLab";
 import BookTestBill from "./Components/PathologyLabDashboard/BookTestBill";
+import BillPrintPage from "./Components/PathologyLabDashboard/BillPrintPage";
+import NewBookTest from "./Components/PathologyLabDashboard/NewBookTest";
 const router = createBrowserRouter([
   // {
   //   path: "/",
   //   element: <Homepage />,
   //   errorElement: <ErrorPage />,
   // },
+  {
+    path: "/billprintpage",
+    element: <BillPrintPage />,
+    errorElement: <ErrorPage />,
+  },
   {
     path: "/customer",
     element: <CustomerDashboard />,
@@ -297,6 +304,16 @@ const router = createBrowserRouter([
         element: <BookTestBill />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/newbooktestbill",
+        element: <NewBookTest />,
+        errorElement: <ErrorPage />,
+      },
+      // {
+      //   path: "/billprintpage",
+      //   element: <BillPrintPage />,
+      //   errorElement: <ErrorPage />,
+      // },
     ],
   },
 ]);

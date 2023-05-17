@@ -9,6 +9,7 @@ import {
   Input,
   InputNumber,
   Row,
+  notification,
 } from "antd";
 import { paymentType } from "../Common/paymentType";
 import html2canvas from "html2canvas";
@@ -16,6 +17,7 @@ import jsPDF from "jspdf";
 import styled from "styled-components";
 import { GetDepartmentLists } from "../../services/appServices/ProductionServices";
 
+import { Space, Table, Tag } from "antd";
 const BookTestBill = () => {
   const [rate, setRate] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -28,7 +30,75 @@ const BookTestBill = () => {
   const [pointRoundAmt, setPointRoundAmt] = useState(0);
   const [departmentlist, setAllDepartmentList] = useState();
   const [form] = Form.useForm();
+  useEffect(() => {
+    console.log(discountamount);
+  });
+  const columns = [
+    {
+      title: "Test Name",
+      dataIndex: "tname",
+      key: "tname",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Rate",
+      dataIndex: "Rate",
+      key: "Rate",
 
+      render: (text, record) => (
+        <InputNumber
+          style={{ width: "100%" }}
+          //   value={text}
+          onChange={(values) => handlerate(values, record.key)}
+        />
+      ),
+      //   render: (text, record) => {
+      //     console.log(record, "recordhoma");
+      //   },
+    },
+    {
+      title: "Quantity",
+      dataIndex: "Quantity",
+      key: "Quantity",
+      render: (text, record) => (
+        <InputNumber
+          style={{ width: "100%" }}
+          //   value={text}
+          onChange={(values) => handleQuantityChange(values, record.key)}
+        />
+      ),
+    },
+    {
+      title: "Price(Rs)",
+      dataIndex: "Price(Rs)",
+      key: "Price(Rs)",
+    },
+
+    // {
+    //   title: "Discount Per",
+    //   dataIndex: "Discount Per",
+    //   key: "Discount Per",
+    // },
+    // {
+    //   title: "Discount Amt",
+    //   dataIndex: "Discount Amt",
+    //   key: "Discount Amt",
+    // },
+    // {
+    //   title: "Final Price",
+    //   dataIndex: "Final Price",
+    //   key: "Final Price",
+    // },
+  ];
+  const data = [
+    {
+      key: "1",
+      tname: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      doctor: "ram",
+    },
+  ];
   //pdf converter
   // html2canvas(element).then((canvas) => {
   //   const imageData = canvas.toDataURL("image/png");
@@ -39,7 +109,14 @@ const BookTestBill = () => {
   //   pdf.addImage(imageData, "PNG", 100, 100, width, height);
   //   pdf.save("invoice.pdf");
   // });
-
+  const handlerate = (values) => {
+    console.log(values, "rate");
+    setRate(values);
+  };
+  const handleQuantityChange = (values) => {
+    console.log(values);
+    setQuantity(values);
+  };
   const checkvalue = (e) => {
     if (e > 101) {
       message.info("only enter the value less than 100");
@@ -67,7 +144,6 @@ const BookTestBill = () => {
   const grandtotal = () => {
     let totalss = total - discountamount;
     let totalD = Math.round(totalss);
-
     setGrandTotals(totalD);
   };
   const roundsfunc = () => {
@@ -265,15 +341,17 @@ const BookTestBill = () => {
                   </Form.Item> */}
                 </Col>
               </Row>
-              <Row gutter={16}>
-                <Col
-                  sm={24}
-                  md={24}
-                  xs={24}
-                  lg={6}
-                  xl={6}
-                  className="description-box"
-                >
+              <Row>
+                <Col sm={16} md={16} xs={16} lg={16} xl={16}>
+                  <div>
+                    <h3>Test List</h3>
+                    <Table columns={columns} dataSource={data} />
+                  </div>
+                </Col>
+                <Col sm={8} md={8} xs={8} lg={8} xl={8}>
+                  <div>
+                    <h3>Bill Transaction Details</h3>
+                  </div>
                   <Descriptions
                     bordered
                     layout="horizontal"
@@ -283,187 +361,59 @@ const BookTestBill = () => {
                     <Descriptions.Item label="SubTotal">
                       <span className="descriptioncol">{total}</span>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Discount (%)">
-                      <span className="descriptioncol">
-                        {discountpercentage?.toFixed(1)}
-                      </span>
-                    </Descriptions.Item>
+
                     <Descriptions.Item label="Discount Amt">
                       <span className="descriptioncol">
-                        {" "}
-                        {discountamount?.toFixed(1)}
+                        <InputNumber
+                          style={{
+                            width: "100%",
+                          }}
+                          min={0}
+                          onChange={(e) => {
+                            setDiscountAmount(e);
+                            calculateDiscountPercentage(e);
+                          }}
+                        />
+
+                        {/* {discountamount?.toFixed(1)} */}
                       </span>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Round Amt">
-                      <span className="descriptioncol"> {roundamt}</span>
+                    <Descriptions.Item label="Discount (%)">
+                      <span className="descriptioncol">
+                        {/* {discountpercentage?.toFixed(1)} */}
+                        <InputNumber
+                          style={{
+                            width: "100%",
+                          }}
+                          // min={0}
+                          max={100}
+                          onChange={(e) => {
+                            console.log(e, "discount percentage");
+                            // console.log(e.length, "discount lenght");
+
+                            checkvalue();
+                            setDiscountPercentage(e);
+                            // setDTracker(!dTracker)
+
+                            calculateDiscountAmount(e);
+                            console.log(e, "log from onchange");
+
+                            // autodisountamtcalculate(e);
+                            // autocalcDisAmount(e);
+                          }}
+                          // defaultValue={discountpercentage}
+                        />
+                      </span>
                     </Descriptions.Item>
+                    {/* <Descriptions.Item label="Round Amt">
+                      <span className="descriptioncol"> {roundamt}</span>
+                    </Descriptions.Item> */}
                     <Descriptions.Item label="GrandTotal">
                       <span className="descriptioncol"> {grandtotals}</span>
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
-                {/* span={10} */}
-                <Col sm={24} md={24} xs={24} lg={14} xl={10}>
-                  <Form.Item
-                    label="Item Name"
-                    name="item"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input item name!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label="Rate"
-                    name="rate"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input item rate!",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      min={0}
-                      onChange={(e) => {
-                        setRate(e);
-                      }}
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label="Quantity"
-                    name="qty"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input item quantity!",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      style={{
-                        width: "100%",
-                      }}
-                      min={0}
-                      onChange={(e) => setQuantity(e)}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label="Discount Amount"
-                    name="discountAmount"
-                    // rules={[
-                    //   {
-                    //     required: true,
-                    //     message: "Please input max discount!",
-                    //   },
-                    // ]}
-                  >
-                    <InputNumber
-                      style={{
-                        width: "100%",
-                      }}
-                      min={0}
-                      onChange={(e) => {
-                        setDiscountAmount(e);
-                        calculateDiscountPercentage(e);
-                      }}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col sm={24} md={24} xs={24} lg={10} xl={8}>
-                  <Form.Item
-                    label="Discount (%)"
-                    name="discountPercentage"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input item discount!",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      style={{
-                        width: "100%",
-                      }}
-                      // min={0}
-                      max={100}
-                      onChange={(e) => {
-                        // console.log(e, "discount percentage");
-                        // console.log(e.length, "discount lenght");
-
-                        checkvalue();
-                        setDiscountPercentage(e);
-                        // setDTracker(!dTracker)
-
-                        calculateDiscountAmount(e);
-                        // console.log(e, "log from onchange");
-
-                        // autodisountamtcalculate(e);
-                        // autocalcDisAmount(e);
-                      }}
-                      // defaultValue={discountpercentage}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label="Payment Type"
-                    name="pmt"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select payment type!",
-                      },
-                    ]}
-                  >
-                    <Select onChange={handleChange}>
-                      {paymentType.map((item) => {
-                        return (
-                          <Option value={item.paymentmethod} key={item.id}>
-                            {item.paymentmethod}
-                          </Option>
-                        );
-                      })}
-                    </Select>
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Remarks"
-                    name="Remarks"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input remarks!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Form.Item>
-                </Col>
               </Row>
-              <div className="itemsection">
-                <Row gutter={16}>
-                  <Col span={24}>
-                    <div className="save-btn-float-right">
-                      <Button htmlType="submit" className="btn-load">
-                        Save
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
             </Form>
           </Col>
         </Card>

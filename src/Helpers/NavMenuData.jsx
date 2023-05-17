@@ -221,4 +221,26 @@ export const RouteDataAdmin = [
       },
     ],
   },
+  {
+    id: 30.5,
+    label: "Pathology",
+    hasSubMenu: true,
+    icon: SiStaffbase,
+    subNav: [
+      {
+        id: 30.4,
+        label: "Pathology",
+        pathName: "/pathologydashboard",
+        icon: SiStaffbase,
+      },
+      {
+        id: 30.6,
+        label: "Invoice",
+        // pathName: "/BookTestBill",
+        pathName: "/newbooktestbill",
+        icon: SiStaffbase,
+      },
+      {},
+    ],
+  },
 ];
