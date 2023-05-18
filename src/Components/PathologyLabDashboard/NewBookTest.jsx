@@ -29,6 +29,7 @@ const BookTestBill = () => {
   const [chData, setChData] = useState({});
   const [pointRoundAmt, setPointRoundAmt] = useState(0);
   const [departmentlist, setAllDepartmentList] = useState();
+  const [chequenumber, setChequeNumber] = useState();
   const [form] = Form.useForm();
   useEffect(() => {
     console.log(discountamount);
@@ -93,7 +94,7 @@ const BookTestBill = () => {
   const data = [
     {
       key: "1",
-      tname: "John Brown",
+      tname: "WBC",
       age: 32,
       address: "New York No. 1 Lake Park",
       doctor: "ram",
@@ -113,6 +114,7 @@ const BookTestBill = () => {
     console.log(values, "rate");
     setRate(values);
   };
+
   const handleQuantityChange = (values) => {
     console.log(values);
     setQuantity(values);
@@ -121,6 +123,9 @@ const BookTestBill = () => {
     if (e > 101) {
       message.info("only enter the value less than 100");
     }
+  };
+  const Chequenohandle = (e) => {
+    setChequeNumber(e);
   };
 
   useEffect(() => {
@@ -140,6 +145,7 @@ const BookTestBill = () => {
   };
   const handleChange = (value) => {
     setChData(value);
+    console.log(value, "value selected");
   };
   const grandtotal = () => {
     let totalss = total - discountamount;
@@ -350,7 +356,7 @@ const BookTestBill = () => {
                 </Col>
                 <Col sm={8} md={8} xs={8} lg={8} xl={8}>
                   <div>
-                    <h3>Bill Transaction Details</h3>
+                    <h3 className="header-center">Bill Transaction Details</h3>
                   </div>
                   <Descriptions
                     bordered
@@ -358,13 +364,16 @@ const BookTestBill = () => {
                     column={1}
                     size="small"
                   >
-                    <Descriptions.Item label="SubTotal">
-                      <span className="descriptioncol">{total}</span>
+                    <Descriptions.Item label="GrandTotal">
+                      <span className="descriptioncol"> {grandtotals}</span>
                     </Descriptions.Item>
+                    {/* <Descriptions.Item label="SubTotal">
+                      <span className="descriptioncol">{total}</span>
+                    </Descriptions.Item> */}
 
                     <Descriptions.Item label="Discount Amt">
                       <span className="descriptioncol">
-                        <InputNumber
+                        {/* <InputNumber
                           style={{
                             width: "100%",
                           }}
@@ -373,47 +382,144 @@ const BookTestBill = () => {
                             setDiscountAmount(e);
                             calculateDiscountPercentage(e);
                           }}
-                        />
+                        /> */}
+                        <Form.Item
+                          name="discountAmount"
+                          // rules={[
+                          //   {
+                          //     required: true,
+                          //     message: "Please input max discount!",
+                          //   },
+                          // ]}
+                        >
+                          <InputNumber
+                            style={{
+                              width: "100%",
+                            }}
+                            min={0}
+                            onChange={(e) => {
+                              setDiscountAmount(e);
+                              calculateDiscountPercentage(e);
+                            }}
+                          />
+                        </Form.Item>
 
                         {/* {discountamount?.toFixed(1)} */}
                       </span>
                     </Descriptions.Item>
                     <Descriptions.Item label="Discount (%)">
                       <span className="descriptioncol">
-                        {/* {discountpercentage?.toFixed(1)} */}
-                        <InputNumber
-                          style={{
-                            width: "100%",
-                          }}
-                          // min={0}
-                          max={100}
-                          onChange={(e) => {
-                            console.log(e, "discount percentage");
-                            // console.log(e.length, "discount lenght");
+                        <Form.Item
+                          name="discountPercentage"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input item discount!",
+                            },
+                          ]}
+                        >
+                          <InputNumber
+                            style={{
+                              width: "100%",
+                            }}
+                            // min={0}
+                            max={100}
+                            onChange={(e) => {
+                              // console.log(e, "discount percentage");
+                              // console.log(e.length, "discount lenght");
 
-                            checkvalue();
-                            setDiscountPercentage(e);
-                            // setDTracker(!dTracker)
+                              checkvalue();
+                              setDiscountPercentage(e);
+                              // setDTracker(!dTracker)
 
-                            calculateDiscountAmount(e);
-                            console.log(e, "log from onchange");
+                              calculateDiscountAmount(e);
+                              // console.log(e, "log from onchange");
 
-                            // autodisountamtcalculate(e);
-                            // autocalcDisAmount(e);
-                          }}
-                          // defaultValue={discountpercentage}
-                        />
+                              // autodisountamtcalculate(e);
+                              // autocalcDisAmount(e);
+                            }}
+                            // defaultValue={discountpercentage}
+                          />
+                        </Form.Item>
                       </span>
                     </Descriptions.Item>
                     {/* <Descriptions.Item label="Round Amt">
                       <span className="descriptioncol"> {roundamt}</span>
                     </Descriptions.Item> */}
-                    <Descriptions.Item label="GrandTotal">
+                    {/* <Descriptions.Item label="GrandTotal">
                       <span className="descriptioncol"> {grandtotals}</span>
+                    </Descriptions.Item> */}
+                    <Descriptions.Item label="Payment type">
+                      <Row>
+                        <Col span={24}>
+                          <Form.Item
+                            // label="Payment Type"
+                            name="pmt"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please select payment type!",
+                              },
+                            ]}
+                          >
+                            <Select
+                              style={{ width: "100%" }}
+                              onChange={handleChange}
+                            >
+                              {paymentType.map((item) => {
+                                return (
+                                  <Option
+                                    value={item.paymentmethod}
+                                    key={item.id}
+                                  >
+                                    {item.paymentmethod}
+                                  </Option>
+                                );
+                              })}
+                            </Select>
+                            {chData === "Online pay" && (
+                              <div>
+                                <p>Online pay</p>
+                              </div>
+                            )}
+                            {chData === "Cash on Delivery" && (
+                              <div>
+                                <div>Cash on delivery</div>
+                              </div>
+                            )}
+                            {chData === "Cheque" && (
+                              <div>
+                                <div>
+                                  <div>
+                                    <p>Payment Code</p>
+                                    <InputNumber
+                                      onChange={Chequenohandle}
+                                      placeholder="XXXXXXXXXXXX"
+                                      style={{ width: "100%" }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {chData === "Credit Card" && ""}
+                          </Form.Item>
+                        </Col>
+                      </Row>
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
               </Row>
+              <div className="itemsection">
+                <Row gutter={16}>
+                  <Col span={24}>
+                    <div className="save-btn-float-right">
+                      <Button htmlType="submit" className="btn-load">
+                        Save
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </Form>
           </Col>
         </Card>

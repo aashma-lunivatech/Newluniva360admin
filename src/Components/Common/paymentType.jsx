@@ -11,4 +11,8 @@ export const paymentType = [
     id: 3,
     paymentmethod: "Credit Card",
   },
+  {
+    id: 4,
+    paymentmethod: "Cheque",
+  },
 ];

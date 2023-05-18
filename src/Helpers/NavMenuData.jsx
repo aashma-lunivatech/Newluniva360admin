@@ -12,6 +12,7 @@ import {
 } from "react-icons/Ai";
 import { CiMedicalCase } from "react-icons/Ci";
 import { SiStaffbase } from "react-icons/Si";
+
 export const RouteDataAdmin = [
   {
     id: 1,
@@ -229,9 +230,9 @@ export const RouteDataAdmin = [
     subNav: [
       {
         id: 30.4,
-        label: "Pathology",
+        label: "Dashboard",
         pathName: "/pathologydashboard",
-        icon: SiStaffbase,
+        icon: AiOutlineHome,
       },
       {
         id: 30.6,
@@ -240,7 +241,27 @@ export const RouteDataAdmin = [
         pathName: "/newbooktestbill",
         icon: SiStaffbase,
       },
-      {},
+      {
+        id: 30.8,
+        label: "Testlist",
+        // pathName: "/BookTestBill",
+        pathName: "/detailstestlist",
+        icon: SiStaffbase,
+      },
+    ],
+  },
+  {
+    id: 40,
+    label: "LabItems",
+    hasSubMenu: true,
+    icon: SiStaffbase,
+    subNav: [
+      {
+        id: 40.1,
+        label: "Test List",
+        pathName: "/labtestitems",
+        icon: SiStaffbase,
+      },
     ],
   },
 ];

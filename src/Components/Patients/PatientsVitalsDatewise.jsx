@@ -136,24 +136,24 @@ const PatientsVitalsDateWise = () => {
       key: "EntryDate",
       render: (val) => <DateTimeBAdge data={val} />,
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button
-            className="btn-load"
-            onClick={() =>
-              navigate({
-                pathname: `/editpatientvitals/edit/${record.VId}`,
-              })
-            }
-          >
-            Edit
-          </Button>
-        </Space>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (text, record) => (
+    //     <Space size="middle">
+    //       <Button
+    //         className="btn-load"
+    //         onClick={() =>
+    //           navigate({
+    //             pathname: `/editpatientvitals/edit/${record.VId}`,
+    //           })
+    //         }
+    //       >
+    //         Edit
+    //       </Button>
+    //     </Space>
+    //   ),
+    // },
   ];
 
   return (

@@ -54,6 +54,9 @@ import PathologyLab from "./Components/PathologyLabDashboard/PathologyLab";
 import BookTestBill from "./Components/PathologyLabDashboard/BookTestBill";
 import BillPrintPage from "./Components/PathologyLabDashboard/BillPrintPage";
 import NewBookTest from "./Components/PathologyLabDashboard/NewBookTest";
+import TestListPage from "./Components/PathologyLabDashboard/TestListPage";
+import LabTestItems from "./Components/LabItems/LabTestItems/LabTestItems";
+import AddLabTestItems from "./Components/LabItems/LabTestItems/AddLabTestItems";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -309,6 +312,24 @@ const router = createBrowserRouter([
         element: <NewBookTest />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/detailstestlist",
+        element: <TestListPage />,
+        errorElement: <ErrorPage />,
+      },
+      // AddLabTestItems
+      {
+        path: "/labtestitems",
+        element: <LabTestItems />,
+        errorElement: <ErrorPage />,
+      },
+      // /addlabtest
+      {
+        path: "/addlabtest",
+        element: <AddLabTestItems />,
+        errorElement: <ErrorPage />,
+      },
+
       // {
       //   path: "/billprintpage",
       //   element: <BillPrintPage />,

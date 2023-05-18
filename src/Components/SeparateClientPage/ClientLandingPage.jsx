@@ -8,6 +8,7 @@ import ClientServicesPage from "./ClientServicesPage/ClientServicesPage";
 import Doctorslist from "./CollapseMenuPage/Doctorslist";
 import DepartmentCollapseList from "./CollapseMenuPage/DepartmentCollapseList";
 import microscope1 from "../../assets/images/microscope.jpg";
+import DoctorTestimonials from "./DoctorTestimonials";
 const contentStyle = {
   height: "160px",
   color: "#fff",
@@ -58,6 +59,7 @@ const ClientLandingPage = () => {
         </Col>
         <Col span={12}>{/* <ClientServicesPage /> */}</Col>
       </Row>
+
       <Row>
         <Col span={12}>
           {/* <Dashboardchart /> */}
@@ -77,6 +79,13 @@ const ClientLandingPage = () => {
             <DepartmentCollapseList />
           </Col>
         </Row>
+        <div>
+          <Row>
+            <Col span={24}>
+              <DoctorTestimonials />
+            </Col>
+          </Row>
+        </div>
       </div>
     </LandingPage>
   );
