@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   GetDocTimeScheduleForAppointments,
+  GetDoctorDetailsByDoctorIds,
   InsertUpdateDoctorAvailableTimeForAppointments,
 } from "../../services/appServices/ProductionServices";
 import { useParams } from "react-router-dom";
@@ -25,8 +26,10 @@ const AddDrAvailableTimeAppoinment = () => {
   console.log(id, "id of previous value");
   const [editedappointment, setEditedAppointment] = useState();
   const [appointmentlist, setAppointmentList] = useState();
+  const [userselecteddoctor, setUserSelectedDoctor] = useState([]);
   const [buttondisable, setButtondisable] = useState(false);
   const [selectedShift, setSelectedShift] = useState();
+  const [inputValue, setInputValue] = useState();
   const [sunday, setSunday] = useState();
   const [monday, setMonday] = useState();
   const [tuesday, setTuesday] = useState();
@@ -37,6 +40,9 @@ const AddDrAvailableTimeAppoinment = () => {
   const [loading, setLoading] = useState(false);
   dayjs.extend(customParseFormat);
 
+  useEffect(() => {
+    console.log(inputValue, "inputValue");
+  });
   const [form] = Form.useForm();
   const sunOnChange = (time, timeString) => {
     // console.log(timeString, "timestring");
@@ -165,6 +171,21 @@ const AddDrAvailableTimeAppoinment = () => {
     });
     // console.log(data, "i am a data");
   };
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+        setListVisible(true);
+      }
+      setLoading(false);
+    });
+  }, []);
   const format = "h:mm A";
 
   return (
@@ -212,7 +233,29 @@ const AddDrAvailableTimeAppoinment = () => {
                 initialValue={editedappointment ? editedappointment.DoctId : ""}
                 rules={[{ required: true, message: "DoctId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
+                {/* <InputNumber style={{ width: "100%" }} /> */}
+                <Select
+                  style={{ width: "100%" }}
+                  value={inputValue}
+                  // onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(value) => setInputValue(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {userselecteddoctor !== undefined &&
+                    userselecteddoctor.map((e) => (
+                      <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                        {e.DoctorName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item
                 label="DShift"

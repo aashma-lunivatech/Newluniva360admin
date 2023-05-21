@@ -57,6 +57,9 @@ import NewBookTest from "./Components/PathologyLabDashboard/NewBookTest";
 import TestListPage from "./Components/PathologyLabDashboard/TestListPage";
 import LabTestItems from "./Components/LabItems/LabTestItems/LabTestItems";
 import AddLabTestItems from "./Components/LabItems/LabTestItems/AddLabTestItems";
+import AdminDashboard from "./Components/Dashboard/AdminDashboard/AdminDashboard";
+import AdminLoginPage from "./Pages/Login/AdminLoginpage";
+import DoctorServices from "./Components/Dashboard/DoctorDashboard/DoctorServices";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -68,6 +71,7 @@ const router = createBrowserRouter([
     element: <BillPrintPage />,
     errorElement: <ErrorPage />,
   },
+
   {
     path: "/customer",
     element: <CustomerDashboard />,
@@ -76,6 +80,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Homepage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/adminlogin",
+    element: <AdminLoginPage />,
     errorElement: <ErrorPage />,
   },
   {
@@ -116,6 +125,11 @@ const router = createBrowserRouter([
         path: "/editdoctoravailableschdeule/edit/:id",
         element: <AddDrAvailableTimeAppoinment />,
         // element: <AddNewDrAvailableTimeAppoinment />,
+      },
+      {
+        path: "/admindashboard",
+        element: <AdminDashboard />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "/appointment",
@@ -241,6 +255,11 @@ const router = createBrowserRouter([
       {
         path: "/admindepartment",
         element: <AdminDepartment />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/doctorservices",
+        element: <DoctorServices />,
         errorElement: <ErrorPage />,
       },
 

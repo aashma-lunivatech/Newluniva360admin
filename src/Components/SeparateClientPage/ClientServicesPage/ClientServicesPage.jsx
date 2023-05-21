@@ -4,67 +4,109 @@ import styled from "styled-components";
 import { AiOutlineHome, AiOutlineMeh } from "react-icons/Ai";
 import doctor from "../../../assets/images/doctors.png";
 import microscope1 from "../../../assets/images/microscope.jpg";
+import clientimage from "../../../assets/images/clientimage.png";
+import appointmentimage from "../../../assets/images/appointmentimage.png";
 import { useNavigate } from "react-router-dom";
 const ClientServicesPage = () => {
   const { Meta } = Card;
   const navigate = useNavigate();
-  const handleAppointmentclick = () => {
+  const handledoctorclicked = () => {
+    // navigate("/doctor");
+    navigate("/doctorservices");
+  };
+  const handleclientclicked = () => {
+    navigate("/clients");
+  };
+  const handledepartmentclicked = () => {
+    navigate("/admindepartment");
+  };
+  const handleappointment = () => {
     navigate("/doctortime");
   };
-  const data = [
-    {
-      name: "Book Appointments",
-      totalnum: "30",
-      icon: AiOutlineHome,
-    },
-    {
-      name: "Patients",
-      totalnum: "70",
-      icon: AiOutlineMeh,
-    },
-    // {
-    //   name: "Group",
-    //   totalnum: "80",
-    //   icon: AiFillSetting,
-    // },
-  ];
-
+  // const handledepartmentclicked = () => {};
   return (
     <ClientServices>
       <Card
-        style={{
-          width: 500,
-        }}
+        style={
+          {
+            // width: ,
+          }
+        }
       >
         <Row gutter={2}>
           <Col span={6}>
             <Card
-              onClick={handleAppointmentclick}
+              onClick={handledoctorclicked}
               hoverable
-              style={{
-                width: 200,
-              }}
-              cover={<img src={microscope1} alt="microscope" />}
+              style={
+                {
+                  // width: 200,
+                }
+              }
+              cover={<img src={doctor} alt="microscope" />}
             >
-              <Meta title="Set Appointments" />
+              <Meta title="Doctors" />
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card
+              onClick={handleclientclicked}
+              hoverable
+              style={
+                {
+                  // width: 200,
+                  // marginLeft: "20px",
+                }
+              }
+              cover={<img src={clientimage} alt="microscope" />}
+            >
+              <Meta title="Clients" />
             </Card>
           </Col>
           <Col
-            style={{
-              //   width: 200,
-              marginLeft: "80px",
-            }}
+            style={
+              {
+                //   width: 200,
+                // marginLeft: "80px",
+              }
+            }
             span={6}
           >
             <Card
+              onClick={handledepartmentclicked}
               hoverable
-              style={{
-                width: 200,
-                marginLeft: "20px",
-              }}
-              cover={<img src={doctor} alt="microscope" />}
+              style={
+                {
+                  // width: 200,
+                  // marginLeft: "20px",
+                }
+              }
+              cover={<img src={microscope1} alt="microscope" />}
             >
-              <Meta title="Book Lab Test" />
+              <Meta title="Departments" />
+            </Card>
+          </Col>
+          <Col
+            style={
+              {
+                //   width: 200,
+                // marginLeft: "80px",
+              }
+            }
+            span={6}
+          >
+            <Card
+              onClick={handleappointment}
+              hoverable
+              style={
+                {
+                  // width: 200,
+                  // marginLeft: "20px",
+                }
+              }
+              cover={<img src={appointmentimage} alt="appointment" />}
+            >
+              <Meta title="Appointments" />
             </Card>
           </Col>
         </Row>

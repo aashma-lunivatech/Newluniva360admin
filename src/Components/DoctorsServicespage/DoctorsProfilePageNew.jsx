@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Input, Space, Table, Tag } from "antd";
+import { Avatar, Button, Card, Input, Space, Table, Tag, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
@@ -11,8 +11,11 @@ import DateTimeBAdge from "../Common/DateTimeBAdge";
 
 const DoctorsProfilePageNew = () => {
   const [inputValue, setInputValue] = useState("");
-  const [departmentList, setDepartmentList] = useState(null);
+  const [departmentList, setDepartmentList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [listVisible, setListVisible] = useState(false); // Flag to control list visibility
+  const [userselecteddoctor, setUserSelectedDoctor] = useState();
+  const { Option } = Select;
   const columns = [
     {
       title: "DId",
@@ -167,33 +170,54 @@ const DoctorsProfilePageNew = () => {
       ),
     },
   ];
+  useEffect(() => {
+    console.log(userselecteddoctor);
+  });
   const navigate = useNavigate();
+
   const handleRedirect = () => {
     navigate("/adddoctorprofile");
   };
+
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setDepartmentList(res?.DoctorDetails);
+      } else {
+        setDepartmentList([]);
+      }
+      setLoading(false);
+    });
+  }, []);
+
   const handleClick = () => {
-    if (
-      inputValue !== null &&
-      inputValue !== undefined &&
-      inputValue.trim() !== "" &&
-      !isNaN(inputValue)
-    ) {
-      setLoading(true);
-      const data = {
-        docId: inputValue,
-      };
-      GetDoctorDetailsByDoctorIds(data, (res) => {
-        // console.log(res, "res");
-        if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
-          setDepartmentList(res?.DoctorDetails);
-        } else {
-          setDepartmentList([]);
-        }
-        setLoading(false);
-      });
-    } else {
-      // console.log("out of block");
-    }
+    // if (
+    //   departmentList == null &&
+    //   inputValue !== null &&
+    //   inputValue !== undefined &&
+    //   inputValue.trim() !== "" &&
+    //   !isNaN(inputValue)
+    // ) {
+    //   setLoading(true);
+    const data = {
+      docId: inputValue,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+      }
+      setLoading(false);
+      setListVisible(true); // Show the list when data is loaded
+    });
+    // } else {
+    //   console.log("out of block");
+    // }
   };
 
   return (
@@ -211,7 +235,6 @@ const DoctorsProfilePageNew = () => {
           <div className="add-button">
             <Button
               htmlType="submit"
-              // disabled={butDis}
               type="primary"
               className="btn-load"
               onClick={() => handleRedirect()}
@@ -221,14 +244,29 @@ const DoctorsProfilePageNew = () => {
           </div>
           <ClientDepartmentButton>
             <div>
-              <label className="label-name">doctor ID</label>
-              <Input
-                id="input"
-                type="number"
-                style={{ width: 300 }}
+              <label className="label-name">Doctor:</label>
+              <Select
+                style={{ width: "30%" }}
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
+                // onChange={(e) => setInputValue(e.target.value)}
+                onChange={(value) => setInputValue(value)}
+                showSearch
+                filterOption={(input, option) => {
+                  return (
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0 ||
+                    option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  );
+                }}
+              >
+                {departmentList !== undefined &&
+                  departmentList.map((e) => (
+                    <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                      {e.DoctorName}
+                    </Option>
+                  ))}
+              </Select>
+
               <Button className="btn-load" onClick={handleClick}>
                 Load
               </Button>
@@ -236,18 +274,18 @@ const DoctorsProfilePageNew = () => {
           </ClientDepartmentButton>
         </Card>
       </div>
-      {departmentList === null ? (
-        ""
-      ) : departmentList.length === 0 ? (
-        <div className="data-not-found">No data found</div>
-      ) : (
+      {userselecteddoctor && ( // Render the list only when listVisible is true
         <div className="ant-card-head table-data table-div">
           {loading ? (
             <div>
               <span className="data-not-found">Loading</span>
             </div>
+          ) : userselecteddoctor === null ? (
+            ""
+          ) : userselecteddoctor.length === 0 ? (
+            <div className="data-not-found">No data found</div>
           ) : (
-            <Table dataSource={departmentList} columns={columns} />
+            <Table dataSource={userselecteddoctor} columns={columns} />
           )}
         </div>
       )}
@@ -256,6 +294,7 @@ const DoctorsProfilePageNew = () => {
 };
 
 export default DoctorsProfilePageNew;
+
 const DoctorSchedulelist = styled.div`
   .table-div {
     margin-top: 10px;
@@ -265,4 +304,5 @@ const DoctorSchedulelist = styled.div`
     color: red;
   }
 `;
+
 const ClientDepartmentButton = styled.div``;

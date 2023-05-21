@@ -15,27 +15,27 @@ const RegisteredClient = () => {
   };
   const [obtaindata, setObtaindata] = useState();
   const columns = [
-    {
-      title: "RId",
-      dataIndex: "RId",
-      key: "RId",
-    },
-    {
-      title: "ClientCode",
-      dataIndex: "ClientCode",
-      key: "ClientCode",
-    },
+    // {
+    //   title: "RId",
+    //   dataIndex: "RId",
+    //   key: "RId",
+    // },
+    // {
+    //   title: "ClientCode",
+    //   dataIndex: "ClientCode",
+    //   key: "ClientCode",
+    // },
     {
       title: "ClientName",
       dataIndex: "ClientName",
       key: "ClientName",
     },
 
-    {
-      title: "ClientCountry",
-      dataIndex: "ClientCountry",
-      key: "ClientCountry",
-    },
+    // {
+    //   title: "ClientCountry",
+    //   dataIndex: "ClientCountry",
+    //   key: "ClientCountry",
+    // },
 
     {
       title: "ClientState",
@@ -87,11 +87,11 @@ const RegisteredClient = () => {
       dataIndex: "ClinetContactPersonMobile",
       key: "ClinetContactPersonMobile",
     },
-    {
-      title: "UserId",
-      dataIndex: "UserId",
-      key: "UserId",
-    },
+    // {
+    //   title: "UserId",
+    //   dataIndex: "UserId",
+    //   key: "UserId",
+    // },
     {
       title: "RegisterDate",
       dataIndex: "RegisterDate",

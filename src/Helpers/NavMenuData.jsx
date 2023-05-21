@@ -15,6 +15,13 @@ import { SiStaffbase } from "react-icons/Si";
 
 export const RouteDataAdmin = [
   {
+    id: 19.0,
+    icon: AiOutlineHome,
+    label: "Admin Dashboard",
+    pathName: "/admindashboard",
+    hasSubMenu: false,
+  },
+  {
     id: 1,
     icon: AiOutlineHome,
     label: "Dashboard",

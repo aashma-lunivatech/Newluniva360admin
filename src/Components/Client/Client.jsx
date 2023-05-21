@@ -44,7 +44,7 @@ const Client = ({ nextForm, onEdit }) => {
   let currentDate = new Date().toISOString().split("T")[0];
   // console.log(currentDate, "currentdate");
   useEffect(() => {
-    // console.log(selectedDate, "selecteddate");
+    console.log(editvalue, "editvalue");
     if (editvalue !== undefined) {
       form.resetFields();
       // console.log("in am inside editfield valuie");
@@ -121,9 +121,22 @@ const Client = ({ nextForm, onEdit }) => {
       ClientCode: values?.ClientCode ?? "Np",
       ClientName: values?.ClientName,
       ClientCountry: values?.ClientCountry ?? "Np",
-      ClientState: values?.ClientState ?? editvalue.ClientState,
-      ClientDistrict: values?.ClientDistrict ?? editvalue.ClientState,
-      ClientMUNVDC: values?.ClientMUNVDC ?? editvalue.ClientState,
+      // ClientState: values?.ClientState ?? editvalue.ClientState,
+      ClientState:
+        values?.ClientState !== undefined
+          ? values.ClientState
+          : editvalue.ClientState,
+
+      ClientDistrict:
+        values?.ClientDistrict !== undefined
+          ? values.ClientDistrict
+          : editvalue.ClientDistrict,
+      ClientMUNVDC:
+        values?.ClientMUNVDC !== undefined
+          ? values.ClientMUNVDC
+          : editvalue.ClientMUNVDC,
+      // ClientDistrict: values?.ClientDistrict ?? editvalue.ClientDistrict,
+      // ClientMUNVDC: values?.ClientMUNVDC ?? editvalue.ClientMUNVDC,
       ClientLocalAddress: values?.ClientLocalAddress,
       ClientTypeId: values?.ClientTypeId ?? "assdnbn",
       ClientPAN: values?.ClientPAN,
@@ -181,6 +194,9 @@ const Client = ({ nextForm, onEdit }) => {
             <Form
               form={form}
               initialValues={editvalue}
+              // initialValues={
+              //   editvalue ? { ClientState: editvalue.ClientState } : null
+              // }
               onFinish={handleSubmit}
               labelCol={{
                 span: 8,
@@ -228,6 +244,7 @@ const Client = ({ nextForm, onEdit }) => {
                 {/* <InputNumber /> */}
                 <Select
                   onChange={handleStateChange}
+                  value={selectedstatevalue}
                   showSearch
                   filterOption={(input, option) => {
                     return (
@@ -320,7 +337,10 @@ const Client = ({ nextForm, onEdit }) => {
                 label="PAN"
                 name="ClientPAN"
                 values="ClientPAN"
-                rules={[{ required: true, message: "PAN is required" }]}
+                rules={[
+                  { required: true, message: "PAN is required" },
+                  { max: 9, message: "PAN should be a maximum of 9 digits" },
+                ]}
               >
                 <Input />
               </Form.Item>

@@ -1,9 +1,19 @@
-import { Button, Card, Input, Space, Table, Checkbox, Form } from "antd";
+import {
+  Button,
+  Card,
+  Input,
+  Space,
+  Table,
+  Checkbox,
+  Form,
+  Select,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   GetAppointmentSettingsByIds,
   GetDocTimeScheduleForAppointments,
+  GetDoctorDetailsByDoctorIds,
 } from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -56,11 +66,13 @@ const modalContent = () => {
 };
 
 const DoctorScheduleAppointment = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState();
   const [visible, setVisible] = useState(false);
-
-  const [departmentList, setDepartmentList] = useState(null);
+  const [departmentList, setDepartmentList] = useState([]);
+  const [userselecteddoctor, setUserSelectedDoctor] = useState([]);
+  const [doctorlist, setdoctorlist] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [listVisible, setListVisible] = useState(false);
   const columns = [
     {
       title: "DsId",
@@ -152,16 +164,31 @@ const DoctorScheduleAppointment = () => {
     },
     //
   ];
-
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+        setListVisible(true);
+      }
+      setLoading(false);
+    });
+  }, []);
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate("/adddoctortimeappointment");
   };
+
   const handleClick = () => {
     if (
       inputValue !== null &&
       inputValue !== undefined &&
-      inputValue.trim() !== "" &&
+      // inputValue.trim() !== "" &&
       !isNaN(inputValue)
     ) {
       setLoading(true);
@@ -174,6 +201,7 @@ const DoctorScheduleAppointment = () => {
           setDepartmentList(res.DoctorAppointment);
         } else {
           setDepartmentList([]);
+          setListVisible(true);
         }
         setLoading(false);
       });
@@ -208,14 +236,35 @@ const DoctorScheduleAppointment = () => {
           </div>
           <ClientDepartmentButton>
             <div>
-              <label className="label-name">Doctor ID</label>
-              <Input
+              <label className="label-name">Doctor</label>
+              {/* <Input
                 id="input"
                 type="number"
                 style={{ width: 300 }}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-              />
+              /> */}
+              <Select
+                style={{ width: "30%" }}
+                value={inputValue}
+                // onChange={(e) => setInputValue(e.target.value)}
+                onChange={(value) => setInputValue(value)}
+                showSearch
+                filterOption={(input, option) => {
+                  return (
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0 ||
+                    option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  );
+                }}
+              >
+                {userselecteddoctor !== undefined &&
+                  userselecteddoctor.map((e) => (
+                    <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                      {e.DoctorName}
+                    </Option>
+                  ))}
+              </Select>
               <Button className="btn-load" onClick={handleClick}>
                 Load
               </Button>
@@ -223,10 +272,12 @@ const DoctorScheduleAppointment = () => {
           </ClientDepartmentButton>
         </Card>
       </div>
-      {departmentList === null ? (
+      {userselecteddoctor === null ? (
         ""
-      ) : departmentList.length === 0 ? (
+      ) : userselecteddoctor.length === 0 ? (
         <div className="data-not-found">No data found</div>
+      ) : departmentList === null || departmentList.length === 0 ? (
+        ""
       ) : (
         <div className="ant-card-head table-data table-div">
           {loading ? (
@@ -238,6 +289,21 @@ const DoctorScheduleAppointment = () => {
           )}
         </div>
       )}
+      {/* {userselecteddoctor === null ? (
+        ""
+      ) : userselecteddoctor.length === 0 ? (
+        <div className="data-not-found">No data found</div>
+      ) : (
+        <div className="ant-card-head table-data table-div">
+          {loading ? (
+            <div>
+              <span className="data-not-found">Data Not Found</span>
+            </div>
+          ) : (
+            <Table dataSource={departmentList} columns={columns} />
+          )}
+        </div>
+      )} */}
       <Modal
         visible={visible}
         onCancel={() => setVisible(false)}
