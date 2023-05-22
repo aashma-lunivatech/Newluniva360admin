@@ -21,6 +21,7 @@ import styled from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
 import {
   GetBookedOnlineAppointmentDetailsByDocIdAndDates,
+  GetDoctorDetailsByDoctorIds,
   InsertUpdateAppointments,
 } from "../../services/appServices/ProductionServices";
 import dayjs from "dayjs";
@@ -32,7 +33,8 @@ const AddAppointmentTime = () => {
   const [buttondisable, setButtondisable] = useState(false);
   const [entrydate, setEntrydate] = useState();
   const [editedvalue, setEditedValue] = useState();
-
+  const [userselecteddoctor, setUserSelectedDoctor] = useState([]);
+  const [inputValue, setInputValue] = useState("");
   const dateFormat = "YYYY/MM/DD";
 
   console.log(editedvalue, "editedvalue");
@@ -51,6 +53,23 @@ const AddAppointmentTime = () => {
     setEntrydate(startDate);
     console.log(startDate, "startdate");
   };
+
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+        // setListVisible(true);
+      }
+      // setLoading(false);
+    });
+  }, []);
+
   useEffect(() => {
     if (editedvalue !== undefined) {
       form.resetFields();
@@ -155,7 +174,29 @@ const AddAppointmentTime = () => {
                 }
                 rules={[{ required: true, message: "DocId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
+                {/* <InputNumber style={{ width: "100%" }} /> */}
+                <Select
+                  style={{ width: "100%" }}
+                  value={inputValue}
+                  // onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(value) => setInputValue(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {userselecteddoctor !== undefined &&
+                    userselecteddoctor.map((e) => (
+                      <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                        {e.DoctorName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item
                 // initialValue={

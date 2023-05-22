@@ -199,43 +199,7 @@ const GetClientWiseDepartment = ({ nextForm }) => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                 /> */}
-                <Col span={24}>
-                  <Form.Item label="Client">
-                    <Select
-                      style={{ width: "100%" }}
-                      // onChange={handleclientselect}
-                      value={clientId}
-                      onChange={(value) => setClientId(value)}
-                      showSearch
-                      filterOption={(input, option) => {
-                        return (
-                          option.key
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0 ||
-                          option.title
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
-                    >
-                      {clientlist !== undefined &&
-                        clientlist.map((e) => (
-                          <Option
-                            title={e.ClientName}
-                            value={e.RId}
-                            key={e.RId}
-                          >
-                            {e.ClientName}
-                          </Option>
-                        ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Button className="btn-load" onClick={handleClick}>
-                    Load
-                  </Button>
-                </Col>
+                style={{ width: "100%" }}
                 <Row></Row>
               </div>
             </div>

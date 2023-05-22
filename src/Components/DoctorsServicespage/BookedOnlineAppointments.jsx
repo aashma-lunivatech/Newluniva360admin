@@ -1,9 +1,19 @@
-import { Button, Card, Col, DatePicker, Input, Space, Table } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Input,
+  Select,
+  Space,
+  Table,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   GetBookedOnlineAppointmentDetailsByDocIdAndDates,
   GetDocTimeScheduleForAppointments,
+  GetDoctorDetailsByDoctorIds,
 } from "../../services/appServices/ProductionServices";
 import DateTimeBAdge from "../Common/DateTimeBAdge";
 import { useNavigate } from "react-router-dom";
@@ -13,10 +23,14 @@ const BookedOnlineAppointments = () => {
   const [bookedlist, setBookedList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setselectedDates] = useState([]);
+  const [userselecteddoctor, setUserSelectedDoctor] = useState([]);
   const formatDates = (values) => {
     const startDate = values.format("YYYY-MM-DD");
     setselectedDates(startDate);
   };
+  useEffect(() => {
+    console.log(inputValue, "userselectdoctor");
+  }, []);
   const handleEdit = (record) => {
     navigate(`/appointmenttime/edit/${record.ApId}`, {
       state: { selectedrecord: record },
@@ -113,11 +127,26 @@ const BookedOnlineAppointments = () => {
     },
     //
   ];
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+        setListVisible(true);
+      }
+      setLoading(false);
+    });
+  }, []);
   const handleClick = () => {
     if (
       inputValue !== null &&
       inputValue !== undefined &&
-      inputValue.trim() !== "" &&
+      // inputValue.trim() !== "" &&
       !isNaN(inputValue)
     ) {
       setLoading(true);
@@ -166,13 +195,35 @@ const BookedOnlineAppointments = () => {
           <ClientDepartmentButton>
             <div>
               <label className="label-name">Doctor ID</label>
-              <Input
+              {/* <Input
                 id="input"
                 type="number"
                 style={{ width: 300 }}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-              />
+              /> */}
+              <Select
+                style={{ width: "30%" }}
+                value={inputValue}
+                // onChange={(e) => setInputValue(e.target.value)}
+                onChange={(value) => setInputValue(value)}
+                showSearch
+                filterOption={(input, option) => {
+                  return (
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0 ||
+                    option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  );
+                }}
+              >
+                {userselecteddoctor !== undefined &&
+                  userselecteddoctor.map((e) => (
+                    <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                      {e.DoctorName}
+                    </Option>
+                  ))}
+              </Select>
+
               <label style={{ marginLeft: "10px" }} className="label-name">
                 Dates
               </label>
