@@ -8,20 +8,23 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const DoctorServices = () => {
+const ClientDashboard = () => {
   const navigate = useNavigate();
-  const handledoctorclicked = () => {
-    navigate("/doctor");
+  const handleclientimage = () => {
+    navigate("/clientlogo");
     // navigate("/doctorservices");
   };
-  const handleclientclicked = () => {
-    navigate("/drschdeuleclient");
+  const handlebannerimage = () => {
+    navigate("/clientbanner");
   };
   const handledepartmentclicked = () => {
     navigate("/admindepartment");
   };
   const handleappointment = () => {
-    navigate("/doctortime");
+    navigate("/clients");
+  };
+  const handleclientdepartment = () => {
+    navigate("/clientwisedepartment");
   };
   const { Meta } = Card;
   return (
@@ -48,13 +51,13 @@ const DoctorServices = () => {
               >
                 <div className="style-evenly">
                   <SolutionOutlined style={{ fontSize: "20px" }} />
-                  <Meta title="Appointment" />
+                  <Meta title="Client Profile" />
                 </div>
               </Card>
             </Col>
             <Col span={6}>
               <Card
-                onClick={handledoctorclicked}
+                onClick={handleclientimage}
                 hoverable
                 style={
                   {
@@ -66,7 +69,7 @@ const DoctorServices = () => {
                 <div className="style-evenly">
                   <UserOutlined style={{ fontSize: "20px" }} />
 
-                  <Meta title="Doctor's Profile" />
+                  <Meta title="Upload Client Image" />
                 </div>
               </Card>
             </Col>
@@ -80,7 +83,7 @@ const DoctorServices = () => {
               span={6}
             >
               <Card
-                onClick={handleclientclicked}
+                onClick={handlebannerimage}
                 hoverable
                 style={
                   {
@@ -92,7 +95,33 @@ const DoctorServices = () => {
               >
                 <div className="style-evenly">
                   <FileUnknownFilled style={{ fontSize: "20px" }} />
-                  <Meta title="Doctor's Schedule" />
+                  <Meta title="Upload clientBanner" />
+                </div>
+              </Card>
+            </Col>
+            <Col
+              style={
+                {
+                  //   width: 200,
+                  // marginLeft: "80px",
+                }
+              }
+              span={6}
+            >
+              <Card
+                onClick={handleclientdepartment}
+                hoverable
+                style={
+                  {
+                    // width: 200,
+                    // marginLeft: "20px",
+                  }
+                }
+                // cover={<img src={microscope1} alt="microscope" />}
+              >
+                <div className="style-evenly">
+                  <FileUnknownFilled style={{ fontSize: "20px" }} />
+                  <Meta title="Client Department" />
                 </div>
               </Card>
             </Col>
@@ -103,7 +132,7 @@ const DoctorServices = () => {
   );
 };
 
-export default DoctorServices;
+export default ClientDashboard;
 const ClientServices = styled.div`
   .appointmentsection {
     display: flex;

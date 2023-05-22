@@ -14,6 +14,8 @@ import React, { useEffect, useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   GetDoctorAvailableTimeinClientByIds,
+  GetDoctorDetailsByDoctorIds,
+  GetListOfRegisteredClientsluniva,
   InsertUpdateClientWiseDoctorTimes,
 } from "../../services/appServices/ProductionServices";
 import { useParams } from "react-router-dom";
@@ -36,14 +38,14 @@ const AddClientWiseDoctorSchedule = () => {
   const [loading, setLoading] = useState(false);
   const [previoussunday, setPreviousSunday] = useState();
   const [availableTime, setAvailableTime] = useState();
+  const [userselecteddoctor, setUserSelectedDoctor] = useState([]);
+  const [clientlist, setClientList] = useState();
+  const [clientId, setClientId] = useState();
+  const [inputValue, setInputValue] = useState();
   // const [defaultdate, setDefaultDate] = useState();
   dayjs.extend(customParseFormat);
-  useEffect(() => {
-    // console.log(sunday, "dayvalue");
-    // console.log(defaultdate, "defaultdate");
-  }, []);
+
   const [form] = Form.useForm();
-  const timeString = "1:30 AM - 2:30AM";
   const sunOnChange = (time, timeString) => {
     // console.log(timeString, "timestring");
     setSunday(timeString);
@@ -147,6 +149,7 @@ const AddClientWiseDoctorSchedule = () => {
       Sat: formateedtdata.Sat.replace(/,/g, "-"),
       AppTimeGap: values?.AppTimeGap,
     };
+    console.log(data, "dataho");
     // console.log(Friday, "friday");
     InsertUpdateClientWiseDoctorTimes(data, (res) => {
       // console.log(res, "i am response");
@@ -171,6 +174,34 @@ const AddClientWiseDoctorSchedule = () => {
     console.log(data, "i am a data");
   };
   const format = "h:mm A";
+
+  useEffect(() => {
+    // Fetch department list when the component mounts
+    const data = {
+      docId: 0,
+    };
+    GetDoctorDetailsByDoctorIds(data, (res) => {
+      if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+        setUserSelectedDoctor(res?.DoctorDetails);
+      } else {
+        setUserSelectedDoctor([]);
+        setListVisible(true);
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    GetListOfRegisteredClientsluniva((res) => {
+      // console.log(res, "res");
+      if (res?.ClientList.length > 0) {
+        setClientList(res?.ClientList);
+      } else {
+        // console.log("out of if else");
+        setClientList([]);
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -211,22 +242,66 @@ const AddClientWiseDoctorSchedule = () => {
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item> */}
               <Form.Item
-                label="DoctorId"
+                label="Doctor"
                 name="DoctorId"
                 values="DoctorId"
                 initialValue={availableTime ? availableTime.DoctorId : ""}
                 rules={[{ required: true, message: "DoctorId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
+                {/* <InputNumber style={{ width: "100%" }} /> */}
+                <Select
+                  style={{ width: "100%" }}
+                  value={inputValue}
+                  // onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(value) => setInputValue(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {userselecteddoctor !== undefined &&
+                    userselecteddoctor.map((e) => (
+                      <Option title={e.DoctorName} value={e.DId} key={e.DId}>
+                        {e.DoctorName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item
-                label="ClientId"
+                label="Client"
                 name="ClientId"
                 values="ClientId"
                 initialValue={availableTime ? availableTime.ClientId : ""}
                 rules={[{ required: true, message: "ClientId is required" }]}
               >
-                <InputNumber style={{ width: "100%" }} />
+                {/* <InputNumber style={{ width: "100%" }} /> */}
+                <Select
+                  style={{ width: "100%" }}
+                  // onChange={handleclientselect}
+                  value={clientId}
+                  onChange={(value) => setClientId(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {clientlist !== undefined &&
+                    clientlist.map((e) => (
+                      <Option title={e.ClientName} value={e.RId} key={e.RId}>
+                        {e.ClientName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item
                 label="DocShift"

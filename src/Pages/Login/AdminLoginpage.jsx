@@ -3,13 +3,16 @@ import { Button, Input, Form, message } from "antd";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import Cover from "../../assets/images/clientimage.png";
+import { useNavigate } from "react-router-dom";
 const AdminLoginPage = () => {
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     let data = {
       username: e?.username,
       password: e?.password,
     };
-
+    navigate("/admindashboard");
+    console.log(data, "login credentials");
     // dispatch(
     //   getLoginApi(data, (res) => {
     //     if (res.length !== 0) {

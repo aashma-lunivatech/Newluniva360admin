@@ -60,6 +60,9 @@ import AddLabTestItems from "./Components/LabItems/LabTestItems/AddLabTestItems"
 import AdminDashboard from "./Components/Dashboard/AdminDashboard/AdminDashboard";
 import AdminLoginPage from "./Pages/Login/AdminLoginpage";
 import DoctorServices from "./Components/Dashboard/DoctorDashboard/DoctorServices";
+import ClientDashboard from "./Components/Dashboard/ClientDashboard/ClientDashboard";
+import SeparateClientLogo from "./Components/ImageuploadField/SeparateClientLogo";
+import SeparateBannerLogo from "./Components/ImageuploadField/SeparateBannerLogo";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -131,6 +134,18 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/clientmainpage",
+        element: <ClientDashboard />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/clientbanner",
+        element: <SeparateBannerLogo />,
+        errorElement: <ErrorPage />,
+      },
+      // SeparateBannerLogo
+
       {
         path: "/appointment",
         element: <DoctorDetails />,
@@ -284,6 +299,11 @@ const router = createBrowserRouter([
       {
         path: "/uploadclientlogo",
         element: <UploadClientLogo />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/clientlogo",
+        element: <SeparateClientLogo />,
         errorElement: <ErrorPage />,
       },
       {

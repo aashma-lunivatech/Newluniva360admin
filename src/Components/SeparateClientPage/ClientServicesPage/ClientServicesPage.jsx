@@ -15,7 +15,8 @@ const ClientServicesPage = () => {
     navigate("/doctorservices");
   };
   const handleclientclicked = () => {
-    navigate("/clients");
+    // navigate("/clients");
+    navigate("/clientmainpage");
   };
   const handledepartmentclicked = () => {
     navigate("/admindepartment");
@@ -86,7 +87,7 @@ const ClientServicesPage = () => {
               <Meta title="Departments" />
             </Card>
           </Col>
-          <Col
+          {/* <Col
             style={
               {
                 //   width: 200,
@@ -108,7 +109,7 @@ const ClientServicesPage = () => {
             >
               <Meta title="Appointments" />
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Card>
     </ClientServices>

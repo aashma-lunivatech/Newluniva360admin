@@ -153,6 +153,10 @@ justify-content: flex-end;
   display: flex;
   justify-content: space-between;
 }
+.style-evenly{
+  display: flex;
+  justify-content: space-evenly;
+}
 .input-searchbtn{
   display: flex;
   justify-content: flex-end;

@@ -1,7 +1,22 @@
-import { Avatar, Button, Card, Input, Space, Table, Tag } from "antd";
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Table,
+  Tag,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getClientWiseDepartmentByClientIdluniva } from "../../services/appServices/ProductionServices";
+import {
+  GetListOfRegisteredClientsluniva,
+  getClientWiseDepartmentByClientIdluniva,
+} from "../../services/appServices/ProductionServices";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 const GetClientWiseDepartment = ({ nextForm }) => {
@@ -10,18 +25,34 @@ const GetClientWiseDepartment = ({ nextForm }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [clientId, setClientId] = useState("");
+  const [clientlist, setClientList] = useState();
   const handleRedirect = () => {
     navigate("/addclientwisedepartment");
   };
+  useEffect(() => {
+    console.log(clientId, "clientid");
+  });
+  useEffect(() => {
+    GetListOfRegisteredClientsluniva((res) => {
+      // console.log(res, "res");
+      if (res?.ClientList.length > 0) {
+        setClientList(res?.ClientList);
+      } else {
+        // console.log("out of if else");
+        setClientList([]);
+      }
+    });
+  }, []);
   const handleClick = () => {
     if (
-      inputValue !== null &&
-      inputValue !== undefined &&
-      inputValue.trim() !== "" &&
-      !isNaN(inputValue)
+      clientId !== null &&
+      clientId !== undefined &&
+      // clientId.trim() !== "" &&
+      !isNaN(clientId)
     ) {
       const data = {
-        clientId: inputValue,
+        clientId: clientId,
       };
       getClientWiseDepartmentByClientIdluniva(data, (res) => {
         // console.log(res, "res");
@@ -147,29 +178,66 @@ const GetClientWiseDepartment = ({ nextForm }) => {
           }
         >
           <ClientDepartmentButton>
-            <h3>Client Id</h3>
+            <Button
+              htmlType="submit"
+              style={{ float: "right" }}
+              className="btn-load"
+              // disabled={butDis}
+              type="primary"
+              onClick={() => handleRedirect()}
+            >
+              Add Department
+            </Button>
+            {/* <div className="style-between"></div> */}
+
             <div className="add-button">
-              <div>
-                <Input
+              <div style={{ display: "flex" }}>
+                {/* <Input
                   id="input"
                   type="number"
                   style={{ width: 300 }}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                />
-                <Button className="btn-load" onClick={handleClick}>
-                  Load
-                </Button>
+                /> */}
+                <Col span={24}>
+                  <Form.Item label="Client">
+                    <Select
+                      style={{ width: "100%" }}
+                      // onChange={handleclientselect}
+                      value={clientId}
+                      onChange={(value) => setClientId(value)}
+                      showSearch
+                      filterOption={(input, option) => {
+                        return (
+                          option.key
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0 ||
+                          option.title
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
+                    >
+                      {clientlist !== undefined &&
+                        clientlist.map((e) => (
+                          <Option
+                            title={e.ClientName}
+                            value={e.RId}
+                            key={e.RId}
+                          >
+                            {e.ClientName}
+                          </Option>
+                        ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Button className="btn-load" onClick={handleClick}>
+                    Load
+                  </Button>
+                </Col>
+                <Row></Row>
               </div>
-              <Button
-                htmlType="submit"
-                className="btn-load"
-                // disabled={butDis}
-                type="primary"
-                onClick={() => handleRedirect()}
-              >
-                Add Department
-              </Button>
             </div>
           </ClientDepartmentButton>
         </Card>

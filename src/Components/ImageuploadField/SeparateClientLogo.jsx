@@ -6,19 +6,28 @@ import {
   InputNumber,
   Upload,
   message,
+  Select,
   notification,
 } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import { UploadClientLogos } from "../../services/appServices/ProductionServices";
 import { useLocation, useNavigate } from "react-router-dom";
-const UploadClientLogo = () => {
+import {
+  GetListOfRegisteredClientsluniva,
+  UploadClientLogos,
+} from "../../services/appServices/ProductionServices";
+const SeparateClientLogo = () => {
   const location = useLocation();
   const enteredid = location.state?.enteredvalue.RId;
   console.log(enteredid, "clientlistnavigatedata");
+  const [clientlist, setClientList] = useState();
   const [form] = Form.useForm();
   const [LogoPath, setLogoPath] = useState();
   const navigate = useNavigate();
+  const [clientId, setClientId] = useState("");
+  useEffect(() => {
+    console.log(clientId, "clientId");
+  });
   const photoprops = {
     name: "file",
     headers: {
@@ -33,7 +42,7 @@ const UploadClientLogo = () => {
   const handleSubmit = (values) => {
     console.log(values, "values");
     const formData = new FormData();
-    formData.append("clientid", enteredid);
+    formData.append("clientid", clientId);
     formData.append("filepath", LogoPath);
 
     UploadClientLogos(formData, (res) => {
@@ -43,13 +52,21 @@ const UploadClientLogo = () => {
       } else {
         message.warning("Failed to upload client logo");
       }
-      navigate("/uploadbannerimage");
-      // setTimeout(function () {
-      //   window.location.reload("/clients");
-      // }, 5000);
     });
     console.log(formData, "i am a data");
   };
+
+  useEffect(() => {
+    GetListOfRegisteredClientsluniva((res) => {
+      // console.log(res, "res");
+      if (res?.ClientList.length > 0) {
+        setClientList(res?.ClientList);
+      } else {
+        // console.log("out of if else");
+        setClientList([]);
+      }
+    });
+  }, []);
   return (
     <div>
       <div className="">
@@ -80,8 +97,32 @@ const UploadClientLogo = () => {
               }}
             >
               {/* <Form.Item label="Client Id" name="clientid" values="clientid">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item> */}
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item> */}
+              <Form.Item label="Client">
+                <Select
+                  style={{ width: "80%" }}
+                  // onChange={handleclientselect}
+                  value={clientId}
+                  onChange={(value) => setClientId(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {clientlist !== undefined &&
+                    clientlist.map((e) => (
+                      <Option title={e.ClientName} value={e.RId} key={e.RId}>
+                        {e.ClientName}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
               <Form.Item
                 label="Client Logo "
                 name="filepath"
@@ -113,4 +154,4 @@ const UploadClientLogo = () => {
   );
 };
 
-export default UploadClientLogo;
+export default SeparateClientLogo;
