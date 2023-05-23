@@ -8,21 +8,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const DoctorServices = () => {
+const MainPageOnlineRegistration = () => {
   const navigate = useNavigate();
-  const handledoctorclicked = () => {
-    navigate("/doctor");
+  const handleappointmentonline = () => {
+    navigate("/doctortime");
     // navigate("/doctorservices");
   };
-  const handleclientclicked = () => {
-    navigate("/drschdeuleclient");
+  const handledoctorclicked = () => {
+    navigate("/onlinedoctorregistration");
   };
-  const handledoctorlist = () => {
-    navigate("/viewdoctorlist");
-  };
-  const handleappointment = () => {
-    navigate("/doctortime");
-  };
+
   const { Meta } = Card;
   return (
     <div>
@@ -35,24 +30,7 @@ const DoctorServices = () => {
           }
         >
           <Row gutter={2}>
-            <Col span={6}>
-              <Card
-                onClick={handledoctorlist}
-                hoverable
-                style={
-                  {
-                    // width: 200,
-                  }
-                }
-                // cover={<img src={doctor} alt="microscope" />}
-              >
-                <div className="style-evenly">
-                  <SolutionOutlined style={{ fontSize: "20px" }} />
-                  <Meta title="Our Doctors" />
-                </div>
-              </Card>
-            </Col>
-            <Col span={6}>
+            {/* <Col span={6}>
               <Card
                 onClick={handleappointment}
                 hoverable
@@ -68,10 +46,10 @@ const DoctorServices = () => {
                   <Meta title="Appointment" />
                 </div>
               </Card>
-            </Col>
-            <Col span={6}>
+            </Col> */}
+            <Col span={8}>
               <Card
-                onClick={handledoctorclicked}
+                onClick={handleappointmentonline}
                 hoverable
                 style={
                   {
@@ -83,7 +61,7 @@ const DoctorServices = () => {
                 <div className="style-evenly">
                   <UserOutlined style={{ fontSize: "20px" }} />
 
-                  <Meta title="Doctor's Profile" />
+                  <Meta title="Online Doctor's Appointment" />
                 </div>
               </Card>
             </Col>
@@ -94,10 +72,10 @@ const DoctorServices = () => {
                   // marginLeft: "80px",
                 }
               }
-              span={6}
+              span={8}
             >
               <Card
-                onClick={handleclientclicked}
+                onClick={handledoctorclicked}
                 hoverable
                 style={
                   {
@@ -109,7 +87,7 @@ const DoctorServices = () => {
               >
                 <div className="style-evenly">
                   <FileUnknownFilled style={{ fontSize: "20px" }} />
-                  <Meta title="Doctor's Schedule" />
+                  <Meta title="Online Doctor Register" />
                 </div>
               </Card>
             </Col>
@@ -120,7 +98,7 @@ const DoctorServices = () => {
   );
 };
 
-export default DoctorServices;
+export default MainPageOnlineRegistration;
 const ClientServices = styled.div`
   .appointmentsection {
     display: flex;

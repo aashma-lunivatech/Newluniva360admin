@@ -63,6 +63,8 @@ import DoctorServices from "./Components/Dashboard/DoctorDashboard/DoctorService
 import ClientDashboard from "./Components/Dashboard/ClientDashboard/ClientDashboard";
 import SeparateClientLogo from "./Components/ImageuploadField/SeparateClientLogo";
 import SeparateBannerLogo from "./Components/ImageuploadField/SeparateBannerLogo";
+import MainPageOnlineRegistration from "./Components/Dashboard/OnlinePages/MainPageOnline";
+import TotalListOfDoctors from "./Components/Doctorspage/TotalListofDoctors";
 const router = createBrowserRouter([
   // {
   //   path: "/",
@@ -134,6 +136,12 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/onlineregistrationpage",
+        element: <MainPageOnlineRegistration />,
+        errorElement: <ErrorPage />,
+      },
+
       {
         path: "/clientmainpage",
         element: <ClientDashboard />,
@@ -213,6 +221,10 @@ const router = createBrowserRouter([
       {
         path: "/doctorslist",
         element: <DoctorsList />,
+      },
+      {
+        path: "/viewdoctorlist",
+        element: <TotalListOfDoctors />,
       },
       {
         path: "/doctorschedule",

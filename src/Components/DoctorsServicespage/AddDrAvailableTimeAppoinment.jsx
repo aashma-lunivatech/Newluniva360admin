@@ -227,7 +227,7 @@ const AddDrAvailableTimeAppoinment = () => {
                 <InputNumber style={{ width: "100%" }} disabled={true} />
               </Form.Item> */}
               <Form.Item
-                label="DoctId"
+                label="Doctor "
                 name="DoctId"
                 values="DoctId"
                 initialValue={editedappointment ? editedappointment.DoctId : ""}

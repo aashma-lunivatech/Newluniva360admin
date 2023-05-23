@@ -35,7 +35,7 @@ const ClientServicesPage = () => {
         }
       >
         <Row gutter={2}>
-          <Col span={6}>
+          <Col span={8}>
             <Card
               onClick={handledoctorclicked}
               hoverable
@@ -49,7 +49,7 @@ const ClientServicesPage = () => {
               <Meta title="Doctors" />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col span={8}>
             <Card
               onClick={handleclientclicked}
               hoverable
@@ -71,7 +71,7 @@ const ClientServicesPage = () => {
                 // marginLeft: "80px",
               }
             }
-            span={6}
+            span={8}
           >
             <Card
               onClick={handledepartmentclicked}
@@ -84,7 +84,7 @@ const ClientServicesPage = () => {
               }
               cover={<img src={microscope1} alt="microscope" />}
             >
-              <Meta title="Departments" />
+              <Meta title="Departments" style={{ fontSize: "10px" }} />
             </Card>
           </Col>
           {/* <Col

@@ -44,9 +44,13 @@ const Client = ({ nextForm, onEdit }) => {
   let currentDate = new Date().toISOString().split("T")[0];
   // console.log(currentDate, "currentdate");
   useEffect(() => {
-    console.log(editvalue, "editvalue");
+    // console.log(editvalue, "editvalue");
     if (editvalue !== undefined) {
       form.resetFields();
+      if (editvalue) {
+        setSelectedStateValue(editvalue.ClientState);
+        setSelectedDistrict(editvalue.ClientDistrict);
+      }
       // console.log("in am inside editfield valuie");
     }
   }, [editvalue]);

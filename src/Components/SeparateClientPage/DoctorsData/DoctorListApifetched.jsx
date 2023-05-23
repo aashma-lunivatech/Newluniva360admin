@@ -11,7 +11,7 @@ const DoctorListApifetched = () => {
   useEffect(() => {
     // console.log(doctorlist, "doctorlist");
     let data = {
-      docId: 17,
+      docId: 0,
     };
     if (doctorlist === undefined) {
       // console.log(doctorlist, "doctorlist");
@@ -38,7 +38,12 @@ const DoctorListApifetched = () => {
                     <img
                       alt="DocImage"
                       className="image-doctor"
-                      src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`}
+                      // src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`}
+                      src={
+                        report.DocImage
+                          ? `https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`
+                          : ""
+                      }
                     />
                     <div className="doctors-details">
                       <span className="doctor-name">{report.DoctorName}</span>

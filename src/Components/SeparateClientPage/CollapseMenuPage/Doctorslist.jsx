@@ -22,6 +22,7 @@ const Doctorslist = () => {
       }}
     />
   );
+
   return (
     <>
       <Collapse
@@ -35,7 +36,7 @@ const Doctorslist = () => {
           key="1"
           extra={genExtra()}
         >
-          <div>
+          <div style={{ maxHeight: "200px", overflowY: "auto" }}>
             <DoctorListApifetched />
           </div>
         </Panel>

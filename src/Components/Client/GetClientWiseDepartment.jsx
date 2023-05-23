@@ -140,6 +140,18 @@ const GetClientWiseDepartment = ({ nextForm }) => {
           >
             Edit
           </Button> */}
+          <div>
+            {/* <Input
+              id="input"
+              type="number"
+              style={{ width: 300 }}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <Button className="btn-load" onClick={handleClick}>
+              Load
+            </Button> */}
+          </div>
           <Button
             className="btn-load"
             onClick={() => {
@@ -164,6 +176,18 @@ const GetClientWiseDepartment = ({ nextForm }) => {
   //     }
   //   });
   // }, []);
+
+  useEffect(() => {
+    GetListOfRegisteredClientsluniva((res) => {
+      // console.log(res, "res");
+      if (res?.ClientList.length > 0) {
+        setClientList(res?.ClientList);
+      } else {
+        // console.log("out of if else");
+        setClientList([]);
+      }
+    });
+  }, []);
 
   return (
     <Doctorlists>
@@ -199,11 +223,42 @@ const GetClientWiseDepartment = ({ nextForm }) => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                 /> */}
-                style={{ width: "100%" }}
-                <Row></Row>
               </div>
             </div>
           </ClientDepartmentButton>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="Client">
+                <Select
+                  style={{ width: "100%" }}
+                  // onChange={handleclientselect}
+                  value={clientId}
+                  onChange={(value) => setClientId(value)}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return (
+                      option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0 ||
+                      option.title.toLowerCase().indexOf(input.toLowerCase()) >=
+                        0
+                    );
+                  }}
+                >
+                  {clientlist !== undefined &&
+                    clientlist.map((e) => (
+                      <Option title={e.ClientName} value={e.RId} key={e.RId}>
+                        {e.ClientName}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Button className="btn-load" onClick={handleClick}>
+                Load
+              </Button>
+            </Col>
+          </Row>
         </Card>
       </div>
 

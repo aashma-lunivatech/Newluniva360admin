@@ -233,7 +233,7 @@ const RegisteredClient = () => {
   useEffect(() => {
     GetListOfRegisteredClientsluniva((res) => {
       // console.log(res, "res");
-      if (res?.ClientList.length > 0) {
+      if (res?.ClientList && res?.ClientList.length > 0) {
         setObtaindata(res?.ClientList);
       } else {
         // console.log("out of if else");
