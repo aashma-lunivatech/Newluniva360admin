@@ -90,11 +90,9 @@ const MainLayout = ({}) => {
                           )}
                           {collapsed ? null : (
                             <span
-                              style={
-                                {
-                                  // marginLeft: "4px",
-                                }
-                              }
+                              style={{
+                                marginLeft: "4px",
+                              }}
                             >
                               {subNavItem.label}
                             </span>

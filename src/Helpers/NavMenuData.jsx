@@ -15,7 +15,14 @@ import {
   SiStaffbase,
   SiTryitonline,
   SiOneplus,
+  SiDrone,
   SiGooglehome,
+  SiMicrosoftoutlook,
+  SiEsphome,
+  SiInvoiceninja,
+  SiTestcafe,
+  SiOdnoklassniki,
+  SiStatuspal,
 } from "react-icons/Si";
 
 export const RouteDataAdmin = [
@@ -233,7 +240,7 @@ export const RouteDataAdmin = [
     label: "Online Consultation",
     pathName: "/onlineregistrationpage",
     hasSubMenu: false,
-    icon: SiTryitonline,
+    icon: SiStatuspal,
     // subNav: [
     //   {
     //     id: 20.1,
@@ -254,19 +261,19 @@ export const RouteDataAdmin = [
     label: "Patient",
     pathName: "/patientsvitals",
     hasSubMenu: true,
-    icon: SiStaffbase,
+    icon: SiOdnoklassniki,
     subNav: [
       {
         id: 20.6,
         label: "Add Vitals",
         pathName: "/patientsvitalss",
-        icon: SiStaffbase,
+        icon: SiOneplus,
       },
       {
         id: 20.7,
-        label: " View Vitals Datewise",
+        label: "View Vitals ",
         pathName: "/patientsvitalssdatewise",
-        icon: SiStaffbase,
+        icon: SiMicrosoftoutlook,
       },
     ],
   },
@@ -274,7 +281,7 @@ export const RouteDataAdmin = [
     id: 30.5,
     label: "Pathology",
     hasSubMenu: true,
-    icon: SiStaffbase,
+    icon: SiEsphome,
     subNav: [
       {
         id: 30.4,
@@ -287,14 +294,14 @@ export const RouteDataAdmin = [
         label: "Invoice",
         // pathName: "/BookTestBill",
         pathName: "/newbooktestbill",
-        icon: SiStaffbase,
+        icon: SiInvoiceninja,
       },
       {
         id: 30.8,
         label: "Testlist",
         // pathName: "/BookTestBill",
         pathName: "/detailstestlist",
-        icon: SiStaffbase,
+        icon: SiTestcafe,
       },
     ],
   },
@@ -302,13 +309,13 @@ export const RouteDataAdmin = [
     id: 40,
     label: "LabItems",
     hasSubMenu: true,
-    icon: SiStaffbase,
+    icon: SiMicrosoftoutlook,
     subNav: [
       {
         id: 40.1,
         label: "Test List",
         pathName: "/labtestitems",
-        icon: SiStaffbase,
+        icon: SiTestcafe,
       },
     ],
   },
