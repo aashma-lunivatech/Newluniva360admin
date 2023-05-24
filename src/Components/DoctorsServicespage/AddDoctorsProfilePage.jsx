@@ -15,6 +15,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import {
   GetDepartmentLists,
+  GetDoctorDetailsByDoctorIds,
   GetListOfDoctorDetails,
   InsertUpdateDoctorDetailss,
 } from "../../services/appServices/ProductionServices";
@@ -27,7 +28,7 @@ const AddDoctorsProfilePage = () => {
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState(null);
   const [buttondisable, setButtondisable] = useState(false);
-  const [gendervalue, setGendervalue] = useState("");
+  const [gendervalue, setGendervalue] = useState();
   const [editedvaluedoctor, setEditedValueDoctor] = useState();
   const [departmentlist, setDepartmentList] = useState();
   const [previousValue, setPreviousValue] = useState();
@@ -48,8 +49,14 @@ const AddDoctorsProfilePage = () => {
   let currentDate = new Date().toISOString().split("T")[0];
   // console.log(finaldate, "finaldate");
   useEffect(() => {
-    if (editedvaluedoctor !== undefined) form.resetFields();
-  }, [editedvaluedoctor]);
+    if (editedvaluedoctor !== undefined) {
+      form.resetFields();
+      setPreviousValue(editedvaluedoctor.DocGender);
+      // if (editedvaluedoctor) {
+      //   setPreviousValue(editedvaluedoctor.DocGender);
+      // }
+    }
+  }, [editedvaluedoctor, previousValue]);
   useEffect(() => {
     // console.log(editedvaluedoctor, "sekectednbsdnasb");
   }, [id]);
@@ -63,17 +70,17 @@ const AddDoctorsProfilePage = () => {
     });
   }, []);
   useEffect(() => {
-    // console.log(gendervalue, "gendervalue");
+    console.log(departmentlist, "departmentlist");
+    console.log(previousValue, "gendervalue");
     if (editedvaluedoctor === undefined) {
       let data = {
-        departmentId: id,
+        docId: id,
       };
-      GetListOfDoctorDetails(data, (res) => {
+      GetDoctorDetailsByDoctorIds(data, (res) => {
         // console.log(res, "res");
-        if (res?.DoctorList && res?.DoctorList.length > 0) {
-          setDepartmentList(res?.DoctorList);
-          setEditedValueDoctor(res?.DoctorList[0]);
-          console.log(departmentlist, "departmentlistofdoctor");
+        if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
+          setDepartmentList(res?.DoctorDetails);
+          setEditedValueDoctor(res?.DoctorDetails[0]);
           // console.log(editedvaluedoctor, "editedvaluedr");
         } else {
           setDepartmentList([]);
@@ -87,7 +94,11 @@ const AddDoctorsProfilePage = () => {
       DoctorName: values?.DoctorName,
       DocMobileNo: values?.DocMobileNo,
       DocContactNo: values?.DocContactNo.toString(),
-      DocGender: previousValue ?? editedvaluedoctor.DocGender,
+      // DocGender: previousValue ?? editedvaluedoctor.DocGender,
+      DocGender:
+        values?.DocGender !== undefined
+          ? values.DocGender
+          : editedvaluedoctor.DocGender,
       DocEmail: values?.DocEmail,
       DocQualification: values?.DocQualification ?? "mbbs",
       DocSpecilization: values?.DocSpecilization,
@@ -110,6 +121,7 @@ const AddDoctorsProfilePage = () => {
       ConferenceLink: values?.ConferenceLink ?? "abc.com",
       DepartmentId: values?.DepartmentId,
     };
+    console.log(data, "data");
     InsertUpdateDoctorDetailss(data, (res) => {
       // console.log(res, "i am response");
       if (res?.SuccessMsg == true) {
@@ -203,6 +215,7 @@ const AddDoctorsProfilePage = () => {
                 <Select
                   // onSelect={selectOnchange}
                   // value={gendervalue}
+                  value={previousValue}
                   onChange={(value) => {
                     setPreviousValue(value);
                   }}
@@ -308,7 +321,17 @@ const AddDoctorsProfilePage = () => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item label="Links" name="DocLinks" values="DocLinks">
+              <Form.Item
+                label="Links"
+                name="DocLinks"
+                values="DocLinks"
+                rules={[
+                  {
+                    required: true,
+                    message: "Doc Links  is required!",
+                  },
+                ]}
+              >
                 <Input />
               </Form.Item>
 

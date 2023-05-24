@@ -11,7 +11,12 @@ import {
   AiOutlineGlobal,
 } from "react-icons/Ai";
 import { CiMedicalCase } from "react-icons/Ci";
-import { SiStaffbase } from "react-icons/Si";
+import {
+  SiStaffbase,
+  SiTryitonline,
+  SiOneplus,
+  SiGooglehome,
+} from "react-icons/Si";
 
 export const RouteDataAdmin = [
   //New Maintained
@@ -25,7 +30,8 @@ export const RouteDataAdmin = [
     subNav: [
       {
         id: 1.0,
-        icon: CiMedicalCase,
+        // icon: SiOneplus,
+        icon: SiGooglehome,
         label: "Dashboard",
         // pathName: "/doctor",
         pathName: "/dashboard",
@@ -227,7 +233,7 @@ export const RouteDataAdmin = [
     label: "Online Consultation",
     pathName: "/onlineregistrationpage",
     hasSubMenu: false,
-    icon: SiStaffbase,
+    icon: SiTryitonline,
     // subNav: [
     //   {
     //     id: 20.1,

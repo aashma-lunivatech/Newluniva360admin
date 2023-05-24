@@ -41,7 +41,7 @@ export const data = {
 
 export function Dashboardchart() {
   return (
-    <Card style={{ height: 390 }}>
+    <Card style={{ height: 320, marginBottom: "10px" }}>
       <Line data={data} options={options} />
     </Card>
   );

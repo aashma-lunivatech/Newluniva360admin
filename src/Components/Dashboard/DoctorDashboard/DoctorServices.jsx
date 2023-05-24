@@ -1,7 +1,11 @@
 import {
+  DashboardOutlined,
+  FieldTimeOutlined,
   FileUnknownFilled,
+  ProfileOutlined,
   SolutionOutlined,
   UserOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Row } from "antd";
 import React from "react";
@@ -47,7 +51,7 @@ const DoctorServices = () => {
                 // cover={<img src={doctor} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <SolutionOutlined style={{ fontSize: "20px" }} />
+                  <UsergroupAddOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Our Doctors" />
                 </div>
               </Card>
@@ -64,7 +68,7 @@ const DoctorServices = () => {
                 // cover={<img src={doctor} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <SolutionOutlined style={{ fontSize: "20px" }} />
+                  <DashboardOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Appointment" />
                 </div>
               </Card>
@@ -81,8 +85,7 @@ const DoctorServices = () => {
                 }
               >
                 <div className="style-evenly">
-                  <UserOutlined style={{ fontSize: "20px" }} />
-
+                  <ProfileOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Doctor's Profile" />
                 </div>
               </Card>
@@ -108,7 +111,7 @@ const DoctorServices = () => {
                 // cover={<img src={microscope1} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <FileUnknownFilled style={{ fontSize: "20px" }} />
+                  <FieldTimeOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Doctor's Schedule" />
                 </div>
               </Card>

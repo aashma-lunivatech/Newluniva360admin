@@ -39,7 +39,6 @@ import {
 import { fetch, seperateStoreJson, store } from "../utils/httpUtil";
 //getdoctorlist
 export const GetListOfDoctorDetails = async (data, successCallback) => {
-  console.log(data, "datajhomaa");
   try {
     const response = await fetch(
       `${GetListOfDoctorDetailsByDepartment}?departmentId=${data.departmentId}`

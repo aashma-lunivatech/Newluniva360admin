@@ -1,4 +1,5 @@
 import {
+  AccountBookOutlined,
   FileUnknownFilled,
   SolutionOutlined,
   UserOutlined,
@@ -86,7 +87,7 @@ const MainPageOnlineRegistration = () => {
                 // cover={<img src={microscope1} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <FileUnknownFilled style={{ fontSize: "20px" }} />
+                  <AccountBookOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Online Doctor Register" />
                 </div>
               </Card>

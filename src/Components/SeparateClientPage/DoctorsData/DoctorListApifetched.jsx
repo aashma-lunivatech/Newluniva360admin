@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { GetDoctorDetailsByDoctorIds } from "../../../services/appServices/ProductionServices";
-import { Button, Card, Col, Row } from "antd";
+import { Avatar, Button, Card, Col, Row } from "antd";
 import styled from "styled-components";
+import { UserOutlined } from "@ant-design/icons";
 
 const DoctorListApifetched = () => {
   const { Meta } = Card;
@@ -9,23 +10,20 @@ const DoctorListApifetched = () => {
   const [totallist, setTotalList] = useState();
 
   useEffect(() => {
-    // console.log(doctorlist, "doctorlist");
     let data = {
       docId: 0,
     };
     if (doctorlist === undefined) {
-      // console.log(doctorlist, "doctorlist");
       GetDoctorDetailsByDoctorIds(data, (res) => {
-        // console.log(res, "res");
         if (res?.DoctorDetails && res?.DoctorDetails.length > 0) {
           setDoctorList(res?.DoctorDetails);
         } else {
-          // console.log("out of if else");
           setTotalList([]);
         }
       });
     }
   }, [doctorlist]);
+
   return (
     <DoctorListDashboard>
       <Row>
@@ -36,15 +34,28 @@ const DoctorListApifetched = () => {
                 <div>
                   <div className="doctorlistsection">
                     <img
-                      alt="DocImage"
+                      alt=""
                       className="image-doctor"
-                      // src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`}
                       src={
-                        report.DocImage
-                          ? `https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`
-                          : ""
+                        report.DocImage &&
+                        (report.DocImage === null ||
+                          report.DocImage.length === 6)
+                          ? ""
+                          : `https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.DocImage}`
                       }
                     />
+                    {(!report.DocImage || report.DocImage.length === 7) && (
+                      <div>
+                        <Avatar
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                          }}
+                          icon={<UserOutlined style={{ fontSize: "48px" }} />}
+                        />
+                      </div>
+                    )}
                     <div className="doctors-details">
                       <span className="doctor-name">{report.DoctorName}</span>
                       <span className="extras-details-doctor">
@@ -65,6 +76,7 @@ const DoctorListApifetched = () => {
 };
 
 export default DoctorListApifetched;
+
 const DoctorListDashboard = styled.div`
   .image-doctor {
     width: 50px;

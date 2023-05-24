@@ -93,7 +93,7 @@ const WholeBodyTestList = () => {
               onChange={handleSearch}
               style={{ width: "50%" }}
               className="input-searchbtn"
-              placeholder="Search Here"
+              placeholder="Search Test"
             />
           </Col>
         </Row>

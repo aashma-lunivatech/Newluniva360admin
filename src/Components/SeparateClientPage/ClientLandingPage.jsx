@@ -9,6 +9,7 @@ import Doctorslist from "./CollapseMenuPage/Doctorslist";
 import DepartmentCollapseList from "./CollapseMenuPage/DepartmentCollapseList";
 import microscope1 from "../../assets/images/microscope.jpg";
 import DoctorTestimonials from "./DoctorTestimonials";
+import PathologyLab from "../PathologyLabDashboard/PathologyLab";
 const contentStyle = {
   height: "160px",
   color: "#fff",
@@ -75,8 +76,13 @@ const ClientLandingPage = () => {
           <Col span={12}>
             <Dashboardchart />
           </Col>
-          <Col span={10}>
+          <Col span={10} style={{ maxHeight: "320px", overflowY: "auto" }}>
             <DepartmentCollapseList />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <PathologyLab />
           </Col>
         </Row>
         <div>

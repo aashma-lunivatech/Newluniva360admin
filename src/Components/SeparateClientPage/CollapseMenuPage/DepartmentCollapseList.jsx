@@ -1,3 +1,4 @@
+///department
 import React, { useEffect } from "react";
 import { SettingOutlined } from "@ant-design/icons";
 import { Col, Collapse, Row, Select } from "antd";
@@ -5,9 +6,12 @@ import { useState } from "react";
 import DoctorListApifetched from "../DoctorsData/DoctorListApifetched";
 import { GetDepartmentLists } from "../../../services/appServices/ProductionServices";
 import styled from "styled-components";
+// import "./DepartmentCollapseList.css"; // Import custom CSS file
+
 const { Panel } = Collapse;
 const { Option } = Select;
 const text = `scdnbsdn`;
+
 const DepartmentCollapseList = () => {
   const [departmentList, setDepartmentList] = useState();
   const [totallist, setTotalList] = useState();
@@ -28,7 +32,6 @@ const DepartmentCollapseList = () => {
 
   const Departmentlistdetails = () => {
     useEffect(() => {
-      // console.log(departmentList, "departlist");
       if (departmentList === undefined) {
         GetDepartmentLists((res) => {
           if (res?.DepartmentList && res?.DepartmentList.length > 0) {
@@ -37,17 +40,9 @@ const DepartmentCollapseList = () => {
             setDepartmentList([]);
           }
         });
-      } else {
-        const firstFiveDepartments = departmentList.slice(0, 5);
-        let temp = [];
-        for (let i = 0; i < firstFiveDepartments.length; i++) {
-          // console.log(firstFiveDepartments[i]); // or display them in any other way you want
-          temp.push(firstFiveDepartments[i]);
-          setDepartmentList(temp);
-          //   setDepartmentList(firstFiveDepartments[i]);
-        }
       }
     }, []);
+
     return (
       <>
         <Row>
@@ -56,11 +51,7 @@ const DepartmentCollapseList = () => {
               <div className="department-container" key={index}>
                 <Col span={5}>
                   <div className="doctorlistsection">
-                    {/* <img
-                        // alt="DocImage"
-                        className="image-doctor"
-                        src={`https://lunivacare.ddns.net/Luniva360mHealthAPI/${report.LogoPath}`}
-                      /> */}
+                    {/* Rest of the code */}
                     <div className="doctors-details">
                       {/* <span>{index + 1}</span> */}
                       <ul>
@@ -93,8 +84,7 @@ const DepartmentCollapseList = () => {
           key="1"
           extra={genExtra()}
         >
-          <div>
-            {/* <departmentlistdetails /> */}
+          <div className="custom-scrollbar">
             <Departmentlistdetails />
           </div>
         </Panel>

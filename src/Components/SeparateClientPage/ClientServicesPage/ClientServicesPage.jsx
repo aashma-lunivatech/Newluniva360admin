@@ -84,7 +84,10 @@ const ClientServicesPage = () => {
               }
               cover={<img src={microscope1} alt="microscope" />}
             >
-              <Meta title="Departments" style={{ fontSize: "10px" }} />
+              <Meta title="Area" />
+              {/* <Meta
+        title={<h3 className="card-title">Departments</h3>}
+      /> */}
             </Card>
           </Col>
           {/* <Col

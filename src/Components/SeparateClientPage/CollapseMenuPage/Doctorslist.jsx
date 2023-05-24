@@ -3,9 +3,10 @@ import { SettingOutlined } from "@ant-design/icons";
 import { Collapse, Select } from "antd";
 import { useState } from "react";
 import DoctorListApifetched from "../DoctorsData/DoctorListApifetched";
+
 const { Panel } = Collapse;
 const { Option } = Select;
-const text = `scdnbsdn`;
+
 const Doctorslist = () => {
   const [expandIconPosition, setExpandIconPosition] = useState("start");
   const onPositionChange = (newExpandIconPosition) => {
@@ -36,7 +37,7 @@ const Doctorslist = () => {
           key="1"
           extra={genExtra()}
         >
-          <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+          <div className="custom-scrollbar">
             <DoctorListApifetched />
           </div>
         </Panel>

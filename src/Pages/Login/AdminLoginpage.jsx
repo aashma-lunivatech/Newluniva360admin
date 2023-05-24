@@ -11,7 +11,7 @@ const AdminLoginPage = () => {
       username: e?.username,
       password: e?.password,
     };
-    navigate("/admindashboard");
+    navigate("/dashboard");
     console.log(data, "login credentials");
     // dispatch(
     //   getLoginApi(data, (res) => {

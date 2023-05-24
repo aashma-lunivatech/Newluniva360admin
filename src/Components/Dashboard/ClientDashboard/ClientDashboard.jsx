@@ -1,6 +1,8 @@
 import {
   FileUnknownFilled,
   SolutionOutlined,
+  SwitcherOutlined,
+  UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Row } from "antd";
@@ -67,7 +69,8 @@ const ClientDashboard = () => {
                 }
               >
                 <div className="style-evenly">
-                  <UserOutlined style={{ fontSize: "20px" }} />
+                  <UploadOutlined style={{ fontSize: "20px" }} />
+                  {/* <UploadOutlined /> */}
 
                   <Meta title="Upload Client Image" />
                 </div>
@@ -94,8 +97,8 @@ const ClientDashboard = () => {
                 // cover={<img src={microscope1} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <FileUnknownFilled style={{ fontSize: "20px" }} />
-                  <Meta title="Upload clientBanner" />
+                  <UploadOutlined style={{ fontSize: "20px" }} />
+                  <Meta title="Upload Client Banner" />
                 </div>
               </Card>
             </Col>
@@ -120,7 +123,7 @@ const ClientDashboard = () => {
                 // cover={<img src={microscope1} alt="microscope" />}
               >
                 <div className="style-evenly">
-                  <FileUnknownFilled style={{ fontSize: "20px" }} />
+                  <SwitcherOutlined style={{ fontSize: "20px" }} />
                   <Meta title="Client Department" />
                 </div>
               </Card>
