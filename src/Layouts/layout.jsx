@@ -52,55 +52,53 @@ const Mainlayout = ({}) => {
 
             {sideBarDataNew?.map((e) =>
               e.hasSubMenu === true ? (
-                <div>
-                  <SubMenu
-                    key={e.id}
-                    title={e.label}
-                    icon={
-                      e.icon && (
-                        <e.icon
-                          style={{
-                            fontSize: "20px",
-                          }}
-                        />
-                      )
-                    }
-                  >
-                    {e.subNav.map((subNavItem) => (
-                      <Menu.Item
-                        onClick={HandleSelection}
-                        key={subNavItem.id}
-                        item={subNavItem.label}
+                <SubMenu
+                  key={e.id}
+                  title={e.label}
+                  icon={
+                    e.icon && (
+                      <e.icon
+                        style={{
+                          fontSize: "20px",
+                        }}
+                      />
+                    )
+                  }
+                >
+                  {e.subNav.map((subNavItem) => (
+                    <Menu.Item
+                      onClick={HandleSelection}
+                      key={subNavItem.id}
+                      item={subNavItem.label}
+                    >
+                      <NavLink
+                        to={subNavItem.pathName}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginTop: "8px",
+                        }}
                       >
-                        <NavLink
-                          to={subNavItem.pathName}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            marginTop: "8px",
-                          }}
-                        >
-                          {subNavItem.icon && (
-                            <subNavItem.icon
-                              style={{
-                                fontSize: "20px",
-                              }}
-                            />
-                          )}
-                          {collapsed ? null : (
-                            <span
-                              style={{
-                                marginLeft: "8px",
-                              }}
-                            >
-                              {subNavItem.label}
-                            </span>
-                          )}
-                        </NavLink>
-                      </Menu.Item>
-                    ))}
-                  </SubMenu>
-                </div>
+                        {subNavItem.icon && (
+                          <subNavItem.icon
+                            style={{
+                              fontSize: "20px",
+                            }}
+                          />
+                        )}
+                        {collapsed ? null : (
+                          <span
+                            style={{
+                              marginLeft: "8px",
+                            }}
+                          >
+                            {subNavItem.label}
+                          </span>
+                        )}
+                      </NavLink>
+                    </Menu.Item>
+                  ))}
+                </SubMenu>
               ) : (
                 <Menu.Item onClick={HandleSelection} key={e.id} item={e.label}>
                   <NavLink
@@ -109,6 +107,7 @@ const Mainlayout = ({}) => {
                       display: "flex",
                       alignItems: "center",
                       marginTop: "8px",
+                      marginLeft: "11px",
                     }}
                   >
                     {e.icon && (
