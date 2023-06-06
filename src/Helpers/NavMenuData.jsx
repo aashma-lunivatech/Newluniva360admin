@@ -23,6 +23,7 @@ import {
   SiTestcafe,
   SiOdnoklassniki,
   SiStatuspal,
+  SiCachet,
 } from "react-icons/Si";
 
 export const RouteDataAdmin = [
@@ -240,7 +241,7 @@ export const RouteDataAdmin = [
     label: "Online Consultation",
     pathName: "/onlineregistrationpage",
     hasSubMenu: false,
-    icon: SiStatuspal,
+    icon: SiCachet,
     // subNav: [
     //   {
     //     id: 20.1,

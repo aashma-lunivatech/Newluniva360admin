@@ -104,6 +104,10 @@ justify-content: flex-end;
 }
 .ant-menu-title-content {
   font-size: 18px !important;
+  color: rgb(29, 26, 26);
+}
+.ant-menu-item-icon{
+  color: black !important;
 }
 /* .ant-menu {
   overflow-y: auto;
